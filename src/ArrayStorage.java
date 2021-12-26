@@ -33,9 +33,7 @@ public class ArrayStorage {
             if (storage[i].toString().equals(uuid)) {
                 resumeCount--;
                 System.arraycopy(storage, i + 1, storage, i, resumeCount - i);
-                if (resumeCount - i == 0) {
-                    storage[i] = null;
-                }
+                storage[resumeCount] = null;
                 break;
             }
         }
