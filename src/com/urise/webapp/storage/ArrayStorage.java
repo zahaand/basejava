@@ -19,7 +19,10 @@ public class ArrayStorage {
     public void save(Resume resume) {
         if (size != 9999 && !checkResume(resume)) {
             storage[size] = resume;
+            System.out.println("SUCCESSFULLY SAVED");
             size++;
+        } else {
+            System.out.println("ALREADY EXISTS");
         }
     }
 
@@ -32,6 +35,8 @@ public class ArrayStorage {
                     }
                 }
             }
+        } else {
+            System.out.println("NOT FOUND");
         }
         return null;
     }
@@ -46,6 +51,9 @@ public class ArrayStorage {
                     break;
                 }
             }
+            System.out.println("SUCCESSFULLY DELETED");
+        } else {
+            System.out.println("NOT FOUND");
         }
     }
 
@@ -67,6 +75,7 @@ public class ArrayStorage {
                     storage[i] = resume;
                 }
             }
+            System.out.println("SUCCESSFULLY UPDATED");
         }
     }
     
@@ -74,8 +83,6 @@ public class ArrayStorage {
         for (int i = 0; i < size; i++) {
             if (storage[i].getUuid().equals(resume.getUuid())) {
                 return true;
-            } else {
-                System.out.println("NOT FOUND");
             }
         }
         return false;
@@ -85,8 +92,6 @@ public class ArrayStorage {
         for (int i = 0; i < size; i++) {
             if (storage[i].toString().equals(uuid)) {
                 return true;
-            } else {
-                System.out.println("NOT FOUND");
             }
         }
         return false;
