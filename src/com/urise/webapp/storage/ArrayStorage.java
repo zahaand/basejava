@@ -17,43 +17,38 @@ public class ArrayStorage {
     }
 
     public void save(Resume resume) {
-        if (size != 9999 && !checkResume(resume)) {
-            storage[size] = resume;
-            System.out.println("SUCCESSFULLY SAVED");
-            size++;
+        if (size != storage.length - 1) {
+            if (checkUuid(resume.getUuid()) < 0) {
+                storage[size] = resume;
+                System.out.println(resume.getUuid() + " SUCCESSFULLY SAVED");
+                size++;
+            } else {
+                System.out.println(resume.getUuid() + " ALREADY EXISTS");
+            }
         } else {
-            System.out.println("ALREADY EXISTS");
+            System.out.println("ARRAY IS EMPTY");
         }
     }
 
     public Resume get(String uuid) {
-        if (checkUuid(uuid)) {
-            for (int i = 0; i < size; i++) {
-                if (storage[i] != null) {
-                    if (storage[i].toString().equals(uuid)) {
-                        return storage[i];
-                    }
-                }
+        if (checkUuid(uuid) >= 0) {
+            if (storage[checkUuid(uuid)] != null) {
+                return storage[checkUuid(uuid)];
             }
         } else {
-            System.out.println("NOT FOUND");
+            System.out.println(uuid + " NOT FOUND");
         }
         return null;
     }
 
     public void delete(String uuid) {
-        if (checkUuid(uuid)) {
-            for (int i = 0; i < size; i++) {
-                if (storage[i].toString().equals(uuid)) {
-                    size--;
-                    System.arraycopy(storage, i + 1, storage, i, size - i);
-                    storage[size] = null;
-                    break;
-                }
-            }
-            System.out.println("SUCCESSFULLY DELETED");
+        if (size > 0 && checkUuid(uuid) >= 0) {
+            size--;
+            System.arraycopy(storage, size + 1, storage, size, size - checkUuid(uuid));
+            storage[size] = null;
+            System.out.println(uuid + " SUCCESSFULLY DELETED");
         } else {
-            System.out.println("NOT FOUND");
+            System.out.println(uuid + " NOT FOUND");
         }
     }
 
@@ -69,31 +64,18 @@ public class ArrayStorage {
     }
 
     public void update(Resume resume) {
-        if (checkResume(resume)) {
-            for (int i = 0; i < size; i++) {
-                if (storage[i].getUuid().equals(resume.getUuid())) {
-                    storage[i] = resume;
-                }
-            }
-            System.out.println("SUCCESSFULLY UPDATED");
+        if (checkUuid(resume.getUuid()) >= 0) {
+            storage[checkUuid(resume.getUuid())] = resume;
+            System.out.println(resume.getUuid() + " SUCCESSFULLY UPDATED");
         }
-    }
-    
-    private boolean checkResume(Resume resume) {
-        for (int i = 0; i < size; i++) {
-            if (storage[i].getUuid().equals(resume.getUuid())) {
-                return true;
-            }
-        }
-        return false;
     }
 
-    private boolean checkUuid(String uuid) {
+    private int checkUuid(String uuid) {
         for (int i = 0; i < size; i++) {
-            if (storage[i].toString().equals(uuid)) {
-                return true;
+            if (storage[i].getUuid().equals(uuid)) {
+                return i;
             }
         }
-        return false;
+        return -1;
     }
 }
