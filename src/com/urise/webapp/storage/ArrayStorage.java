@@ -17,7 +17,7 @@ public class ArrayStorage {
     }
 
     public void save(Resume resume) {
-        if (size < storage.length) {
+        if (size < storage.length - 1) {
             if (findIndex(resume.getUuid()) < 0) {
                 storage[size] = resume;
                 size++;
