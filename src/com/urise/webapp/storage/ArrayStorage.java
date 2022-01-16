@@ -20,8 +20,8 @@ public class ArrayStorage {
         if (size < storage.length) {
             if (findIndex(resume.getUuid()) < 0) {
                 storage[size] = resume;
-                System.out.println(resume.getUuid() + " SUCCESSFULLY SAVED");
                 size++;
+                System.out.println(resume.getUuid() + " SUCCESSFULLY SAVED");
             } else {
                 System.out.println(resume.getUuid() + " ALREADY EXISTS");
             }
@@ -31,10 +31,9 @@ public class ArrayStorage {
     }
 
     public Resume get(String uuid) {
-        if (findIndex(uuid) >= 0) {
-            if (storage[findIndex(uuid)] != null) {
-                return storage[findIndex(uuid)];
-            }
+        int index = findIndex(uuid);
+        if (index >= 0) {
+                return storage[index];
         } else {
             System.out.println(uuid + " NOT FOUND");
         }
@@ -65,8 +64,9 @@ public class ArrayStorage {
     }
 
     public void update(Resume resume) {
-        if (findIndex(resume.getUuid()) >= 0) {
-            storage[findIndex(resume.getUuid())] = resume;
+        int index = findIndex(resume.getUuid());
+        if (index >= 0) {
+            storage[index] = resume;
             System.out.println(resume.getUuid() + " SUCCESSFULLY UPDATED");
         } else {
             System.out.println("ID NOT FOUND");
