@@ -18,12 +18,13 @@ public class ArrayStorage {
 
     public void save(Resume resume) {
         if (size < storage.length - 1) {
-            if (findIndex(resume.getUuid()) < 0) {
+            String uuid = resume.getUuid();
+            if (findIndex(uuid) < 0) {
                 storage[size] = resume;
                 size++;
-                System.out.println(resume.getUuid() + " SUCCESSFULLY SAVED");
+                System.out.println(uuid + " SUCCESSFULLY SAVED");
             } else {
-                System.out.println(resume.getUuid() + " ALREADY EXISTS");
+                System.out.println(uuid + " ALREADY EXISTS");
             }
         } else {
             System.out.println("ARRAY IS FULL");
@@ -33,10 +34,9 @@ public class ArrayStorage {
     public Resume get(String uuid) {
         int index = findIndex(uuid);
         if (index >= 0) {
-                return storage[index];
-        } else {
-            System.out.println(uuid + " NOT FOUND");
+            return storage[index];
         }
+        System.out.println(uuid + " NOT FOUND");
         return null;
     }
 
