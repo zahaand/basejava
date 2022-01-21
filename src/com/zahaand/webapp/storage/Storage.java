@@ -1,6 +1,6 @@
-package com.urise.webapp.storage;
+package com.zahaand.webapp.storage;
 
-import com.urise.webapp.model.Resume;
+import com.zahaand.webapp.model.Resume;
 
 public interface Storage {
 

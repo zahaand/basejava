@@ -1,12 +1,12 @@
-package com.urise.webapp;
+package com.zahaand.webapp;
 
-import com.urise.webapp.model.Resume;
-import com.urise.webapp.storage.ArrayStorage;
+import com.zahaand.webapp.model.Resume;
+import com.zahaand.webapp.storage.ArrayStorage;
 
 /**
  * Test for your com.urise.webapp.storage.ArrayStorage implementation
  */
-public class MainTestArrayStorage {
+public class MainTestSortedArrayStorage {
     static final ArrayStorage ARRAY_STORAGE = new ArrayStorage();
 
     public static void main(String[] args) {

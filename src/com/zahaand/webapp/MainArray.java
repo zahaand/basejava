@@ -1,7 +1,7 @@
-package com.urise.webapp;
+package com.zahaand.webapp;
 
-import com.urise.webapp.model.Resume;
-import com.urise.webapp.storage.ArrayStorage;
+import com.zahaand.webapp.model.Resume;
+import com.zahaand.webapp.storage.ArrayStorage;
 
 import java.io.BufferedReader;
 import java.io.IOException;

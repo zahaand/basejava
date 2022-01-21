@@ -1,20 +1,23 @@
-package com.urise.webapp.storage;
+package com.zahaand.webapp.storage;
 
-import com.urise.webapp.model.Resume;
+import com.zahaand.webapp.model.Resume;
 
 import java.util.Arrays;
 
 /**
  * Array based storage for Resumes
  */
-public class ArrayStorage extends AbstractArrayStorage {
-    @Override
+public abstract class AbstractArrayStorage implements Storage {
+    protected static final int STORAGE_LIMIT = 10000;
+
+    protected Resume[] storage = new Resume[STORAGE_LIMIT];
+    protected int size = 0;
+
     public void clear() {
         Arrays.fill(storage, 0, size, null);
         size = 0;
     }
 
-    @Override
     public void update(Resume resume) {
         int index = getIndex(resume.getUuid());
         if (index >= 0) {
@@ -25,23 +28,15 @@ public class ArrayStorage extends AbstractArrayStorage {
         }
     }
 
-    @Override
-    public void save(Resume resume) {
-        if (size < storage.length - 1) {
-            String uuid = resume.getUuid();
-            if (getIndex(uuid) < 0) {
-                storage[size] = resume;
-                size++;
-                System.out.println(uuid + " SUCCESSFULLY SAVED");
-            } else {
-                System.out.println(uuid + " ALREADY EXISTS");
-            }
-        } else {
-            System.out.println("ARRAY IS OVERFLOW");
+    public Resume get(String uuid) {
+        int index = getIndex(uuid);
+        if (index >= 0) {
+            return storage[index];
         }
+        System.out.println(uuid + " NOT FOUND");
+        return null;
     }
 
-    @Override
     public void delete(String uuid) {
         int index = getIndex((uuid));
         if (index >= 0) {
@@ -54,21 +49,13 @@ public class ArrayStorage extends AbstractArrayStorage {
         }
     }
 
-    /**
-     * @return array, contains only Resumes in storage (without null)
-     */
-    @Override
     public Resume[] getAll() {
         return Arrays.copyOf(storage, size);
     }
 
-    @Override
-    protected int getIndex(String uuid) {
-        for (int i = 0; i < size; i++) {
-            if (storage[i].getUuid().equals(uuid)) {
-                return i;
-            }
-        }
-        return -1;
+    public int size() {
+        return size;
     }
+
+    protected abstract int getIndex(String uuid);
 }
