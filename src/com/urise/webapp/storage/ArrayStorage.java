@@ -7,19 +7,29 @@ import java.util.Arrays;
 /**
  * Array based storage for Resumes
  */
-public class ArrayStorage {
-    private Resume[] storage = new Resume[10000];
-    private int size;
-
+public class ArrayStorage extends AbstractArrayStorage {
+    @Override
     public void clear() {
         Arrays.fill(storage, 0, size, null);
         size = 0;
     }
 
+    @Override
+    public void update(Resume resume) {
+        int index = getIndex(resume.getUuid());
+        if (index >= 0) {
+            storage[index] = resume;
+            System.out.println(resume.getUuid() + " SUCCESSFULLY UPDATED");
+        } else {
+            System.out.println("ID NOT FOUND");
+        }
+    }
+
+    @Override
     public void save(Resume resume) {
         if (size < storage.length - 1) {
             String uuid = resume.getUuid();
-            if (findIndex(uuid) < 0) {
+            if (getIndex(uuid) < 0) {
                 storage[size] = resume;
                 size++;
                 System.out.println(uuid + " SUCCESSFULLY SAVED");
@@ -27,21 +37,13 @@ public class ArrayStorage {
                 System.out.println(uuid + " ALREADY EXISTS");
             }
         } else {
-            System.out.println("ARRAY IS FULL");
+            System.out.println("ARRAY IS OVERFLOW");
         }
     }
 
-    public Resume get(String uuid) {
-        int index = findIndex(uuid);
-        if (index >= 0) {
-            return storage[index];
-        }
-        System.out.println(uuid + " NOT FOUND");
-        return null;
-    }
-
+    @Override
     public void delete(String uuid) {
-        int index = findIndex((uuid));
+        int index = getIndex((uuid));
         if (index >= 0) {
             size--;
             System.arraycopy(storage, size + 1, storage, size, size - index);
@@ -55,25 +57,13 @@ public class ArrayStorage {
     /**
      * @return array, contains only Resumes in storage (without null)
      */
+    @Override
     public Resume[] getAll() {
         return Arrays.copyOf(storage, size);
     }
 
-    public int size() {
-        return size;
-    }
-
-    public void update(Resume resume) {
-        int index = findIndex(resume.getUuid());
-        if (index >= 0) {
-            storage[index] = resume;
-            System.out.println(resume.getUuid() + " SUCCESSFULLY UPDATED");
-        } else {
-            System.out.println("ID NOT FOUND");
-        }
-    }
-
-    private int findIndex(String uuid) {
+    @Override
+    protected int getIndex(String uuid) {
         for (int i = 0; i < size; i++) {
             if (storage[i].getUuid().equals(uuid)) {
                 return i;
