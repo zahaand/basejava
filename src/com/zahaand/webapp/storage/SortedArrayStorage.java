@@ -1,7 +1,5 @@
 package com.zahaand.webapp.storage;
 
-import com.zahaand.webapp.model.Resume;
-
 import java.util.Arrays;
 
 public class SortedArrayStorage extends AbstractArrayStorage {
@@ -13,6 +11,7 @@ public class SortedArrayStorage extends AbstractArrayStorage {
 
     @Override
     protected void sortStorage(String uuid) {
+        System.out.println("START SORTING");
         if (size > 0) {
             int index = Math.abs(getIndex(uuid));
             System.arraycopy(storage, index, storage, index + 1, size - index);
