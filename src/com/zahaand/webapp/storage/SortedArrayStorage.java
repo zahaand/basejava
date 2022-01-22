@@ -14,9 +14,7 @@ public class SortedArrayStorage extends AbstractArrayStorage {
     @Override
     protected void sortStorage(String uuid) {
         int index = Math.abs(Arrays.binarySearch(storage, uuid));
-        if (storage[index].getUuid().compareTo(uuid) > 0) {
             System.arraycopy(storage, index, storage, index + 1, size - index);
-        }
     }
 }
 
