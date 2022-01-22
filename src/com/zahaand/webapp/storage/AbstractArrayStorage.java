@@ -39,6 +39,7 @@ public abstract class AbstractArrayStorage implements Storage {
                 storage[size] = resume;
                 size++;
                 System.out.println(uuid + " SUCCESSFULLY SAVED");
+                System.out.println("SIZE: " + size);
             } else {
                 System.out.println(uuid + " ALREADY EXISTS");
             }
