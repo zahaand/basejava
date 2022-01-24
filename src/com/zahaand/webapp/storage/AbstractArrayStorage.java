@@ -33,7 +33,7 @@ public abstract class AbstractArrayStorage implements Storage {
 
     @Override
     public final void save(Resume resume) {
-        if (size != storage.length){
+        if (size != storage.length) {
             String uuid = resume.getUuid();
             if (getIndex(uuid) < 0) {
                 saveResume(resume);
@@ -61,9 +61,9 @@ public abstract class AbstractArrayStorage implements Storage {
     public final void delete(String uuid) {
         int index = getIndex((uuid));
         if (index >= 0) {
-            size--;
-            System.arraycopy(storage, size + 1, storage, size, size - index);
+            System.arraycopy(storage, index + 1, storage, index, size - index);
             storage[size] = null;
+            size--;
             System.out.println(uuid + " SUCCESSFULLY DELETED");
         } else {
             System.out.println(uuid + " NOT FOUND");
