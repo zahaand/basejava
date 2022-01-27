@@ -27,7 +27,9 @@ public class MainTestSortedArrayStorage {
         printAll();
         ARRAY_STORAGE.update(r4);
         printAll();
+        System.out.println("NEW SIZE = " + ARRAY_STORAGE.size());
         ARRAY_STORAGE.delete(r3.getUuid());
+        System.out.println("NEW SIZE = " + ARRAY_STORAGE.size());
         printAll();
         ARRAY_STORAGE.clear();
         printAll();

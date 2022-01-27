@@ -1,5 +1,8 @@
 package com.zahaand.webapp.storage;
 
+import com.zahaand.webapp.exception.ExistStorageException;
+import com.zahaand.webapp.exception.NotExistStorageException;
+import com.zahaand.webapp.exception.StorageException;
 import com.zahaand.webapp.model.Resume;
 
 import java.util.Arrays;
@@ -17,6 +20,7 @@ public abstract class AbstractArrayStorage implements Storage {
     public void clear() {
         Arrays.fill(storage, 0, size, null);
         size = 0;
+        System.out.println("SUCCESSFULLY CLEARED");
     }
 
     @Override
@@ -27,7 +31,7 @@ public abstract class AbstractArrayStorage implements Storage {
             storage[index] = resume;
             System.out.println(uuid + " SUCCESSFULLY UPDATED");
         } else {
-            System.out.println(uuid + " NOT FOUND");
+            throw new NotExistStorageException(resume.getUuid());
         }
     }
 
@@ -36,14 +40,14 @@ public abstract class AbstractArrayStorage implements Storage {
         if (size != storage.length) {
             String uuid = resume.getUuid();
             if (getIndex(uuid) < 0) {
-                saveResume(resume);
+                insertElement(resume);
                 size++;
                 System.out.println(uuid + " SUCCESSFULLY SAVED");
             } else {
-                System.out.println(uuid + " ALREADY EXISTS");
+                throw new ExistStorageException(resume.getUuid());
             }
         } else {
-            System.out.println("ARRAY IS OVERFLOW");
+            throw new StorageException("STORAGE OVERFLOW ", resume.getUuid() + " DONT SAVE");
         }
     }
 
@@ -53,24 +57,19 @@ public abstract class AbstractArrayStorage implements Storage {
         if (index >= 0) {
             return storage[index];
         }
-        System.out.println(uuid + " NOT FOUND");
-        return null;
+        throw new NotExistStorageException(uuid);
     }
 
     @Override
     public final void delete(String uuid) {
         int index = getIndex((uuid));
         if (index >= 0) {
-//            if (index == size - 1) {
-//                storage[index] = null;
-//            } else {
-                System.arraycopy(storage, index + 1, storage, index, size - (index + 1));
-                storage[size - 1] = null;
-//            }
+            System.arraycopy(storage, index + 1, storage, index, size - (index + 1));
+            storage[size - 1] = null;
             size--;
             System.out.println(uuid + " SUCCESSFULLY DELETED");
         } else {
-            System.out.println(uuid + " NOT FOUND");
+            throw new NotExistStorageException(uuid);
         }
     }
 
@@ -86,5 +85,5 @@ public abstract class AbstractArrayStorage implements Storage {
 
     protected abstract int getIndex(String uuid);
 
-    protected abstract void saveResume(Resume resume);
+    protected abstract void insertElement(Resume resume);
 }
