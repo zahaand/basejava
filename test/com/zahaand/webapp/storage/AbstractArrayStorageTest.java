@@ -24,38 +24,44 @@ public class AbstractArrayStorageTest {
         storage.save(new Resume(UUID_1));
         storage.save(new Resume(UUID_2));
         storage.save(new Resume(UUID_3));
-        storage.update(new Resume(UUID_4));
     }
 
     @Test
     public void clear() {
         storage.clear();
-        assertEquals(0, storage.size());
+        Assert.assertEquals(0, storage.size);
     }
 
     @Test
     public void update() {
+        storage.update(new Resume(UUID_4));
         Assert.assertEquals(0, storage.getIndex("uuid1"));
     }
 
     @Test(expected = NotExistStorageException.class)
     public void updateNotExist() {
+        storage.update(new Resume("uuid5"));
     }
 
     @Test(expected = ExistStorageException.class)
     public void saveExist() {
+        storage.save(new Resume("uuid1"));
     }
 
     @Test(expected = StorageException.class)
     public void save() {
+        storage.size = 10000;
+        storage.save(new Resume("uuid5"));
     }
 
     @Test(expected = NotExistStorageException.class)
     public void getNotExis() {
+        storage.get("uuid5");
     }
 
     @Test(expected = NotExistStorageException.class)
     public void deleteNotExist() {
+        storage.delete("uuid5");
     }
 
     @Test
