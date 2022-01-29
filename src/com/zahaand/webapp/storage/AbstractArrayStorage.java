@@ -17,6 +17,11 @@ public abstract class AbstractArrayStorage implements Storage {
     protected int size = 0;
 
     @Override
+    public int size() {
+        return size;
+    }
+
+    @Override
     public void clear() {
         Arrays.fill(storage, 0, size, null);
         size = 0;
@@ -76,11 +81,6 @@ public abstract class AbstractArrayStorage implements Storage {
     @Override
     public Resume[] getAll() {
         return Arrays.copyOf(storage, size);
-    }
-
-    @Override
-    public int size() {
-        return size;
     }
 
     protected abstract int getIndex(String uuid);
