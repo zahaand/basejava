@@ -42,15 +42,15 @@ public abstract class AbstractArrayStorageTest {
         storage.update(new Resume("dummy"));
     }
 
-    @Test(expected = ExistStorageException.class)
-    public void saveExist() {
-        storage.save(new Resume("uuid1"));
-    }
-
     @Test
     public void save() {
         storage.save(new Resume("dummy"));
         Assert.assertEquals(4, storage.size());
+    }
+
+    @Test(expected = ExistStorageException.class)
+    public void saveExist() {
+        storage.save(new Resume("uuid1"));
     }
 
     @Test(expected = StorageException.class)
