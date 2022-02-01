@@ -61,12 +61,12 @@ public abstract class AbstractArrayStorageTest {
 
     @Test(expected = StorageException.class)
     public void saveException() {
-        try {
-            for (int i = 3; i < storage.size(); i++) {
+        for (int i = 3; i < 10000; i++) {
+            try {
                 storage.save(new Resume());
+            } catch (Exception e) {
+                fail("OVERFLOW HAPPENED AHEAD OF TIME");
             }
-        } catch (Exception e) {
-            fail("OVERFLOW HAPPENED AHEAD OF TIME");
         }
         storage.save(new Resume());
     }
