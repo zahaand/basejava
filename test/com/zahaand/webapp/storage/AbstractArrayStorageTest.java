@@ -7,6 +7,7 @@ import com.zahaand.webapp.model.Resume;
 import org.junit.Before;
 import org.junit.Test;
 
+import static com.zahaand.webapp.storage.AbstractArrayStorage.STORAGE_LIMIT;
 import static org.junit.Assert.*;
 
 public abstract class AbstractArrayStorageTest {
@@ -37,8 +38,9 @@ public abstract class AbstractArrayStorageTest {
 
     @Test
     public void update() {
-        storage.update(new Resume(UUID_1));
-        assertEquals(new Resume(UUID_1), storage.get(UUID_1));
+        Resume newResume = new Resume(UUID_1);
+        storage.update(newResume);
+        assertSame(newResume, storage.get(UUID_1));
     }
 
     @Test(expected = NotExistStorageException.class)
@@ -62,14 +64,13 @@ public abstract class AbstractArrayStorageTest {
     @Test(expected = StorageException.class)
     public void saveException() {
         try {
-            for (int i = 0; i < 10000; i++) {
+            for (int i = storage.size(); i < STORAGE_LIMIT; i++) {
                 storage.save(new Resume());
             }
-        } catch (Exception e) {
+        } catch (StorageException e) {
             fail("OVERFLOW HAPPENED AHEAD OF TIME");
-        } finally {
-            storage.save(new Resume());
         }
+        storage.save(new Resume());
     }
 
     @Test
