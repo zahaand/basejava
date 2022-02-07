@@ -5,12 +5,12 @@ import com.zahaand.webapp.exception.NotExistStorageException;
 import com.zahaand.webapp.model.Resume;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 
 public class ListStorage extends AbstractStorage {
     protected List<Resume> storage = new ArrayList<>();
-    Iterator<Resume> iterator = storage.iterator();
+    ListIterator<Resume> listIterator = storage.listIterator();
 
     @Override
     public void clear() {
@@ -20,12 +20,13 @@ public class ListStorage extends AbstractStorage {
 
     @Override
     public void update(Resume r) {
-        while (iterator.hasNext()) {
-            if (iterator.next().equals(r)) {
-                iterator.remove();
-                storage.add(r);
+        String uuid = r.getUuid();
+        while (listIterator.hasNext()) {
+            if (listIterator.next().equals(r)) {
+                listIterator.set(r);
+                System.out.println(uuid + " SUCCESSFULLY UPDATED");
             } else {
-                throw new NotExistStorageException(r.getUuid());
+                throw new NotExistStorageException(uuid);
             }
         }
     }
@@ -37,30 +38,29 @@ public class ListStorage extends AbstractStorage {
             throw new ExistStorageException(uuid);
         } else {
             storage.add(r);
+            System.out.println(uuid + " SUCCESSFULLY SAVED");
         }
     }
 
     @Override
     public Resume get(String uuid) {
-        while (iterator.hasNext()) {
-            if (iterator.next().toString().equals(uuid)) {
-                return iterator.next();
-            } else {
-                throw new NotExistStorageException(uuid);
+        while (listIterator.hasNext()) {
+            if (listIterator.next().toString().equals(uuid)) {
+                return listIterator.next();
             }
         }
-        return null;
+        throw new NotExistStorageException(uuid);
     }
 
     @Override
     public void delete(String uuid) {
-        while (iterator.hasNext()) {
-            if (iterator.next().toString().equals(uuid)) {
-                iterator.remove();
-            } else {
-                throw new NotExistStorageException(uuid);
+        while (listIterator.hasNext()) {
+            if (listIterator.next().toString().equals(uuid)) {
+                listIterator.remove();
+                break;
             }
         }
+            throw new NotExistStorageException(uuid);
     }
 
     @Override
