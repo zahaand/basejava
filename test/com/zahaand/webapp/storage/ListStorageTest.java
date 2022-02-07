@@ -1,6 +1,7 @@
 package com.zahaand.webapp.storage;
 
 import com.zahaand.webapp.exception.ExistStorageException;
+import com.zahaand.webapp.exception.NotExistStorageException;
 import com.zahaand.webapp.model.Resume;
 import org.junit.Before;
 import org.junit.Test;
@@ -37,11 +38,11 @@ public class ListStorageTest {
         assertEquals(newResume, storage.get(UUID_1));
     }
 
-//    @Test(expected = NotExistStorageException.class)
-//    public void updateNotExist() {
-//        storage.update(new Resume(UUID_4));
-//
-//    }
+    @Test(expected = NotExistStorageException.class)
+    public void updateNotExist() {
+        storage.update(new Resume(UUID_4));
+
+    }
 
     @Test
     public void save() {
@@ -56,15 +57,15 @@ public class ListStorageTest {
         storage.save(new Resume(UUID_1));
     }
 
-//    @Test
-//    public void get() {
-//        assertEquals(new Resume(UUID_1), storage.get(UUID_1));
-//    }
+    @Test
+    public void get() {
+        assertEquals(new Resume(UUID_1), storage.get(UUID_1));
+    }
 
-//    @Test(expected = NotExistStorageException.class)
-//    public void getNotExist() {
-//        storage.get(UUID_4);
-//    }
+    @Test(expected = NotExistStorageException.class)
+    public void getNotExist() {
+        storage.get(UUID_4);
+    }
 
     @Test
     public void delete() {
@@ -74,10 +75,10 @@ public class ListStorageTest {
         assertArrayEquals(storageTest, storage.getAll());
     }
 
-//    @Test(expected = NotExistStorageException.class)
-//    public void deleteNotExist() {
-//        storage.delete(UUID_4);
-//    }
+    @Test(expected = NotExistStorageException.class)
+    public void deleteNotExist() {
+        storage.delete(UUID_4);
+    }
 
     @Test
     public void getAll() {
