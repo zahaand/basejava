@@ -82,8 +82,4 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     public Resume[] getAll() {
         return Arrays.copyOf(storage, size);
     }
-
-    protected abstract int getIndex(String uuid);
-
-    protected abstract void insertElement(Resume resume);
 }
