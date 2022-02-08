@@ -7,13 +7,6 @@ import com.zahaand.webapp.model.Resume;
 public abstract class AbstractStorage implements Storage {
 
     @Override
-    public void clear() {
-        clearStorage();
-        System.out.println("SUCCESSFULLY CLEARED");
-    }
-
-
-    @Override
     public void update(Resume r) {
         String uuid = r.getUuid();
         if (getIndex(uuid) >= 0) {
@@ -54,18 +47,6 @@ public abstract class AbstractStorage implements Storage {
         }
     }
 
-    @Override
-    public Resume[] getAll() {
-        return getAllResumes();
-    }
-
-    @Override
-    public int size() {
-        return getStorageSize();
-    }
-
-    protected abstract void clearStorage();
-
     protected abstract void updateResume(Resume resume);
 
     protected abstract void saveResume(Resume resume);
@@ -73,10 +54,6 @@ public abstract class AbstractStorage implements Storage {
     protected abstract Resume getResume(String uuid);
 
     protected abstract void deleteResume(String uuid);
-
-    protected abstract Resume[] getAllResumes();
-
-    protected abstract int getStorageSize();
 
     protected abstract int getIndex(String uuid);
 }
