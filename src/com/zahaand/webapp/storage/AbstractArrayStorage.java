@@ -21,8 +21,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    protected void updateResume(Resume resume) {
-        int index = getIndex(resume.getUuid());
+    protected void updateResume(int index, Resume resume) {
         storage[index] = resume;
     }
 
@@ -37,14 +36,12 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    protected Resume getResume(String uuid) {
-        int index = getIndex(uuid);
+    protected Resume getResume(int index) {
         return storage[index];
     }
 
     @Override
-    protected void deleteResume(String uuid) {
-        int index = getIndex((uuid));
+    protected void deleteResume(int index) {
         System.arraycopy(storage, index + 1, storage, index, size - (index + 1));
         storage[size - 1] = null;
         size--;
