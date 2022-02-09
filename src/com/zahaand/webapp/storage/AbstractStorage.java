@@ -9,8 +9,9 @@ public abstract class AbstractStorage implements Storage {
     @Override
     public void update(Resume r) {
         String uuid = r.getUuid();
-        if (getIndex(uuid) >= 0) {
-            updateResume(getIndex(uuid), r);
+        int index = getIndex(uuid);
+        if (index >= 0) {
+            updateResume(index, r);
             System.out.println(uuid + " SUCCESSFULLY UPDATED");
         } else {
             throw new NotExistStorageException(uuid);
@@ -20,7 +21,8 @@ public abstract class AbstractStorage implements Storage {
     @Override
     public void save(Resume r) {
         String uuid = r.getUuid();
-        if (getIndex(uuid) < 0) {
+        int index = getIndex(uuid);
+        if (index < 0) {
             saveResume(r);
             System.out.println(uuid + " SUCCESSFULLY SAVED");
         } else {
