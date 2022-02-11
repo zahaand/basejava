@@ -4,14 +4,14 @@ import java.util.Objects;
 import java.util.UUID;
 
 /**
- * Initial resume class
+ * initial resume class
  */
 public class Resume implements Comparable<Resume> {
 
-    // Unique identifier
+    // unique identifier
     private final String uuid;
 
-    // Random UUID generation
+    // random UUID generation
     public Resume() {
        this (UUID.randomUUID().toString());
     }
