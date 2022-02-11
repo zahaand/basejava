@@ -30,7 +30,10 @@ public class MapStorage extends AbstractStorage {
 
     @Override
     protected int getIndex(String uuid) {
-        return uuid.hashCode();
+        if (storage.containsKey(uuid)) {
+            return uuid.hashCode();
+        }
+        return -1;
     }
 
     @Override
