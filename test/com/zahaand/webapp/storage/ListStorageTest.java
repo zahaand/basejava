@@ -41,7 +41,6 @@ public class ListStorageTest {
     @Test(expected = NotExistStorageException.class)
     public void updateNotExist() {
         storage.update(new Resume(UUID_4));
-
     }
 
     @Test

@@ -6,13 +6,11 @@ import com.zahaand.webapp.model.Resume;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
 
 public class MapStorageTest {
-    private final Map<String, Resume> storage = new HashMap<>();
+    private final Storage storage = new MapStorage();
 
     private static final String UUID_1 = "uuid1";
     private static final String UUID_2 = "uuid2";
@@ -22,9 +20,9 @@ public class MapStorageTest {
     @Before
     public void setUp() {
         storage.clear();
-        storage.put(UUID_1, new Resume(UUID_1));
-        storage.put(UUID_2, new Resume(UUID_2));
-        storage.put(UUID_3, new Resume(UUID_3));
+        storage.save(new Resume(UUID_1));
+        storage.save(new Resume(UUID_2));
+        storage.save(new Resume(UUID_3));
     }
 
     @Test
@@ -36,26 +34,26 @@ public class MapStorageTest {
     @Test
     public void update() {
         Resume newResume = new Resume(UUID_1);
-        storage.replace(UUID_1, newResume);
+        storage.update(newResume);
         assertEquals(newResume, storage.get(UUID_1));
     }
 
     @Test(expected = NotExistStorageException.class)
     public void updateNotExist() {
-        storage.replace(UUID_4, new Resume(UUID_4));
+        storage.update(new Resume(UUID_4));
     }
 
     @Test
     public void save() {
         Resume newResume = new Resume(UUID_4);
-        storage.put(UUID_4, newResume);
+        storage.save(newResume);
         assertEquals(4, storage.size());
         assertEquals(newResume, storage.get(UUID_4));
     }
 
     @Test(expected = ExistStorageException.class)
     public void saveExist() {
-        storage.put(UUID_1, new Resume(UUID_1));
+        storage.save(new Resume(UUID_1));
     }
 
     @Test
@@ -70,21 +68,21 @@ public class MapStorageTest {
 
     @Test
     public void delete() {
-        storage.remove(UUID_1);
+        storage.delete(UUID_1);
         Resume[] storageTest = {new Resume(UUID_2), new Resume(UUID_3)};
         assertEquals(2, storage.size());
-        assertArrayEquals(storageTest, storage.values().toArray(new Resume[0]));
+        assertArrayEquals(storageTest, storage.getAll());
     }
 
     @Test(expected = NotExistStorageException.class)
     public void deleteNotExist() {
-        storage.remove(UUID_4);
+        storage.delete(UUID_4);
     }
 
     @Test
     public void getAll() {
         Resume[] storageTest = {new Resume(UUID_1), new Resume(UUID_2), new Resume(UUID_3)};
-        assertArrayEquals(storageTest, storage.values().toArray(new Resume[0]));
+        assertArrayEquals(storageTest, storage.getAll());
         assertEquals(3, storage.size());
     }
 
