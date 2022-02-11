@@ -10,7 +10,7 @@ public class MapStorage extends AbstractStorage {
 
     @Override
     protected void updateResume(Object index, Resume resume) {
-        storage.replace(index.toString(), resume);
+        storage.replace(String.valueOf(index), resume);
     }
 
     @Override
@@ -20,12 +20,12 @@ public class MapStorage extends AbstractStorage {
 
     @Override
     protected Resume getResume(Object index) {
-        return storage.get(index.toString());
+        return storage.get(String.valueOf(index));
     }
 
     @Override
     protected void deleteResume(Object index) {
-        storage.remove(index.toString());
+        storage.remove(String.valueOf(index));
     }
 
     @Override
