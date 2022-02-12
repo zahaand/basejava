@@ -7,8 +7,9 @@ public class MapStorageTest extends AbstractStorageTest {
         super(new MapStorage());
     }
 
+    @Override
     @Ignore
-    public void saveExist() {
-        super.saveExist();
+    public void saveException() {
+        super.saveException();
     }
 }

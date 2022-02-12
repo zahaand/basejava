@@ -7,6 +7,7 @@ public class ListStorageTest extends AbstractStorageTest{
         super(new ListStorage());
     }
 
+    @Override
     @Ignore
     public void saveException() {
         super.saveException();
