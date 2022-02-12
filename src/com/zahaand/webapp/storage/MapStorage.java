@@ -6,11 +6,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MapStorage extends AbstractStorage {
-    Map<String, Resume> storage = new HashMap<>();
+    Map<Object, Resume> storage = new HashMap<>();
 
     @Override
     protected void updateResume(Object searchKey, Resume resume) {
-        storage.replace(String.valueOf(searchKey), resume);
+        storage.replace(searchKey, resume);
     }
 
     @Override
@@ -20,12 +20,12 @@ public class MapStorage extends AbstractStorage {
 
     @Override
     protected Resume getResume(Object searchKey) {
-        return storage.get(String.valueOf(searchKey));
+        return storage.get(searchKey);
     }
 
     @Override
     protected void deleteResume(Object searchKey) {
-        storage.remove(String.valueOf(searchKey));
+        storage.remove(searchKey);
     }
 
     @Override
