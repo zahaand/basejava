@@ -9,8 +9,8 @@ public class MapStorage extends AbstractStorage {
     Map<String, Resume> storage = new HashMap<>();
 
     @Override
-    protected void updateResume(Object index, Resume resume) {
-        storage.replace(String.valueOf(index), resume);
+    protected void updateResume(Object searchKey, Resume resume) {
+        storage.replace(String.valueOf(searchKey), resume);
     }
 
     @Override
@@ -19,13 +19,13 @@ public class MapStorage extends AbstractStorage {
     }
 
     @Override
-    protected Resume getResume(Object index) {
-        return storage.get(String.valueOf(index));
+    protected Resume getResume(Object searchKey) {
+        return storage.get(String.valueOf(searchKey));
     }
 
     @Override
-    protected void deleteResume(Object index) {
-        storage.remove(String.valueOf(index));
+    protected void deleteResume(Object searchKey) {
+        storage.remove(String.valueOf(searchKey));
     }
 
     @Override

@@ -51,13 +51,13 @@ public abstract class AbstractStorage implements Storage {
         }
     }
 
-    protected abstract void updateResume(Object index, Resume resume);
+    protected abstract void updateResume(Object searchKey, Resume resume);
 
     protected abstract void saveResume(Resume resume);
 
-    protected abstract Resume getResume(Object index);
+    protected abstract Resume getResume(Object searchKey);
 
-    protected abstract void deleteResume(Object index);
+    protected abstract void deleteResume(Object searchKey);
 
     protected abstract int getIndex(String uuid);
 }
