@@ -1,7 +1,8 @@
 package com.zahaand.webapp.storage;
 
-import org.junit.Ignore;
 import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
 
 public class MapStorageTest extends AbstractStorageTest {
     public MapStorageTest() {
@@ -9,9 +10,15 @@ public class MapStorageTest extends AbstractStorageTest {
     }
 
     @Override
-    @Ignore
     @Test
-    public void saveException() {
-        super.saveException();
+    public void getAll() {
+        assertEquals(3, storage.getAll().length);
     }
+
+    @Override
+    @Test
+    public void delete() {
+        assertEquals(2, storage.size());
+    }
+
 }

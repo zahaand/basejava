@@ -22,8 +22,8 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
 
     @Override
     protected void updateResume(Object searchKey, Resume resume) {
-        int i = Integer.parseInt(searchKey.toString());
-        storage[i] = resume;
+        int index = (int) searchKey;
+        storage[index] = resume;
     }
 
     @Override
@@ -38,7 +38,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
 
     @Override
     protected Resume getResume(Object searchKey) {
-        int index = Integer.parseInt(searchKey.toString());
+        int index = (int) searchKey;
         return storage[index];
     }
 

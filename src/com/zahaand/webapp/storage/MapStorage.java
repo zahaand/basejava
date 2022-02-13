@@ -6,11 +6,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MapStorage extends AbstractStorage {
-    Map<Object, Resume> storage = new HashMap<>();
+    private final Map<String, Resume> storage = new HashMap<>();
 
     @Override
     protected void updateResume(Object searchKey, Resume resume) {
-        storage.replace(searchKey, resume);
+        storage.replace(String.valueOf(searchKey), resume);
     }
 
     @Override
@@ -20,17 +20,17 @@ public class MapStorage extends AbstractStorage {
 
     @Override
     protected Resume getResume(Object searchKey) {
-        return storage.get(searchKey);
+        return storage.get(String.valueOf(searchKey));
     }
 
     @Override
     protected void deleteResume(Object searchKey) {
-        storage.remove(searchKey);
+        storage.remove(String.valueOf(searchKey));
     }
 
     @Override
-    protected int getIndex(String uuid) {
-        if (storage.containsKey(uuid)) {
+    protected int searchKey(Object uuid) {
+        if (storage.containsKey(String.valueOf(uuid))) {
             return uuid.hashCode();
         }
         return -1;
