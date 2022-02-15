@@ -20,7 +20,8 @@ public class MapStorage extends AbstractStorage {
 
     @Override
     protected Resume getResume(Object searchKey) {
-        return storage.get(String.valueOf(searchKey));
+        String key = String.valueOf(searchKey);
+        return storage.get(key);
     }
 
     @Override
@@ -28,10 +29,22 @@ public class MapStorage extends AbstractStorage {
         storage.remove(String.valueOf(searchKey));
     }
 
+//    @Override
+//    protected int searchKey(Object uuid) {
+//        String key = String.valueOf(uuid);
+//        if (storage.containsKey(key)) {
+//            return key.hashCode();
+//        }
+//        return -1;
+//    }
+
+
     @Override
     protected int searchKey(Object uuid) {
-        if (storage.containsKey(String.valueOf(uuid))) {
-            return uuid.hashCode();
+        String key = String.valueOf(uuid);
+        if (storage.containsKey(key)) {
+            System.out.println(key + " HASHCODE IS " + key.hashCode());
+            return key.hashCode();
         }
         return -1;
     }

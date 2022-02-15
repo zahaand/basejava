@@ -9,9 +9,8 @@ import java.lang.reflect.Method;
 public class MainReflection {
     public static void main(String[] args) throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         Resume resume = new Resume();
-        Class<? extends Resume> resumeClass = resume.getClass();
 
-        Field field = resumeClass.getDeclaredFields()[0];
+        Field field = resume.getClass().getDeclaredFields()[0];
         field.setAccessible(true);
 
         System.out.println(field.getName());
@@ -20,7 +19,7 @@ public class MainReflection {
         field.set(resume, "new_uuid");
         System.out.println(resume);
 
-        Method toString = resumeClass.getMethod("toString");
+        Method toString = resume.getClass().getMethod("toString");
         System.out.println(toString.invoke(resume));
     }
 }

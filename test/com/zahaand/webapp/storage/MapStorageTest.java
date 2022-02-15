@@ -4,6 +4,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
+
 public class MapStorageTest extends AbstractStorageTest {
     public MapStorageTest() {
         super(new MapStorage());
@@ -18,7 +19,7 @@ public class MapStorageTest extends AbstractStorageTest {
     @Override
     @Test
     public void delete() {
+        storage.delete("uuid1");
         assertEquals(2, storage.size());
     }
-
 }
