@@ -9,12 +9,9 @@ public abstract class AbstractStorage implements Storage {
     @Override
     public void update(Resume r) {
         String uuid = r.getUuid();
-        int key = searchKey(uuid);
-        if (key >= 0) {
-            updateResume(key, r);
+        if (containsKey(uuid)) {
+            updateResume(searchKey(uuid), r);
             System.out.println(uuid + " SUCCESSFULLY UPDATED");
-        } else {
-            throw new NotExistStorageException(uuid);
         }
     }
 
@@ -32,23 +29,26 @@ public abstract class AbstractStorage implements Storage {
 
     @Override
     public Resume get(String uuid) {
-        int key = searchKey(uuid);
-        if (key >= 0) {
-            return getResume(key);
-        } else {
-            throw new NotExistStorageException(uuid);
+        if (containsKey(uuid)) {
+            return getResume(searchKey(uuid));
         }
+        return null;
     }
 
     @Override
     public void delete(String uuid) {
+        if (containsKey(uuid)) {
+            deleteResume(searchKey(uuid));
+            System.out.println(uuid + " SUCCESSFULLY DELETED");
+        }
+    }
+
+    private boolean containsKey (String uuid) {
         int key = searchKey(uuid);
         if (key >= 0) {
-            deleteResume(key);
-            System.out.println(uuid + " SUCCESSFULLY DELETED");
-        } else {
-            throw new NotExistStorageException(uuid);
+            return true;
         }
+        throw new NotExistStorageException(uuid);
     }
 
     protected abstract void updateResume(Object searchKey, Resume resume);
