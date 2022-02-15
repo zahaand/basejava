@@ -29,21 +29,10 @@ public class MapStorage extends AbstractStorage {
         storage.remove(String.valueOf(searchKey));
     }
 
-//    @Override
-//    protected int searchKey(Object uuid) {
-//        String key = String.valueOf(uuid);
-//        if (storage.containsKey(key)) {
-//            return key.hashCode();
-//        }
-//        return -1;
-//    }
-
-
     @Override
     protected int searchKey(Object uuid) {
         String key = String.valueOf(uuid);
         if (storage.containsKey(key)) {
-            System.out.println(key + " HASHCODE IS " + key.hashCode());
             return key.hashCode();
         }
         return -1;
