@@ -10,7 +10,7 @@ public class MapStorage extends AbstractStorage {
 
     @Override
     protected void updateResume(Object searchKey, Resume resume) {
-        storage.replace(String.valueOf(searchKey), resume);
+        storage.replace((String) searchKey, resume);
     }
 
     @Override
@@ -20,20 +20,20 @@ public class MapStorage extends AbstractStorage {
 
     @Override
     protected Resume getResume(Object searchKey) {
-        String key = String.valueOf(searchKey);
+        String key = (String) searchKey;
         return storage.get(key);
     }
 
     @Override
     protected void deleteResume(Object searchKey) {
-        storage.remove(String.valueOf(searchKey));
+        storage.remove((String) searchKey);
     }
 
     @Override
-    protected int searchKey(Object uuid) {
-        String key = String.valueOf(uuid);
+    protected Object searchKey(Object uuid) {
+        String key = (String) uuid;
         if (storage.containsKey(key)) {
-            return key.hashCode();
+            return uuid;
         }
         return -1;
     }
