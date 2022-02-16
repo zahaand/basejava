@@ -33,7 +33,7 @@ public class MapStorage extends AbstractStorage {
     protected Object searchKey(Object uuid) {
         String key = (String) uuid;
         if (storage.containsKey(key)) {
-            return uuid;
+            return key;
         }
         return -1;
     }
