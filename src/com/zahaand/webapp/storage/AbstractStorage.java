@@ -49,7 +49,7 @@ public abstract class AbstractStorage implements Storage {
     private Object getKey(String uuid) {
         int key = (int) searchKey(uuid);
         if (key >= 0) {
-            return true;
+            return key;
         }
         throw new NotExistStorageException(uuid);
     }
