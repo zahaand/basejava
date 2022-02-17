@@ -1,7 +1,5 @@
 package com.zahaand.webapp.storage;
 
-import com.zahaand.webapp.exception.ExistStorageException;
-import com.zahaand.webapp.exception.NotExistStorageException;
 import com.zahaand.webapp.model.Resume;
 
 import java.util.HashMap;
@@ -9,46 +7,6 @@ import java.util.Map;
 
 public class MapStorage extends AbstractStorage {
     private final Map<String, Resume> storage = new HashMap<>();
-
-    @Override
-    public void update(Resume r) {
-        String key = r.getUuid();
-        if (storage.containsKey(key)) {
-            updateResume(r.getUuid(), r);
-            System.out.println(key + " SUCCESSFULLY UPDATED");
-        } else {
-            throw new NotExistStorageException(key);
-        }
-    }
-
-    @Override
-    public void save(Resume r) {
-        String key = r.getUuid();
-        if (storage.containsKey(key)) {
-            throw new ExistStorageException(key);
-        }
-        saveResume(r);
-        System.out.println(key + " SUCCESSFULLY SAVED");
-    }
-
-    @Override
-    public Resume get(String uuid) {
-        if (storage.containsKey(uuid)) {
-            return getResume(uuid);
-        } else {
-            throw new NotExistStorageException(uuid);
-        }
-    }
-
-    @Override
-    public void delete(String uuid) {
-        if (storage.containsKey(uuid)) {
-            deleteResume(uuid);
-            System.out.println(uuid + " SUCCESSFULLY DELETED");
-        } else {
-            throw new NotExistStorageException(uuid);
-        }
-    }
 
     @Override
     protected void updateResume(Object searchKey, Resume resume) {
@@ -93,5 +51,10 @@ public class MapStorage extends AbstractStorage {
     @Override
     public int size() {
         return storage.size();
+    }
+
+    @Override
+    protected boolean checkResume(Resume resume) {
+        return storage.containsValue(resume);
     }
 }

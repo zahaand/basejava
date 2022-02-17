@@ -50,4 +50,14 @@ public class ListStorage extends AbstractStorage {
     protected Object searchKey(Object uuid) {
         return storage.indexOf(new Resume((String) uuid));
     }
+
+    @Override
+    protected boolean checkResume(Resume resume) {
+        for (Resume r: storage) {
+            if (r.equals(resume)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

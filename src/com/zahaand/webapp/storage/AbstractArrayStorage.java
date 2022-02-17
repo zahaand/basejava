@@ -61,4 +61,14 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     protected abstract void insertElement(Resume resume);
+
+    @Override
+    protected boolean checkResume(Resume resume) {
+        for (int i = 0; i < size; i++) {
+            if (storage[i].equals(resume)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

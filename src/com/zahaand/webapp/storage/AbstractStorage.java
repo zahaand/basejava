@@ -8,9 +8,8 @@ public abstract class AbstractStorage implements Storage {
 
     @Override
     public void save(Resume r) {
-        String uuid = r.getUuid();
-        int key = (int) searchKey(uuid);
-        if (key < 0) {
+            String uuid = r.getUuid();
+        if (!checkResume(r)) {
             saveResume(r);
             System.out.println(uuid + " SUCCESSFULLY SAVED");
         } else {
@@ -20,9 +19,9 @@ public abstract class AbstractStorage implements Storage {
 
     @Override
     public void update(Resume r) {
-        String uuid = r.getUuid();
-        int key = (int) getKey(uuid);
-        if (key >= 0) {
+            String uuid = r.getUuid();
+            Object key = getKey(uuid);
+        if (checkResume(r)) {
             updateResume(key, r);
             System.out.println(uuid + " SUCCESSFULLY UPDATED");
         }
@@ -30,8 +29,8 @@ public abstract class AbstractStorage implements Storage {
 
     @Override
     public Resume get(String uuid) {
-        int key = (int) getKey(uuid);
-        if (key >= 0) {
+            Object key = getKey(uuid);
+        if (checkResume(new Resume(uuid))) {
             return getResume(key);
         }
         return null;
@@ -39,16 +38,16 @@ public abstract class AbstractStorage implements Storage {
 
     @Override
     public void delete(String uuid) {
-        int key = (int) getKey(uuid);
-        if (key >= 0) {
+        Object key = getKey(uuid);
+        if (checkResume(new Resume(uuid))) {
             deleteResume(key);
             System.out.println(uuid + " SUCCESSFULLY DELETED");
         }
     }
 
     private Object getKey(String uuid) {
-        int key = (int) searchKey(uuid);
-        if (key >= 0) {
+        Object key = searchKey(uuid);
+        if (checkResume(new Resume(uuid))) {
             return key;
         }
         throw new NotExistStorageException(uuid);
@@ -63,4 +62,6 @@ public abstract class AbstractStorage implements Storage {
     protected abstract void deleteResume(Object searchKey);
 
     protected abstract Object searchKey(Object uuid);
+
+    protected abstract boolean checkResume(Resume resume);
 }
