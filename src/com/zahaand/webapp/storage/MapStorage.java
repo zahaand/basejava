@@ -14,8 +14,7 @@ public class MapStorage extends AbstractStorage {
     public void update(Resume r) {
         String key = r.getUuid();
         if (storage.containsKey(key)) {
-            storage.remove(key);
-            storage.put(key, r);
+            updateResume(r.getUuid(), r);
             System.out.println(key + " SUCCESSFULLY UPDATED");
         } else {
             throw new NotExistStorageException(key);
@@ -28,14 +27,14 @@ public class MapStorage extends AbstractStorage {
         if (storage.containsKey(key)) {
             throw new ExistStorageException(key);
         }
-        storage.put(r.getUuid(), r);
+        saveResume(r);
         System.out.println(key + " SUCCESSFULLY SAVED");
     }
 
     @Override
     public Resume get(String uuid) {
         if (storage.containsKey(uuid)) {
-            return storage.get(uuid);
+            return getResume(uuid);
         } else {
             throw new NotExistStorageException(uuid);
         }
@@ -44,7 +43,7 @@ public class MapStorage extends AbstractStorage {
     @Override
     public void delete(String uuid) {
         if (storage.containsKey(uuid)) {
-            storage.remove(uuid);
+            deleteResume(uuid);
             System.out.println(uuid + " SUCCESSFULLY DELETED");
         } else {
             throw new NotExistStorageException(uuid);
@@ -53,58 +52,33 @@ public class MapStorage extends AbstractStorage {
 
     @Override
     protected void updateResume(Object searchKey, Resume resume) {
-
+        storage.replace((String) searchKey, resume);
     }
 
     @Override
     protected void saveResume(Resume resume) {
-
+        storage.put(resume.getUuid(), resume);
     }
 
     @Override
     protected Resume getResume(Object searchKey) {
-        return null;
+        String key = (String) searchKey;
+        return storage.get(key);
     }
 
     @Override
     protected void deleteResume(Object searchKey) {
-
+        storage.remove((String) searchKey);
     }
 
     @Override
     protected Object searchKey(Object uuid) {
-        return null;
+        String key = (String) uuid;
+        if (storage.containsKey(key)) {
+            return key;
+        }
+        return -1;
     }
-
-//    @Override
-//    protected void updateResume(Object searchKey, Resume resume) {
-//        storage.replace((String) searchKey, resume);
-//    }
-//
-//    @Override
-//    protected void saveResume(Resume resume) {
-//        storage.put(resume.getUuid(), resume);
-//    }
-//
-//    @Override
-//    protected Resume getResume(Object searchKey) {
-//        String key = (String) searchKey;
-//        return storage.get(key);
-//    }
-//
-//    @Override
-//    protected void deleteResume(Object searchKey) {
-//        storage.remove((String) searchKey);
-//    }
-//
-//    @Override
-//    protected Object searchKey(Object uuid) {
-//        String key = (String) uuid;
-//        if (storage.containsKey(key)) {
-//            return key;
-//        }
-//        return -1;
-//    }
 
     @Override
     public void clear() {

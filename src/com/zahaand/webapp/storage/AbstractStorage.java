@@ -7,16 +7,6 @@ import com.zahaand.webapp.model.Resume;
 public abstract class AbstractStorage implements Storage {
 
     @Override
-    public void update(Resume r) {
-        String uuid = r.getUuid();
-        int key = (int) getKey(uuid);
-        if (key >= 0) {
-            updateResume(key, r);
-            System.out.println(uuid + " SUCCESSFULLY UPDATED");
-        }
-    }
-
-    @Override
     public void save(Resume r) {
         String uuid = r.getUuid();
         int key = (int) searchKey(uuid);
@@ -25,6 +15,16 @@ public abstract class AbstractStorage implements Storage {
             System.out.println(uuid + " SUCCESSFULLY SAVED");
         } else {
             throw new ExistStorageException(uuid);
+        }
+    }
+
+    @Override
+    public void update(Resume r) {
+        String uuid = r.getUuid();
+        int key = (int) getKey(uuid);
+        if (key >= 0) {
+            updateResume(key, r);
+            System.out.println(uuid + " SUCCESSFULLY UPDATED");
         }
     }
 
@@ -54,9 +54,9 @@ public abstract class AbstractStorage implements Storage {
         throw new NotExistStorageException(uuid);
     }
 
-    protected abstract void updateResume(Object searchKey, Resume resume);
-
     protected abstract void saveResume(Resume resume);
+
+    protected abstract void updateResume(Object searchKey, Resume resume);
 
     protected abstract Resume getResume(Object searchKey);
 
