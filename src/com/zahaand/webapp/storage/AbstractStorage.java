@@ -8,8 +8,9 @@ public abstract class AbstractStorage implements Storage {
 
     @Override
     public void save(Resume r) {
-            String uuid = r.getUuid();
-        if (!checkResume(r)) {
+        String uuid = r.getUuid();
+        Object key = getKey(uuid);
+        if (!checkKey(key)) {
             saveResume(r);
             System.out.println(uuid + " SUCCESSFULLY SAVED");
         } else {
@@ -19,38 +20,35 @@ public abstract class AbstractStorage implements Storage {
 
     @Override
     public void update(Resume r) {
-            String uuid = r.getUuid();
-            Object key = getKey(uuid);
-        if (checkResume(r)) {
+        String uuid = r.getUuid();
+        Object key = getKey(uuid);
+        if (checkKey(key)) {
             updateResume(key, r);
             System.out.println(uuid + " SUCCESSFULLY UPDATED");
+        } else {
+            throw new NotExistStorageException(uuid);
         }
     }
 
     @Override
     public Resume get(String uuid) {
-            Object key = getKey(uuid);
-        if (checkResume(new Resume(uuid))) {
+        Object key = getKey(uuid);
+        if (checkKey(key)) {
             return getResume(key);
+        } else {
+            throw new NotExistStorageException(uuid);
         }
-        return null;
     }
 
     @Override
     public void delete(String uuid) {
         Object key = getKey(uuid);
-        if (checkResume(new Resume(uuid))) {
+        if (checkKey(key)) {
             deleteResume(key);
             System.out.println(uuid + " SUCCESSFULLY DELETED");
+        } else {
+            throw new NotExistStorageException(uuid);
         }
-    }
-
-    private Object getKey(String uuid) {
-        Object key = searchKey(uuid);
-        if (checkResume(new Resume(uuid))) {
-            return key;
-        }
-        throw new NotExistStorageException(uuid);
     }
 
     protected abstract void saveResume(Resume resume);
@@ -61,7 +59,7 @@ public abstract class AbstractStorage implements Storage {
 
     protected abstract void deleteResume(Object searchKey);
 
-    protected abstract Object searchKey(Object uuid);
+    protected abstract Object getKey(String uuid);
 
-    protected abstract boolean checkResume(Resume resume);
+    protected abstract boolean checkKey(Object key);
 }
