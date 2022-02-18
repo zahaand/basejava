@@ -52,7 +52,7 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    protected boolean checkKey(Object key) {
-        return (int) key >= 0;
+    protected boolean checkKey(Object getKey) {
+        return (int) getKey >= 0;
     }
 }

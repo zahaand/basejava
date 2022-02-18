@@ -53,7 +53,7 @@ public class MapStorage extends AbstractStorage {
     }
 
     @Override
-    protected boolean checkKey(Object key) {
-        return storage.containsKey((String) key);
+    protected boolean checkKey(Object getKey) {
+        return storage.containsKey((String) getKey);
     }
 }

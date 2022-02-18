@@ -61,5 +61,5 @@ public abstract class AbstractStorage implements Storage {
 
     protected abstract Object getKey(String uuid);
 
-    protected abstract boolean checkKey(Object key);
+    protected abstract boolean checkKey(Object getKey);
 }
