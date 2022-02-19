@@ -21,9 +21,9 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    protected void updateResume(Object getKey, Resume resume) {
-        int index = (int) getKey;
-        storage[index] = resume;
+    protected void updateResume(Object getSearchKey, Resume resume) {
+//        int index = (int) getKey;
+        storage[(int) getSearchKey] = resume;
     }
 
     @Override
@@ -37,15 +37,14 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    protected Resume getResume(Object getKey) {
-        int index = (int) getKey;
-        return storage[index];
+    protected Resume getResume(Object index) {
+        return storage[(int) index];
     }
 
     @Override
-    protected void deleteResume(Object getKey) {
-        int index = Integer.parseInt(getKey.toString());
-        System.arraycopy(storage, index + 1, storage, index, size - (index + 1));
+    protected void deleteResume(Object index) {
+        int i = (int) index;
+        System.arraycopy(storage, i + 1, storage, i, size - (i + 1));
         storage[size - 1] = null;
         size--;
     }
@@ -63,7 +62,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     protected abstract void insertElement(Resume resume);
 
     @Override
-    protected boolean checkKey(Object getKey) {
-        return (int) getKey >= 0;
+    protected boolean isExist(Object index) {
+        return (int) index >= 0;
     }
 }
