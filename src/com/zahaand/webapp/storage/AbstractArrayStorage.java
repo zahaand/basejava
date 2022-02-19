@@ -21,9 +21,8 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    protected void updateResume(Object getSearchKey, Resume resume) {
-//        int index = (int) getKey;
-        storage[(int) getSearchKey] = resume;
+    protected void updateResume(Object index, Resume resume) {
+        storage[(int) index] = resume;
     }
 
     @Override
