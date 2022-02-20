@@ -5,11 +5,13 @@ import com.zahaand.webapp.exception.NotExistStorageException;
 import com.zahaand.webapp.model.Resume;
 
 public abstract class AbstractStorage implements Storage {
+    private String uuid;
+    private Object key;
 
     @Override
     public void save(Resume r) {
-        String uuid = r.getUuid();
-        Object key = getSearchKey(uuid);
+        uuid = r.getUuid();
+        key = getSearchKey(uuid);
         if (!isExist(key)) {
             saveResume(r);
             System.out.println(uuid + " SUCCESSFULLY SAVED");
@@ -20,8 +22,8 @@ public abstract class AbstractStorage implements Storage {
 
     @Override
     public void update(Resume r) {
-        String uuid = r.getUuid();
-        Object key = getSearchKey(uuid);
+        uuid = r.getUuid();
+        key = getSearchKey(uuid);
         if (isExist(key)) {
             updateResume(key, r);
             System.out.println(uuid + " SUCCESSFULLY UPDATED");
@@ -32,7 +34,7 @@ public abstract class AbstractStorage implements Storage {
 
     @Override
     public Resume get(String uuid) {
-        Object key = getSearchKey(uuid);
+        key = getSearchKey(uuid);
         if (isExist(key)) {
             return getResume(key);
         } else {
@@ -42,7 +44,7 @@ public abstract class AbstractStorage implements Storage {
 
     @Override
     public void delete(String uuid) {
-        Object key = getSearchKey(uuid);
+        key = getSearchKey(uuid);
         if (isExist(key)) {
             deleteResume(key);
             System.out.println(uuid + " SUCCESSFULLY DELETED");
