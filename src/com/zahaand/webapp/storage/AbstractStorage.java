@@ -22,7 +22,7 @@ public abstract class AbstractStorage implements Storage {
     public void update(Resume r) {
         String uuid = r.getUuid();
         Object key = getSearchKey(uuid);
-        if (checkKey(uuid)) {
+        if (isExistKey(uuid)) {
             updateResume(key, r);
             System.out.println(uuid + " SUCCESSFULLY UPDATED");
         }
@@ -31,7 +31,7 @@ public abstract class AbstractStorage implements Storage {
     @Override
     public Resume get(String uuid) {
         Object key = getSearchKey(uuid);
-        if (checkKey(uuid)) {
+        if (isExistKey(uuid)) {
             return getResume(key);
         }
         return null;
@@ -40,13 +40,13 @@ public abstract class AbstractStorage implements Storage {
     @Override
     public void delete(String uuid) {
         Object key = getSearchKey(uuid);
-        if (checkKey(uuid)) {
+        if (isExistKey(uuid)) {
             deleteResume(key);
             System.out.println(uuid + " SUCCESSFULLY DELETED");
         }
     }
 
-    private boolean checkKey(String uuid) {
+    private boolean isExistKey(String uuid) {
         Object key = getSearchKey(uuid);
         if (isExist(key)) {
             return true;
