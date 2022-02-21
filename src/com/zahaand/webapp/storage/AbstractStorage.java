@@ -5,13 +5,11 @@ import com.zahaand.webapp.exception.NotExistStorageException;
 import com.zahaand.webapp.model.Resume;
 
 public abstract class AbstractStorage implements Storage {
-    private String uuid;
-    private Object key;
 
     @Override
     public void save(Resume r) {
-        uuid = r.getUuid();
-        key = getSearchKey(uuid);
+        String uuid = r.getUuid();
+        Object key = getSearchKey(uuid);
         if (!isExist(key)) {
             saveResume(r);
             System.out.println(uuid + " SUCCESSFULLY SAVED");
@@ -22,32 +20,36 @@ public abstract class AbstractStorage implements Storage {
 
     @Override
     public void update(Resume r) {
-        uuid = r.getUuid();
-        key = getSearchKey(uuid);
-        if (isExist(key)) {
+        String uuid = r.getUuid();
+        Object key = getSearchKey(uuid);
+        if (checkKey(uuid)) {
             updateResume(key, r);
             System.out.println(uuid + " SUCCESSFULLY UPDATED");
-        } else {
-            throw new NotExistStorageException(uuid);
         }
     }
 
     @Override
     public Resume get(String uuid) {
-        key = getSearchKey(uuid);
-        if (isExist(key)) {
+        Object key = getSearchKey(uuid);
+        if (checkKey(uuid)) {
             return getResume(key);
-        } else {
-            throw new NotExistStorageException(uuid);
         }
+        return null;
     }
 
     @Override
     public void delete(String uuid) {
-        key = getSearchKey(uuid);
-        if (isExist(key)) {
+        Object key = getSearchKey(uuid);
+        if (checkKey(uuid)) {
             deleteResume(key);
             System.out.println(uuid + " SUCCESSFULLY DELETED");
+        }
+    }
+
+    private boolean checkKey(String uuid) {
+        Object key = getSearchKey(uuid);
+        if (isExist(key)) {
+            return true;
         } else {
             throw new NotExistStorageException(uuid);
         }
