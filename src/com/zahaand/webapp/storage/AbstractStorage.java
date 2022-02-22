@@ -21,32 +21,30 @@ public abstract class AbstractStorage implements Storage {
     @Override
     public void update(Resume r) {
         String uuid = r.getUuid();
-        Object key = getSearchKey(uuid);
-        if (isExistKey(key, uuid)) {
-            updateResume(key, r);
+        if (getSearchKeyIfExist(uuid)) {
+            updateResume(getSearchKey(uuid), r);
             System.out.println(uuid + " SUCCESSFULLY UPDATED");
         }
     }
 
     @Override
     public Resume get(String uuid) {
-        Object key = getSearchKey(uuid);
-        if (isExistKey(key, uuid)) {
-            return getResume(key);
+        if (getSearchKeyIfExist(uuid)) {
+            return getResume(getSearchKey(uuid));
         }
         return null;
     }
 
     @Override
     public void delete(String uuid) {
-        Object key = getSearchKey(uuid);
-        if (isExistKey(key, uuid)) {
-            deleteResume(key);
+        if (getSearchKeyIfExist(uuid)) {
+            deleteResume(getSearchKey(uuid));
             System.out.println(uuid + " SUCCESSFULLY DELETED");
         }
     }
 
-    private boolean isExistKey(Object key, String uuid) {
+    private boolean getSearchKeyIfExist(String uuid) {
+        Object key = getSearchKey(uuid);
         if (isExist(key)) {
             return true;
         } else {
