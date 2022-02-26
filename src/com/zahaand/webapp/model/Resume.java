@@ -13,7 +13,6 @@ public class Resume implements Comparator<Resume> {
     private final String uuid;
     private String fullName;
 
-
     // random UUID generation
     public Resume() {
        this (UUID.randomUUID().toString(), null);
