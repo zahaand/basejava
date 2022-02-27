@@ -4,6 +4,8 @@ import com.zahaand.webapp.exception.StorageException;
 import com.zahaand.webapp.model.Resume;
 
 import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
 
 /**
  * Array based storage for Resumes
@@ -48,9 +50,17 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         size--;
     }
 
+//    @Override
+//    public Resume[] getAll() {
+//        return Arrays.copyOf(storage, size);
+//    }
+
+
     @Override
-    public Resume[] getAll() {
-        return Arrays.copyOf(storage, size);
+    public List<Resume> getAllSorted() {
+        Arrays.sort(storage, Comparator.comparing(Resume::getFullName));
+        Arrays.sort(storage, Comparator.comparing(Resume::getUuid));
+        return Arrays.asList(storage);
     }
 
     @Override

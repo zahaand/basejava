@@ -3,6 +3,7 @@ package com.zahaand.webapp.storage;
 import com.zahaand.webapp.model.Resume;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class ListStorage extends AbstractStorage {
@@ -33,9 +34,17 @@ public class ListStorage extends AbstractStorage {
         storage.remove((int) index);
     }
 
+//    @Override
+//    public Resume[] getAll() {
+//        return storage.toArray(new Resume[0]);
+//    }
+
+
     @Override
-    public Resume[] getAll() {
-        return storage.toArray(new Resume[0]);
+    public List<Resume> getAllSorted() {
+        storage.sort(Comparator.comparing(Resume::getFullName));
+        storage.sort(Comparator.comparing(Resume::getUuid));
+        return storage;
     }
 
     @Override
