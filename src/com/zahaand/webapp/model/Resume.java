@@ -12,7 +12,6 @@ public class Resume implements Comparable<Resume> {
     private final String uuid;
     private final String fullName;
 
-
     // random UUID generation
     public Resume(String fullName) {
         this(UUID.randomUUID().toString(), fullName);
@@ -27,7 +26,7 @@ public class Resume implements Comparable<Resume> {
         return uuid;
     }
 
-    public String getFullName() {
+    public String getFullName(String uuid) {
         return fullName;
     }
 
@@ -51,10 +50,11 @@ public class Resume implements Comparable<Resume> {
 
     @Override
     public int compareTo(Resume o) {
-        int result = fullName.compareTo(o.fullName);
-        if (result == 0) {
-            return uuid.compareTo(o.uuid);
+        int uuidComparator = uuid.compareTo(o.uuid);
+        if (o.fullName == null) {
+            return uuidComparator;
         }
-        return result;
+        int result = fullName.compareTo(o.fullName);
+        return (result != 0 ? result : uuidComparator);
     }
 }

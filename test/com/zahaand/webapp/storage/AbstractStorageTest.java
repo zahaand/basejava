@@ -6,6 +6,9 @@ import com.zahaand.webapp.model.Resume;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.Assert.*;
 
 public abstract class AbstractStorageTest {
@@ -17,9 +20,9 @@ public abstract class AbstractStorageTest {
     private static final String UUID_4 = "uuid4";
 
     private static final String FULL_NAME_1 = "fullName1";
-    private static final String FULL_NAME_2 = "fullName1";
-    private static final String FULL_NAME_3 = "fullName1";
-    private static final String FULL_NAME_4 = "fullName1";
+    private static final String FULL_NAME_2 = "fullName2";
+    private static final String FULL_NAME_3 = "fullName3";
+    private static final String FULL_NAME_4 = "fullName4";
 
     public AbstractStorageTest(Storage storage) {
         this.storage = storage;
@@ -77,8 +80,10 @@ public abstract class AbstractStorageTest {
     @Test
     public void delete() {
         storage.delete(UUID_1);
-        Resume[] storageTest = {new Resume(UUID_2, FULL_NAME_2), new Resume(UUID_3, FULL_NAME_3)};
-        assertArrayEquals(storageTest, storage.getAll());
+        List<Resume> storageTest = new ArrayList<>();
+        storageTest.add(new Resume(UUID_2, FULL_NAME_2));
+        storageTest.add(new Resume(UUID_3, FULL_NAME_3));
+        assertEquals(storageTest, storage.getAllSorted());
         assertEquals(2, storage.size());
     }
 
@@ -88,10 +93,13 @@ public abstract class AbstractStorageTest {
     }
 
     @Test
-    public void getAll() {
-        Resume[] storageTest = {new Resume(UUID_1, FULL_NAME_1), new Resume(UUID_2, FULL_NAME_2), new Resume(UUID_3, FULL_NAME_3)};
-        assertArrayEquals(storageTest, storage.getAll());
-        assertEquals(3, storage.getAll().length);
+    public void getAllSorted() {
+        List<Resume> storageTest = new ArrayList<>();
+        storageTest.add(new Resume(UUID_1, FULL_NAME_1));
+        storageTest.add(new Resume(UUID_2, FULL_NAME_2));
+        storageTest.add(new Resume(UUID_3, FULL_NAME_3));
+        assertEquals(storageTest, storage.getAllSorted());
+        assertEquals(3, storage.getAllSorted().size());
     }
 
     @Test
