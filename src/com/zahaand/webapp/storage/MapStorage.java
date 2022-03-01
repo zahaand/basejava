@@ -38,13 +38,6 @@ public class MapStorage extends AbstractStorage {
     }
 
     @Override
-    public List<Resume> sortStorage() {
-        List<Resume> resumes = (List<Resume>) storage.values();
-        resumes.sort(Resume::compareTo);
-        return resumes;
-    }
-
-    @Override
     public int size() {
         return storage.size();
     }
@@ -52,5 +45,10 @@ public class MapStorage extends AbstractStorage {
     @Override
     protected boolean isExist(Object uuid) {
         return uuid != null;
+    }
+
+    @Override
+    public Resume[] getAllResumesAsArray() {
+        return storage.values().toArray((new Resume[0]));
     }
 }

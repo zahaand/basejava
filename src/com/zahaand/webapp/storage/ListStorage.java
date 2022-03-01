@@ -34,9 +34,8 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    public List<Resume> sortStorage() {
-        storage.sort(Resume::compareTo);
-        return storage;
+    public Resume[] getAllResumesAsArray() {
+        return storage.toArray(new Resume[0]);
     }
 
     @Override
@@ -46,7 +45,19 @@ public class ListStorage extends AbstractStorage {
 
     @Override
     protected Object getSearchKey(String uuid) {
-        return storage.indexOf(new Resume(uuid, null));
+        for (int i = 0; i < storage.size(); i++) {
+            if (storage.get(i).getUuid().equals(uuid)) {
+                return i;
+            }
+        }
+        return -1;
+
+//        for (Resume resume: storage) {
+//            if (resume.getUuid().equals(uuid)) {
+//                return storage.indexOf(resume);
+//            }
+//        }
+//        return -1;
     }
 
     @Override

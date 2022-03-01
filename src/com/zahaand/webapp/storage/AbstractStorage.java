@@ -4,6 +4,7 @@ import com.zahaand.webapp.exception.ExistStorageException;
 import com.zahaand.webapp.exception.NotExistStorageException;
 import com.zahaand.webapp.model.Resume;
 
+import java.util.Arrays;
 import java.util.List;
 
 public abstract class AbstractStorage implements Storage {
@@ -47,7 +48,9 @@ public abstract class AbstractStorage implements Storage {
 
     @Override
     public List<Resume> getAllSorted() {
-        return sortStorage();
+        Resume[] sortedResumes = getAllResumesAsArray();
+        Arrays.sort(sortedResumes, Resume::compareTo);
+        return Arrays.asList(sortedResumes);
     }
 
     private boolean getSearchKeyIfExist(String uuid) {
@@ -71,5 +74,5 @@ public abstract class AbstractStorage implements Storage {
 
     protected abstract boolean isExist(Object searchKey);
 
-    protected abstract List<Resume> sortStorage();
+    protected abstract Resume[] getAllResumesAsArray();
 }
