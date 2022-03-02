@@ -7,7 +7,8 @@ import java.util.Arrays;
 public class SortedArrayStorage extends AbstractArrayStorage {
     @Override
     protected void insertElement(Resume resume) {
-        int index = -(int) getSearchKey(resume.getUuid()) - 1;
+        String uuid = resume.getUuid();
+        int index = -(int) getSearchKey(uuid) - 1;
         System.arraycopy(storage, index, storage, index + 1, size - index);
         storage[index] = resume;
     }

@@ -24,15 +24,15 @@ public abstract class AbstractStorage implements Storage {
     @Override
     public void update(Resume r) {
         String uuid = r.getUuid();
-        if (getSearchKeyIfExist(uuid)) {
-            updateResume(getSearchKey(uuid), r);
-            System.out.println(uuid + " SUCCESSFULLY UPDATED");
-        }
+        Object key = getSearchKeyIfExist(uuid);
+        updateResume(key, r);
+        System.out.println(uuid + " SUCCESSFULLY UPDATED");
     }
+
 
     @Override
     public Resume get(String uuid) {
-        if (getSearchKeyIfExist(uuid)) {
+        if (getSearchKeyIfExist(uuid) != null) {
             return getResume(getSearchKey(uuid));
         }
         return null;
@@ -40,23 +40,22 @@ public abstract class AbstractStorage implements Storage {
 
     @Override
     public void delete(String uuid) {
-        if (getSearchKeyIfExist(uuid)) {
-            deleteResume(getSearchKey(uuid));
-            System.out.println(uuid + " SUCCESSFULLY DELETED");
-        }
+        Object key = getSearchKeyIfExist(uuid);
+        deleteResume(key);
+        System.out.println(uuid + " SUCCESSFULLY DELETED");
     }
 
     @Override
     public List<Resume> getAllSorted() {
-        Resume[] sortedResumes = getAllResumesAsArray();
-        Arrays.sort(sortedResumes, Resume::compareTo);
-        return Arrays.asList(sortedResumes);
+        Resume[] resumes = getAllResumesAsArray();
+        Arrays.sort(resumes, Resume::compareTo);
+        return Arrays.asList(resumes);
     }
 
-    private boolean getSearchKeyIfExist(String uuid) {
+    private Object getSearchKeyIfExist(String uuid) {
         Object key = getSearchKey(uuid);
         if (isExist(key)) {
-            return true;
+            return key;
         } else {
             throw new NotExistStorageException(uuid);
         }

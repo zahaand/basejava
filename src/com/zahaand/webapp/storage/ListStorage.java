@@ -51,13 +51,6 @@ public class ListStorage extends AbstractStorage {
             }
         }
         return -1;
-
-//        for (Resume resume: storage) {
-//            if (resume.getUuid().equals(uuid)) {
-//                return storage.indexOf(resume);
-//            }
-//        }
-//        return -1;
     }
 
     @Override

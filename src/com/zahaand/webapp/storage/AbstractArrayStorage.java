@@ -51,7 +51,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     @Override
     public Resume[] getAllResumesAsArray() {
         Resume[] resumes = new Resume[size];
-        System.arraycopy(storage,0, resumes, 0, size);
+        System.arraycopy(storage, 0, resumes, 0, size);
         return resumes;
     }
 
@@ -60,10 +60,10 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         return size;
     }
 
-    protected abstract void insertElement(Resume resume);
-
     @Override
     protected boolean isExist(Object index) {
         return (int) index >= 0;
     }
+
+    protected abstract void insertElement(Resume resume);
 }
