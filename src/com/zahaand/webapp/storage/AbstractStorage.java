@@ -61,15 +61,15 @@ public abstract class AbstractStorage<KeyType> implements Storage {
 
     protected abstract void saveResume(Resume resume);
 
-    protected abstract void updateResume(KeyType keyType, Resume resume);
+    protected abstract void updateResume(KeyType key, Resume resume);
 
-    protected abstract Resume getResume(KeyType keyType);
+    protected abstract Resume getResume(KeyType key);
 
-    protected abstract void deleteResume(KeyType keyType);
+    protected abstract void deleteResume(KeyType key);
 
     protected abstract KeyType getSearchKey(String uuid);
 
-    protected abstract boolean isExist(KeyType keyType);
+    protected abstract boolean isExist(KeyType key);
 
     protected abstract List<Resume> getAllResumesAsList();
 }
