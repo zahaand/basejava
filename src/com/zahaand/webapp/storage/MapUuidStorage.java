@@ -4,17 +4,17 @@ import com.zahaand.webapp.model.Resume;
 
 import java.util.*;
 
-public class MapUuidStorage extends AbstractStorage {
+public class MapUuidStorage extends AbstractStorage<String> {
     private final Map<String, Resume> storage = new HashMap<>();
 
     @Override
-    protected Object getSearchKey(String uuid) {
+    protected String getSearchKey(String uuid) {
         return storage.containsKey(uuid) ? uuid : null;
     }
 
     @Override
-    protected void updateResume(Object uuid, Resume resume) {
-        storage.replace((String) uuid, resume);
+    protected void updateResume(String uuid, Resume resume) {
+        storage.replace(uuid, resume);
     }
 
     @Override
@@ -23,13 +23,13 @@ public class MapUuidStorage extends AbstractStorage {
     }
 
     @Override
-    protected Resume getResume(Object uuid) {
-        return storage.get((String) uuid);
+    protected Resume getResume(String uuid) {
+        return storage.get(uuid);
     }
 
     @Override
-    protected void deleteResume(Object uuid) {
-        storage.remove((String) uuid);
+    protected void deleteResume(String uuid) {
+        storage.remove(uuid);
     }
 
     @Override
@@ -43,7 +43,7 @@ public class MapUuidStorage extends AbstractStorage {
     }
 
     @Override
-    protected boolean isExist(Object uuid) {
+    protected boolean isExist(String uuid) {
         return uuid != null;
     }
 

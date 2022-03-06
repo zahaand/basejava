@@ -6,12 +6,12 @@ import com.zahaand.webapp.model.Resume;
 
 import java.util.List;
 
-public abstract class AbstractStorage implements Storage {
+public abstract class AbstractStorage<KeyType> implements Storage {
 
     @Override
     public void save(Resume r) {
         String uuid = r.getUuid();
-        Object key = getSearchKey(uuid);
+        KeyType key = getSearchKey(uuid);
         if (!isExist(key)) {
             saveResume(r);
             System.out.println(uuid + " SUCCESSFULLY SAVED");
@@ -23,7 +23,7 @@ public abstract class AbstractStorage implements Storage {
     @Override
     public void update(Resume r) {
         String uuid = r.getUuid();
-        Object key = getSearchKeyIfExist(uuid);
+        KeyType key = getSearchKeyIfExist(uuid);
         updateResume(key, r);
         System.out.println(uuid + " SUCCESSFULLY UPDATED");
     }
@@ -38,7 +38,7 @@ public abstract class AbstractStorage implements Storage {
 
     @Override
     public void delete(String uuid) {
-        Object key = getSearchKeyIfExist(uuid);
+        KeyType key = getSearchKeyIfExist(uuid);
         deleteResume(key);
         System.out.println(uuid + " SUCCESSFULLY DELETED");
     }
@@ -50,8 +50,8 @@ public abstract class AbstractStorage implements Storage {
         return resumesList;
     }
 
-    private Object getSearchKeyIfExist(String uuid) {
-        Object key = getSearchKey(uuid);
+    private KeyType getSearchKeyIfExist(String uuid) {
+        KeyType key = getSearchKey(uuid);
         if (isExist(key)) {
             return key;
         } else {
@@ -61,15 +61,15 @@ public abstract class AbstractStorage implements Storage {
 
     protected abstract void saveResume(Resume resume);
 
-    protected abstract void updateResume(Object searchKey, Resume resume);
+    protected abstract void updateResume(KeyType keyType, Resume resume);
 
-    protected abstract Resume getResume(Object searchKey);
+    protected abstract Resume getResume(KeyType keyType);
 
-    protected abstract void deleteResume(Object searchKey);
+    protected abstract void deleteResume(KeyType keyType);
 
-    protected abstract Object getSearchKey(String uuid);
+    protected abstract KeyType getSearchKey(String uuid);
 
-    protected abstract boolean isExist(Object searchKey);
+    protected abstract boolean isExist(KeyType keyType);
 
     protected abstract List<Resume> getAllResumesAsList();
 }

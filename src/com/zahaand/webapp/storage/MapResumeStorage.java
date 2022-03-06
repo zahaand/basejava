@@ -4,7 +4,7 @@ import com.zahaand.webapp.model.Resume;
 
 import java.util.*;
 
-public class MapResumeStorage extends AbstractStorage {
+public class MapResumeStorage extends AbstractStorage<Resume> {
     private final Map<String, Resume> storage = new HashMap<>();
 
     @Override
@@ -13,8 +13,8 @@ public class MapResumeStorage extends AbstractStorage {
     }
 
     @Override
-    protected void updateResume(Object resume, Resume r) {
-        storage.replace(((Resume) resume).getUuid(), r);
+    protected void updateResume(Resume resume, Resume r) {
+        storage.replace((resume).getUuid(), r);
     }
 
     @Override
@@ -23,13 +23,13 @@ public class MapResumeStorage extends AbstractStorage {
     }
 
     @Override
-    protected Resume getResume(Object resume) {
-        return (Resume) resume;
+    protected Resume getResume(Resume resume) {
+        return resume;
     }
 
     @Override
-    protected void deleteResume(Object resume) {
-        storage.remove(((Resume) resume).getUuid());
+    protected void deleteResume(Resume resume) {
+        storage.remove(resume.getUuid());
     }
 
     @Override
@@ -43,7 +43,7 @@ public class MapResumeStorage extends AbstractStorage {
     }
 
     @Override
-    protected boolean isExist(Object uuid) {
+    protected boolean isExist(Resume uuid) {
         return uuid != null;
     }
 
