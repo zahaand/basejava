@@ -28,7 +28,6 @@ public abstract class AbstractStorage implements Storage {
         System.out.println(uuid + " SUCCESSFULLY UPDATED");
     }
 
-
     @Override
     public Resume get(String uuid) {
         if (getSearchKeyIfExist(uuid) != null) {

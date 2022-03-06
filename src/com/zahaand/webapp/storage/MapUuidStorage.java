@@ -8,6 +8,11 @@ public class MapUuidStorage extends AbstractStorage {
     private final Map<String, Resume> storage = new HashMap<>();
 
     @Override
+    protected Object getSearchKey(String uuid) {
+        return storage.containsKey(uuid) ? uuid : null;
+    }
+
+    @Override
     protected void updateResume(Object uuid, Resume resume) {
         storage.replace((String) uuid, resume);
     }
@@ -25,11 +30,6 @@ public class MapUuidStorage extends AbstractStorage {
     @Override
     protected void deleteResume(Object uuid) {
         storage.remove((String) uuid);
-    }
-
-    @Override
-    protected Object getSearchKey(String uuid) {
-        return storage.containsKey(uuid) ? uuid : null;
     }
 
     @Override

@@ -5,16 +5,21 @@ import com.zahaand.webapp.model.Resume;
 import java.util.*;
 
 public class MapResumeStorage extends AbstractStorage {
-    private final Map<Resume, Resume> storage = new HashMap<>();
+    private final Map<String, Resume> storage = new HashMap<>();
 
     @Override
-    protected void updateResume(Object uuid, Resume resume) {
-        storage.replace(resume, resume);
+    protected Resume getSearchKey(String uuid) {
+        return storage.get(uuid);
     }
 
     @Override
-    protected void saveResume(Resume resume) {
-        storage.put(resume, resume);
+    protected void updateResume(Object resume, Resume r) {
+        storage.replace(((Resume) resume).getUuid(), r);
+    }
+
+    @Override
+    protected void saveResume(Resume r) {
+        storage.put(r.getUuid(), r);
     }
 
     @Override
@@ -24,17 +29,7 @@ public class MapResumeStorage extends AbstractStorage {
 
     @Override
     protected void deleteResume(Object resume) {
-        storage.remove((Resume) resume);
-    }
-
-    @Override
-    protected Object getSearchKey(String uuid) {
-        for (Resume resume : storage.values()) {
-            if (resume.getUuid().equals(uuid)) {
-                return resume;
-            }
-        }
-        return null;
+        storage.remove(((Resume) resume).getUuid());
     }
 
     @Override
