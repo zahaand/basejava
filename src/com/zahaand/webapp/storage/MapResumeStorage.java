@@ -2,7 +2,10 @@ package com.zahaand.webapp.storage;
 
 import com.zahaand.webapp.model.Resume;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class MapResumeStorage extends AbstractStorage<Resume> {
     private final Map<String, Resume> storage = new HashMap<>();
@@ -49,9 +52,6 @@ public class MapResumeStorage extends AbstractStorage<Resume> {
 
     @Override
     public List<Resume> getAllResumesAsList() {
-        Resume[] resumesArray = storage.values().toArray((new Resume[0]));
-        List<Resume> resumesList = new ArrayList<>();
-        Collections.addAll(resumesList, resumesArray);
-        return resumesList;
+        return new ArrayList<>(storage.values());
     }
 }
