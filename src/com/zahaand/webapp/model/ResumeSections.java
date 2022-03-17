@@ -1,6 +1,6 @@
 package com.zahaand.webapp.model;
 
-public enum ResumeSectionType {
+public enum ResumeSections {
     PERSONAL("Личные качества"),
     OBJECTIVE("Позиция"),
     ACHIEVEMENT("Достижения"),
@@ -10,7 +10,7 @@ public enum ResumeSectionType {
 
     private final String title;
 
-    ResumeSectionType(String title) {
+    ResumeSections(String title) {
         this.title = title;
     }
 

@@ -1,5 +1,7 @@
 package com.zahaand.webapp.model;
 
+import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -11,6 +13,10 @@ public class Resume implements Comparable<Resume> {
     // unique identifier
     private final String uuid;
     private final String fullName;
+    private Map<ResumeContacts, String> contacts;
+    private Map<ResumeSections, AbstractSection> sectionsData;
+    private List<TimeIntervalSection> experience;
+    private List<TimeIntervalSection> education;
 
     // random UUID generation
     public Resume(String fullName) {
@@ -30,6 +36,22 @@ public class Resume implements Comparable<Resume> {
 
     public String getFullName(String uuid) {
         return fullName;
+    }
+
+    public void setContact(ResumeContacts contact, String data) {
+        contacts.put(contact, data);
+    }
+
+    public void setSectionData(ResumeSections section, AbstractSection data) {
+        sectionsData.put(section, data);
+    }
+
+    public void setExperience(List<TimeIntervalSection> experience) {
+        this.experience = experience;
+    }
+
+    public void setEducation(List<TimeIntervalSection> education) {
+        this.education = education;
     }
 
     @Override

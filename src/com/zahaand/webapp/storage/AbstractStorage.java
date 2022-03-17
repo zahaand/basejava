@@ -9,7 +9,7 @@ import java.util.logging.Logger;
 
 public abstract class AbstractStorage<T> implements Storage {
 
-    private static final Logger LOGGER = Logger.getLogger(AbstractStorage.class.getName());
+    protected static final Logger LOGGER = Logger.getLogger(AbstractStorage.class.getName());
 
     @Override
     public void save(Resume r) {
