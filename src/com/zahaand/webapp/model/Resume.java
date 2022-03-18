@@ -45,7 +45,15 @@ public class Resume implements Comparable<Resume> {
 
     @Override
     public String toString() {
-        return uuid + '(' + fullName + ')';
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(uuid).append(" (").append(fullName).append(")").append("\n");
+        for (String contact : contacts.values()) {
+            stringBuilder.append(contact).append("\n");
+        }
+        for (AbstractSection section : sectionsData.values()) {
+            stringBuilder.append(section);
+        }
+        return stringBuilder.toString();
     }
 
     @Override

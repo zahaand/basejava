@@ -105,7 +105,7 @@ public class MainResumeTestData {
             add(experienceInterval7);
             add(experienceInterval8);
         }};
-        TimeIntervalListSection experienceList = new TimeIntervalListSection(experienceSections);
+        TimeIntervalsListSection experienceList = new TimeIntervalsListSection(experienceSections);
         resume.setSectionData(ResumeSections.EXPERIENCE, experienceList);
 
         String schoolName1 = "Coursera";
@@ -141,7 +141,7 @@ public class MainResumeTestData {
             add(experienceInterval5);
             add(experienceInterval6);
         }};
-        TimeIntervalListSection educationList = new TimeIntervalListSection(educationSections);
+        TimeIntervalsListSection educationList = new TimeIntervalsListSection(educationSections);
         resume.setSectionData(ResumeSections.EDUCATION, educationList);
 
         System.out.println(resume);

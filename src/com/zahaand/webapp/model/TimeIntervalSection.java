@@ -27,4 +27,18 @@ public class TimeIntervalSection {
         this.startDate2 = startDate2;
         this.endDate2 = endDate2;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder();
+        if (text2 != null) {
+            stringBuilder.append(header).append("\n")
+                    .append(startDate).append(" - ").append(endDate).append("\n").append(text).append("\n")
+                    .append(startDate2).append(" - ").append(endDate2).append("\n").append(text2).append("\n");
+        } else {
+            stringBuilder.append(header).append("\n")
+                    .append(startDate).append(" - ").append(endDate).append("\n").append(text).append("\n");
+        }
+        return stringBuilder.toString();
+    }
 }

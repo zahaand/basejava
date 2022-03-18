@@ -6,4 +6,9 @@ public class SimpleLineSection extends AbstractSection {
     public SimpleLineSection(String text) {
         this.text = text;
     }
+
+    @Override
+    public String toString() {
+        return text;
+    }
 }
