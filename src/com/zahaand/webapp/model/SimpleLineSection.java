@@ -1,7 +1,7 @@
 package com.zahaand.webapp.model;
 
 public class SimpleLineSection extends AbstractSection {
-    String text;
+    private String text;
 
     public SimpleLineSection(String text) {
         this.text = text;

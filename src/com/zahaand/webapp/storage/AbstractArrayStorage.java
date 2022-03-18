@@ -3,9 +3,7 @@ package com.zahaand.webapp.storage;
 import com.zahaand.webapp.exception.StorageException;
 import com.zahaand.webapp.model.Resume;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -55,11 +53,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage<Integer> {
 
     @Override
     public List<Resume> getAllResumesAsList() {
-        Resume[] resumesArray = new Resume[size];
-        List<Resume> resumesList = new ArrayList<>();
-        System.arraycopy(storage, 0, resumesArray, 0, size);
-        Collections.addAll(resumesList, resumesArray);
-        return resumesList;
+        return Arrays.asList(Arrays.copyOf(storage, size));
     }
 
     @Override
