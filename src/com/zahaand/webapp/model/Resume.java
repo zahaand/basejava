@@ -1,5 +1,6 @@
 package com.zahaand.webapp.model;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
@@ -12,8 +13,8 @@ public class Resume implements Comparable<Resume> {
     // unique identifier
     private final String uuid;
     private final String fullName;
-    private Map<ContactType, String> contacts;
-    private Map<SectionType, AbstractSection> sectionsData;
+    private Map<ContactType, String> contacts = new HashMap<>();
+    private Map<SectionType, AbstractSection> sectionsData = new HashMap<>();
 
     // random UUID generation
     public Resume(String fullName) {
@@ -46,15 +47,11 @@ public class Resume implements Comparable<Resume> {
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
-        ContactType[] contactsTypes = ContactType.values();
-        SectionType[] sectionTypes = SectionType.values();
         stringBuilder.append(uuid).append(" (").append(fullName).append(")").append("\n");
-        for (int i = 0; i < contacts.size(); i++) {
-            ContactType key = contactsTypes[i];
+        for (ContactType key : ContactType.values()) {
             stringBuilder.append(key.getTitle()).append(": ").append(contacts.get(key)).append("\n");
         }
-        for (int i = 0; i < sectionsData.size(); i++) {
-            SectionType key = sectionTypes[i];
+        for (SectionType key : SectionType.values()) {
             stringBuilder.append(key.getTitle()).append(": \n").append(sectionsData.get(key)).append("\n");
         }
         return stringBuilder.toString();
