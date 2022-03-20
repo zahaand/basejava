@@ -12,8 +12,8 @@ public class Resume implements Comparable<Resume> {
     // unique identifier
     private final String uuid;
     private final String fullName;
-    private Map<ResumeContacts, String> contacts;
-    private Map<ResumeSections, AbstractSection> sectionsData;
+    private Map<ContactType, String> contacts;
+    private Map<SectionType, AbstractSection> sectionsData;
 
     // random UUID generation
     public Resume(String fullName) {
@@ -35,23 +35,27 @@ public class Resume implements Comparable<Resume> {
         return fullName;
     }
 
-    public void setContact(ResumeContacts contact, String data) {
+    public void setContact(ContactType contact, String data) {
         contacts.put(contact, data);
     }
 
-    public void setSectionData(ResumeSections section, AbstractSection data) {
+    public void setSectionData(SectionType section, AbstractSection data) {
         sectionsData.put(section, data);
     }
 
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
+        ContactType[] contactsTypes = ContactType.values();
+        SectionType[] sectionTypes = SectionType.values();
         stringBuilder.append(uuid).append(" (").append(fullName).append(")").append("\n");
-        for (String contact : contacts.values()) {
-            stringBuilder.append(contact).append("\n");
+        for (int i = 0; i < contacts.size(); i++) {
+            ContactType key = contactsTypes[i];
+            stringBuilder.append(key.getTitle()).append(": ").append(contacts.get(key)).append("\n");
         }
-        for (AbstractSection section : sectionsData.values()) {
-            stringBuilder.append(section);
+        for (int i = 0; i < sectionsData.size(); i++) {
+            SectionType key = sectionTypes[i];
+            stringBuilder.append(key.getTitle()).append(": \n").append(sectionsData.get(key)).append("\n");
         }
         return stringBuilder.toString();
     }

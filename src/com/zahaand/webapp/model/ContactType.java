@@ -1,6 +1,6 @@
 package com.zahaand.webapp.model;
 
-public enum ResumeContacts {
+public enum ContactType {
     PHONE_NUMBER("Номер телефона"),
     SKYPE("Srype"),
     EMAIL("e-mail"),
@@ -11,7 +11,7 @@ public enum ResumeContacts {
 
     private final String title;
 
-    ResumeContacts(String title) {
+    ContactType(String title) {
         this.title = title;
     }
 
