@@ -51,8 +51,9 @@ public class Resume implements Comparable<Resume> {
         for (ContactType key : ContactType.values()) {
             stringBuilder.append(key.getTitle()).append(": ").append(contacts.get(key)).append("\n");
         }
+        stringBuilder.append("\n");
         for (SectionType key : SectionType.values()) {
-            stringBuilder.append(key.getTitle()).append(": \n").append(sectionsData.get(key)).append("\n");
+            stringBuilder.append(key.getTitle()).append(": \n").append(sectionsData.get(key)).append("\n").append("\n");
         }
         return stringBuilder.toString();
     }
