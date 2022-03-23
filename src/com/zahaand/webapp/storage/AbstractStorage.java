@@ -17,7 +17,7 @@ public abstract class AbstractStorage<T> implements Storage {
         String uuid = r.getUuid();
         T searchKey = getSearchKey(uuid);
         if (!isExist(searchKey)) {
-            saveResume(r);
+            saveResume(searchKey, r);
             LOGGER.info(r + " Successfully saved");
         } else {
             LOGGER.warning(uuid + " already exist");
@@ -69,7 +69,7 @@ public abstract class AbstractStorage<T> implements Storage {
         }
     }
 
-    protected abstract void saveResume(Resume resume);
+    protected abstract void saveResume(T searchKey, Resume resume);
 
     protected abstract void updateResume(T searchKey, Resume resume);
 

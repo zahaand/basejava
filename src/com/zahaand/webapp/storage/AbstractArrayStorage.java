@@ -27,7 +27,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage<Integer> {
     }
 
     @Override
-    protected void saveResume(Resume resume) {
+    protected void saveResume(Integer index, Resume resume) {
         if (size != storage.length) {
             insertElement(resume);
             size++;
