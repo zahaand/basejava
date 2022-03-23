@@ -2,7 +2,7 @@ package com.zahaand.webapp.model;
 
 public enum ContactType {
     PHONE_NUMBER("Номер телефона"),
-    SKYPE("Srype"),
+    SKYPE("Skype"),
     EMAIL("e-mail"),
     LINKEDIN("Linkedin"),
     GITHUB("GitHub"),

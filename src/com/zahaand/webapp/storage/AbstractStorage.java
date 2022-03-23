@@ -7,18 +7,18 @@ import com.zahaand.webapp.model.Resume;
 import java.util.List;
 import java.util.logging.Logger;
 
-public abstract class AbstractStorage<T> implements Storage {
+public abstract class AbstractStorage<KeyType> implements Storage {
 
     protected static final Logger LOGGER = Logger.getLogger(AbstractStorage.class.getName());
 
     @Override
     public void save(Resume r) {
-        LOGGER.info("Save " + r);
+        LOGGER.info("Save " + r.getUuid());
         String uuid = r.getUuid();
-        T searchKey = getSearchKey(uuid);
+        KeyType searchKey = getSearchKey(uuid);
         if (!isExist(searchKey)) {
             saveResume(searchKey, r);
-            LOGGER.info(r + " Successfully saved");
+            LOGGER.info("Successfully saved " + r.getUuid());
         } else {
             LOGGER.warning(uuid + " already exist");
             throw new ExistStorageException(uuid);
@@ -27,11 +27,11 @@ public abstract class AbstractStorage<T> implements Storage {
 
     @Override
     public void update(Resume r) {
-        LOGGER.info("Update " + r);
+        LOGGER.info("Update " + r.getUuid());
         String uuid = r.getUuid();
-        T searchKey = getSearchKeyIfExist(uuid);
+        KeyType searchKey = getSearchKeyIfExist(uuid);
         updateResume(searchKey, r);
-        LOGGER.info(r + " Successfully updated");
+        LOGGER.info("Successfully updated " + r.getUuid());
     }
 
     @Override
@@ -46,9 +46,9 @@ public abstract class AbstractStorage<T> implements Storage {
     @Override
     public void delete(String uuid) {
         LOGGER.info("Delete " + uuid);
-        T searchKey = getSearchKeyIfExist(uuid);
+        KeyType searchKey = getSearchKeyIfExist(uuid);
         deleteResume(searchKey);
-        LOGGER.info(uuid + " Successfully deleted");
+        LOGGER.info("Successfully deleted " + uuid);
     }
 
     @Override
@@ -59,8 +59,8 @@ public abstract class AbstractStorage<T> implements Storage {
         return resumesList;
     }
 
-    private T getSearchKeyIfExist(String uuid) {
-        T searchKey = getSearchKey(uuid);
+    private KeyType getSearchKeyIfExist(String uuid) {
+        KeyType searchKey = getSearchKey(uuid);
         if (isExist(searchKey)) {
             return searchKey;
         } else {
@@ -69,17 +69,17 @@ public abstract class AbstractStorage<T> implements Storage {
         }
     }
 
-    protected abstract void saveResume(T searchKey, Resume resume);
+    protected abstract void saveResume(KeyType searchKey, Resume resume);
 
-    protected abstract void updateResume(T searchKey, Resume resume);
+    protected abstract void updateResume(KeyType searchKey, Resume resume);
 
-    protected abstract Resume getResume(T searchKey);
+    protected abstract Resume getResume(KeyType searchKey);
 
-    protected abstract void deleteResume(T searchKey);
+    protected abstract void deleteResume(KeyType searchKey);
 
-    protected abstract T getSearchKey(String uuid);
+    protected abstract KeyType getSearchKey(String uuid);
 
-    protected abstract boolean isExist(T searchKey);
+    protected abstract boolean isExist(KeyType searchKey);
 
     protected abstract List<Resume> getAllResumesAsList();
 }

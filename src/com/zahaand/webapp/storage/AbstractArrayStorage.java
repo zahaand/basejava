@@ -31,7 +31,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage<Integer> {
         if (size != storage.length) {
             insertElement(resume);
             size++;
-            LOGGER.info(resume + " Successfully saved");
+            LOGGER.info("Successfully saved " + resume.getUuid());
         } else {
             LOGGER.warning("Storage overflow");
             LOGGER.info(resume + " do not save");
