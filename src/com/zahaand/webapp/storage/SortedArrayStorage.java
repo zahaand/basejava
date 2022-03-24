@@ -16,8 +16,8 @@ public class SortedArrayStorage extends AbstractArrayStorage implements Comparat
     @Override
     protected void insertElement(int index, Resume resume) {
         int insertIndex = -index - 1;
-        System.arraycopy(storage, insertIndex, storage, insertIndex + 1, size - index);
-        storage[index] = resume;
+        System.arraycopy(storage, insertIndex, storage, insertIndex + 1, size - insertIndex);
+        storage[insertIndex] = resume;
     }
 
     @Override
