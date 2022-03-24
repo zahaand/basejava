@@ -29,7 +29,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage<Integer> {
     @Override
     protected void saveResume(Integer index, Resume resume) {
         if (size != storage.length) {
-            insertElement(resume);
+            insertElement(index, resume);
             size++;
             LOGGER.info("Successfully saved " + resume.getUuid());
         } else {
@@ -66,5 +66,5 @@ public abstract class AbstractArrayStorage extends AbstractStorage<Integer> {
         return index >= 0;
     }
 
-    protected abstract void insertElement(Resume resume);
+    protected abstract void insertElement(int index, Resume resume);
 }
