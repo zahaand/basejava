@@ -11,7 +11,7 @@ public class MapResumeStorage extends AbstractStorage<Resume> {
     private final Map<String, Resume> storage = new HashMap<>();
 
     @Override
-    protected Resume getSearchKey(String uuid) {
+    protected Resume getResumeKey(String uuid) {
         return storage.get(uuid);
     }
 

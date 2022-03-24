@@ -11,7 +11,7 @@ public class MapUuidStorage extends AbstractStorage<String> {
     private final Map<String, Resume> storage = new HashMap<>();
 
     @Override
-    protected String getSearchKey(String uuid) {
+    protected String getResumeKey(String uuid) {
         return storage.containsKey(uuid) ? uuid : null;
     }
 

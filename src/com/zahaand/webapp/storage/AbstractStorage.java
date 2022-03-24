@@ -7,7 +7,7 @@ import com.zahaand.webapp.model.Resume;
 import java.util.List;
 import java.util.logging.Logger;
 
-public abstract class AbstractStorage<KeyType> implements Storage {
+public abstract class AbstractStorage<ResumeKeyType> implements Storage {
 
     protected static final Logger LOGGER = Logger.getLogger(AbstractStorage.class.getName());
 
@@ -15,9 +15,9 @@ public abstract class AbstractStorage<KeyType> implements Storage {
     public void save(Resume r) {
         LOGGER.info("Save " + r.getUuid());
         String uuid = r.getUuid();
-        KeyType searchKey = getSearchKey(uuid);
-        if (!isExist(searchKey)) {
-            saveResume(searchKey, r);
+        ResumeKeyType resumeKey = getResumeKey(uuid);
+        if (!isExist(resumeKey)) {
+            saveResume(resumeKey, r);
             LOGGER.info("Successfully saved " + r.getUuid());
         } else {
             LOGGER.warning(uuid + " already exist");
@@ -29,16 +29,16 @@ public abstract class AbstractStorage<KeyType> implements Storage {
     public void update(Resume r) {
         LOGGER.info("Update " + r.getUuid());
         String uuid = r.getUuid();
-        KeyType searchKey = getSearchKeyIfExist(uuid);
-        updateResume(searchKey, r);
+        ResumeKeyType resumeKey = getResumeKeyIfExist(uuid);
+        updateResume(resumeKey, r);
         LOGGER.info("Successfully updated " + r.getUuid());
     }
 
     @Override
     public Resume get(String uuid) {
         LOGGER.info("GET " + uuid);
-        if (getSearchKeyIfExist(uuid) != null) {
-            return getResume(getSearchKey(uuid));
+        if (getResumeKeyIfExist(uuid) != null) {
+            return getResume(getResumeKey(uuid));
         }
         return null;
     }
@@ -46,8 +46,8 @@ public abstract class AbstractStorage<KeyType> implements Storage {
     @Override
     public void delete(String uuid) {
         LOGGER.info("Delete " + uuid);
-        KeyType searchKey = getSearchKeyIfExist(uuid);
-        deleteResume(searchKey);
+        ResumeKeyType resumeKey = getResumeKeyIfExist(uuid);
+        deleteResume(resumeKey);
         LOGGER.info("Successfully deleted " + uuid);
     }
 
@@ -59,27 +59,27 @@ public abstract class AbstractStorage<KeyType> implements Storage {
         return resumesList;
     }
 
-    private KeyType getSearchKeyIfExist(String uuid) {
-        KeyType searchKey = getSearchKey(uuid);
-        if (isExist(searchKey)) {
-            return searchKey;
+    private ResumeKeyType getResumeKeyIfExist(String uuid) {
+        ResumeKeyType resumeKey = getResumeKey(uuid);
+        if (isExist(resumeKey)) {
+            return resumeKey;
         } else {
             LOGGER.warning(uuid + " not exist");
             throw new NotExistStorageException(uuid);
         }
     }
 
-    protected abstract void saveResume(KeyType searchKey, Resume resume);
+    protected abstract void saveResume(ResumeKeyType resumeKey, Resume resume);
 
-    protected abstract void updateResume(KeyType searchKey, Resume resume);
+    protected abstract void updateResume(ResumeKeyType resumeKey, Resume resume);
 
-    protected abstract Resume getResume(KeyType searchKey);
+    protected abstract Resume getResume(ResumeKeyType resumeKey);
 
-    protected abstract void deleteResume(KeyType searchKey);
+    protected abstract void deleteResume(ResumeKeyType resumeKey);
 
-    protected abstract KeyType getSearchKey(String uuid);
+    protected abstract ResumeKeyType getResumeKey(String uuid);
 
-    protected abstract boolean isExist(KeyType searchKey);
+    protected abstract boolean isExist(ResumeKeyType resumeKey);
 
     protected abstract List<Resume> getAllResumesAsList();
 }
