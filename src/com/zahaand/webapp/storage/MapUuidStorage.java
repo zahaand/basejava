@@ -12,7 +12,7 @@ public class MapUuidStorage extends AbstractStorage<String> {
 
     @Override
     protected String getResumeKey(String uuid) {
-        return storage.containsKey(uuid) ? uuid : null;
+        return uuid;
     }
 
     @Override
@@ -47,7 +47,7 @@ public class MapUuidStorage extends AbstractStorage<String> {
 
     @Override
     protected boolean isExist(String uuid) {
-        return uuid != null;
+        return storage.containsKey(uuid);
     }
 
     @Override
