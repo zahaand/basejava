@@ -48,12 +48,12 @@ public class Resume implements Comparable<Resume> {
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(uuid).append(" (").append(fullName).append(")").append("\n");
-        for (ContactType key : ContactType.values()) {
-            stringBuilder.append(key.getTitle()).append(": ").append(contacts.get(key)).append("\n");
+        for (ContactType contact : ContactType.values()) {
+            stringBuilder.append(contact.getTitle()).append(": ").append(contacts.get(contact)).append("\n");
         }
         stringBuilder.append("\n");
-        for (SectionType key : SectionType.values()) {
-            stringBuilder.append(key.getTitle()).append(": \n").append(sections.get(key)).append("\n").append("\n");
+        for (SectionType section : SectionType.values()) {
+            stringBuilder.append(section.getTitle()).append(": \n").append(sections.get(section)).append("\n").append("\n");
         }
         return stringBuilder.toString();
     }
