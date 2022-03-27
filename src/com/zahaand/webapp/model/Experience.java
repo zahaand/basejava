@@ -43,7 +43,7 @@ public class Experience {
 
     @Override
     public String toString() {
-        return "\n" + startDate + " - " + endDate + "\n" + description + "\n";
+        return startDate + " - " + endDate + "\n" + description + "\n";
     }
 
     @Override

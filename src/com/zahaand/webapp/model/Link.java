@@ -14,10 +14,7 @@ public class Link {
 
     @Override
     public String toString() {
-        return "Link{" +
-                "name='" + name + '\'' +
-                ", url='" + url + '\'' +
-                '}';
+        return "Organization: " + name + "\nURL: " + url + "\n";
     }
 
     @Override

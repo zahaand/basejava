@@ -54,49 +54,49 @@ public class MainTestResumeData {
 
         String companyName1 = "Java Online Projects";
         String url1 = null;
-        String position1 = "Автор проекта.\n";
+        String position1 = "Автор проекта.";
         String description1 = "Создание, организация и проведение Java онлайн проектов и стажировок.";
         Experience experience1 = new Experience(companyName1, url1, position1, description1, LocalDate.of(2013, 10, 1), LocalDate.now());
 
         String companyName2 = "Wrike";
         String url2 = null;
-        String position2 = "Старший разработчик (backend)\n";
+        String position2 = "Старший разработчик (backend)";
         String description2 = "Проектирование и разработка онлайн платформы управления проектами Wrike (Java 8 API, Maven, Spring, MyBatis, Guava, Vaadin, PostgreSQL, Redis). Двухфакторная аутентификация, авторизация по OAuth1, OAuth2, JWT SSO.";
         Experience experience2 = new Experience(companyName2, url2, position2, description2, LocalDate.of(2014, 10, 1), LocalDate.of(2016, 1, 1));
 
         String companyName3 = "RIT Center";
         String url3 = null;
-        String position3 = "Java архитектор\n";
+        String position3 = "Java архитектор";
         String description3 = "Организация процесса разработки системы ERP для разных окружений: релизная политика, версионирование, ведение CI (Jenkins), миграция базы (кастомизация Flyway), конфигурирование системы (pgBoucer, Nginx), AAA via SSO. Архитектура БД и серверной части системы. Разработка интергационных сервисов: CMIS, BPMN2, 1C (WebServices), сервисов общего назначения (почта, экспорт в pdf, doc, html). Интеграция Alfresco JLAN для online редактирование из браузера документов MS Office. Maven + plugin development, Ant, Apache Commons, Spring security, Spring MVC, Tomcat,WSO2, xcmis, OpenCmis, Bonita, Python scripting, Unix shell remote scripting via ssh tunnels, PL/Python";
         Experience experience3 = new Experience(companyName3, url3, position3, description3, LocalDate.of(2012, 4, 1), LocalDate.of(2014, 10, 1));
 
         String companyName4 = "Luxoft (Deutsche Bank)";
         String url4 = null;
-        String position4 = "Ведущий программист\n";
+        String position4 = "Ведущий программист";
         String description4 = "Участие в проекте Deutsche Bank CRM (WebLogic, Hibernate, Spring, Spring MVC, SmartGWT, GWT, Jasper, Oracle). Реализация клиентской и серверной части CRM. Реализация RIA-приложения для администрирования, мониторинга и анализа результатов в области алгоритмического трейдинга. JPA, Spring, Spring-MVC, GWT, ExtGWT (GXT), Highstock, Commet, HTML5.";
         Experience experience4 = new Experience(companyName4, url4, position4, description4, LocalDate.of(2010, 12, 1), LocalDate.of(2012, 4, 1));
 
         String companyName5 = "Yota";
         String url5 = null;
-        String position5 = "Ведущий специалист\n";
-        String description5 = "Дизайн и имплементация Java EE фреймворка для отдела \"Платежные Системы\" (GlassFish v2.1, v3, OC4J, EJB3, JAX-WS RI 2.1, Servlet 2.4, JSP, JMX, JMS, Maven2). Реализация администрирования, статистики и мониторинга фреймворка. Разработка online JMX клиента (Python/ Jython, Django, ExtJS)\n";
+        String position5 = "Ведущий специалист";
+        String description5 = "Дизайн и имплементация Java EE фреймворка для отдела \"Платежные Системы\" (GlassFish v2.1, v3, OC4J, EJB3, JAX-WS RI 2.1, Servlet 2.4, JSP, JMX, JMS, Maven2). Реализация администрирования, статистики и мониторинга фреймворка. Разработка online JMX клиента (Python/ Jython, Django, ExtJS)";
         Experience experience5 = new Experience(companyName5, url5, position5, description5, LocalDate.of(2008, 6, 1), LocalDate.of(2010, 12, 1));
 
         String companyName6 = "Enkata";
         String url6 = null;
-        String position6 = "Разработчик ПО\n";
+        String position6 = "Разработчик ПО";
         String description6 = "Реализация клиентской (Eclipse RCP) и серверной (JBoss 4.2, Hibernate 3.0, Tomcat, JMS) частей кластерного J2EE приложения (OLAP, Data mining).";
         Experience experience6 = new Experience(companyName6, url6, position6, description6, LocalDate.of(2007, 3, 1), LocalDate.of(2008, 6, 1));
 
         String companyName7 = "Siemens AG";
         String url7 = null;
-        String position7 = "Java архитектор\n";
+        String position7 = "Java архитектор";
         String description7 = "Организация процесса разработки системы ERP для разных окружений: релизная политика, версионирование, ведение CI (Jenkins), миграция базы (кастомизация Flyway), конфигурирование системы (pgBoucer, Nginx), AAA via SSO. Архитектура БД и серверной части системы. Разработка интергационных сервисов: CMIS, BPMN2, 1C (WebServices), сервисов общего назначения (почта, экспорт в pdf, doc, html). Интеграция Alfresco JLAN для online редактирование из браузера документов MS Office. Maven + plugin development, Ant, Apache Commons, Spring security, Spring MVC, Tomcat,WSO2, xcmis, OpenCmis, Bonita, Python scripting, Unix shell remote scripting via ssh tunnels, PL/Python";
         Experience experience7 = new Experience(companyName7, url7, position7, description7, LocalDate.of(2005, 1, 1), LocalDate.of(2007, 2, 1));
 
         String companyName8 = "Alcatel";
         String url8 = null;
-        String position8 = "Инженер по аппаратному и программному тестированию\n";
+        String position8 = "Инженер по аппаратному и программному тестированию";
         String description8 = "Тестирование, отладка, внедрение ПО цифровой телефонной станции Alcatel 1000 S12 (CHILL, ASM).";
         Experience experience8 = new Experience(companyName8, url8, position8, description8, LocalDate.of(2012, 4, 1), LocalDate.of(2014, 10, 1));
 
@@ -212,49 +212,49 @@ public class MainTestResumeData {
 
         String companyName1 = "Java Online Projects";
         String url1 = null;
-        String position1 = "Автор проекта.\n";
+        String position1 = "Автор проекта.";
         String description1 = "Создание, организация и проведение Java онлайн проектов и стажировок.";
         Experience experience1 = new Experience(companyName1, url1, position1, description1, LocalDate.of(2013, 10, 1), LocalDate.now());
 
         String companyName2 = "Wrike";
         String url2 = null;
-        String position2 = "Старший разработчик (backend)\n";
+        String position2 = "Старший разработчик (backend)";
         String description2 = "Проектирование и разработка онлайн платформы управления проектами Wrike (Java 8 API, Maven, Spring, MyBatis, Guava, Vaadin, PostgreSQL, Redis). Двухфакторная аутентификация, авторизация по OAuth1, OAuth2, JWT SSO.";
         Experience experience2 = new Experience(companyName2, url2, position2, description2, LocalDate.of(2014, 10, 1), LocalDate.of(2016, 1, 1));
 
         String companyName3 = "RIT Center";
         String url3 = null;
-        String position3 = "Java архитектор\n";
+        String position3 = "Java архитектор";
         String description3 = "Организация процесса разработки системы ERP для разных окружений: релизная политика, версионирование, ведение CI (Jenkins), миграция базы (кастомизация Flyway), конфигурирование системы (pgBoucer, Nginx), AAA via SSO. Архитектура БД и серверной части системы. Разработка интергационных сервисов: CMIS, BPMN2, 1C (WebServices), сервисов общего назначения (почта, экспорт в pdf, doc, html). Интеграция Alfresco JLAN для online редактирование из браузера документов MS Office. Maven + plugin development, Ant, Apache Commons, Spring security, Spring MVC, Tomcat,WSO2, xcmis, OpenCmis, Bonita, Python scripting, Unix shell remote scripting via ssh tunnels, PL/Python";
         Experience experience3 = new Experience(companyName3, url3, position3, description3, LocalDate.of(2012, 4, 1), LocalDate.of(2014, 10, 1));
 
         String companyName4 = "Luxoft (Deutsche Bank)";
         String url4 = null;
-        String position4 = "Ведущий программист\n";
+        String position4 = "Ведущий программист";
         String description4 = "Участие в проекте Deutsche Bank CRM (WebLogic, Hibernate, Spring, Spring MVC, SmartGWT, GWT, Jasper, Oracle). Реализация клиентской и серверной части CRM. Реализация RIA-приложения для администрирования, мониторинга и анализа результатов в области алгоритмического трейдинга. JPA, Spring, Spring-MVC, GWT, ExtGWT (GXT), Highstock, Commet, HTML5.";
         Experience experience4 = new Experience(companyName4, url4, position4, description4, LocalDate.of(2010, 12, 1), LocalDate.of(2012, 4, 1));
 
         String companyName5 = "Yota";
         String url5 = null;
-        String position5 = "Ведущий специалист\n";
+        String position5 = "Ведущий специалист";
         String description5 = "Дизайн и имплементация Java EE фреймворка для отдела \"Платежные Системы\" (GlassFish v2.1, v3, OC4J, EJB3, JAX-WS RI 2.1, Servlet 2.4, JSP, JMX, JMS, Maven2). Реализация администрирования, статистики и мониторинга фреймворка. Разработка online JMX клиента (Python/ Jython, Django, ExtJS)\n";
         Experience experience5 = new Experience(companyName5, url5, position5, description5, LocalDate.of(2008, 6, 1), LocalDate.of(2010, 12, 1));
 
         String companyName6 = "Enkata";
         String url6 = null;
-        String position6 = "Разработчик ПО\n";
+        String position6 = "Разработчик ПО";
         String description6 = "Реализация клиентской (Eclipse RCP) и серверной (JBoss 4.2, Hibernate 3.0, Tomcat, JMS) частей кластерного J2EE приложения (OLAP, Data mining).";
         Experience experience6 = new Experience(companyName6, url6, position6, description6, LocalDate.of(2007, 3, 1), LocalDate.of(2008, 6, 1));
 
         String companyName7 = "Siemens AG";
         String url7 = null;
-        String position7 = "Java архитектор\n";
+        String position7 = "Java архитектор";
         String description7 = "Организация процесса разработки системы ERP для разных окружений: релизная политика, версионирование, ведение CI (Jenkins), миграция базы (кастомизация Flyway), конфигурирование системы (pgBoucer, Nginx), AAA via SSO. Архитектура БД и серверной части системы. Разработка интергационных сервисов: CMIS, BPMN2, 1C (WebServices), сервисов общего назначения (почта, экспорт в pdf, doc, html). Интеграция Alfresco JLAN для online редактирование из браузера документов MS Office. Maven + plugin development, Ant, Apache Commons, Spring security, Spring MVC, Tomcat,WSO2, xcmis, OpenCmis, Bonita, Python scripting, Unix shell remote scripting via ssh tunnels, PL/Python";
         Experience experience7 = new Experience(companyName7, url7, position7, description7, LocalDate.of(2005, 1, 1), LocalDate.of(2007, 2, 1));
 
         String companyName8 = "Alcatel";
         String url8 = null;
-        String position8 = "Инженер по аппаратному и программному тестированию\n";
+        String position8 = "Инженер по аппаратному и программному тестированию";
         String description8 = "Тестирование, отладка, внедрение ПО цифровой телефонной станции Alcatel 1000 S12 (CHILL, ASM).";
         Experience experience8 = new Experience(companyName8, url8, position8, description8, LocalDate.of(2012, 4, 1), LocalDate.of(2014, 10, 1));
 

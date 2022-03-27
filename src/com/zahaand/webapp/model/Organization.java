@@ -17,7 +17,7 @@ public class Organization extends AbstractSection {
         String organization = "dummy";
         for (Experience experience : experiences) {
             if (experience.getOrganization().equals(organization)) {
-                stringBuilder.append("\n").append(experience.getStartDate()).append(" - ").append("\n").append(experience.getDescription()).append("\n");
+                stringBuilder.append(experience.getStartDate()).append(" - ").append("\n").append(experience.getDescription()).append("\n");
             } else {
                 stringBuilder.append(experience.getHomePage()).append("\n").append(experience.getOrganization()).append("\n").append(experience).append("\n");
             }
