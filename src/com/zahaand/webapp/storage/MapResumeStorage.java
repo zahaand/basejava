@@ -12,10 +12,7 @@ public class MapResumeStorage extends AbstractStorage<Resume> {
 
     @Override
     protected Resume getResumeKey(String uuid) {
-        if (storage.containsKey(uuid)) {
-            return storage.get(uuid);
-        }
-        return new Resume(uuid, "dummy");
+        return storage.get(uuid);
     }
 
     @Override
@@ -25,7 +22,7 @@ public class MapResumeStorage extends AbstractStorage<Resume> {
 
     @Override
     protected void saveResume(Resume resume, Resume r) {
-        storage.put(resume.getUuid(), r);
+        storage.put(r.getUuid(), r);
     }
 
     @Override
@@ -50,7 +47,7 @@ public class MapResumeStorage extends AbstractStorage<Resume> {
 
     @Override
     protected boolean isExist(Resume resume) {
-        return storage.containsKey(resume.getUuid());
+        return resume != null;
     }
 
     @Override
