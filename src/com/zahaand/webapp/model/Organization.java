@@ -14,8 +14,14 @@ public class Organization extends AbstractSection {
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
-        for (Experience section : experiences) {
-            stringBuilder.append(section).append("\n");
+        String organization = "dummy";
+        for (Experience experience : experiences) {
+            if (experience.getOrganization().equals(organization)) {
+                stringBuilder.append("\n").append(experience.getStartDate()).append(" - ").append("\n").append(experience.getDescription()).append("\n");
+            } else {
+                stringBuilder.append(experience.getHomePage()).append("\n").append(experience.getOrganization()).append("\n").append(experience).append("\n");
+            }
+            organization = experience.getOrganization();
         }
         return stringBuilder.toString();
     }
