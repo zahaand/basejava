@@ -35,7 +35,7 @@ public class Experience {
 
         if (!homePage.equals(that.homePage)) return false;
         if (!title.equals(that.title)) return false;
-        if (description != null ? !description.equals(that.description) : that.description != null) return false;
+        if (!Objects.equals(description, that.description)) return false;
         if (!startDate.equals(that.startDate)) return false;
         return endDate.equals(that.endDate);
     }
