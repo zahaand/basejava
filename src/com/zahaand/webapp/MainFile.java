@@ -4,7 +4,7 @@ import java.io.File;
 
 public class MainFile {
     public static void main(String[] args) {
-        File directory = new File("/Users/zahaand/Java/basejava/src/com/zahaand/webapp");
+        File directory = new File("src/com/zahaand/webapp");
         if (directory.isDirectory()) {
             System.out.println("ROOT DIRECTORY: " + directory.getName());
             System.out.println("PATH: " + directory.getPath());
