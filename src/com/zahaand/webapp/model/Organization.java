@@ -3,25 +3,22 @@ package com.zahaand.webapp.model;
 import java.util.List;
 import java.util.Objects;
 
-public class Organization extends AbstractSection {
+public class Organization {
+    private final Link link;
     private final List<Experience> experiences;
 
-    public Organization(List<Experience> experiences) {
+    public Organization(Link link, List<Experience> experiences) {
         Objects.requireNonNull(experiences, "experience must not be null");
+        this.link = link;
         this.experiences = experiences;
     }
 
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
-        String organization = "dummy";
+        stringBuilder.append(link);
         for (Experience experience : experiences) {
-            if (experience.getOrganization().equals(organization)) {
-                stringBuilder.append(experience.getStartDate()).append(" - ").append("\n").append(experience.getDescription()).append("\n");
-            } else {
-                stringBuilder.append(experience.getHomePage()).append("\n").append(experience.getOrganization()).append("\n").append(experience).append("\n");
-            }
-            organization = experience.getOrganization();
+            stringBuilder.append(experience);
         }
         return stringBuilder.toString();
     }
@@ -31,11 +28,11 @@ public class Organization extends AbstractSection {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Organization that = (Organization) o;
-        return experiences.equals(that.experiences);
+        return link.equals(that.link) && Objects.equals(experiences, that.experiences);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(experiences);
+        return Objects.hash(link, experiences);
     }
 }

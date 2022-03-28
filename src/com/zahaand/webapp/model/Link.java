@@ -3,18 +3,18 @@ package com.zahaand.webapp.model;
 import java.util.Objects;
 
 public class Link {
-    String name;
-    String url;
+    private final String organizationName;
+    private final String url;
 
-    public Link(String name, String url) {
-        Objects.requireNonNull(name, "name must not be null");
-        this.name = name;
+    public Link(String organizationName, String url) {
+        Objects.requireNonNull(organizationName, "organization name must not be null");
+        this.organizationName = organizationName;
         this.url = url;
     }
 
     @Override
     public String toString() {
-        return "Organization: " + name + "\nURL: " + url + "\n";
+        return organizationName + "\n" + url + "\n";
     }
 
     @Override
@@ -22,11 +22,11 @@ public class Link {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Link link = (Link) o;
-        return name.equals(link.name) && Objects.equals(url, link.url);
+        return organizationName.equals(link.organizationName) && Objects.equals(url, link.url);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, url);
+        return Objects.hash(organizationName, url);
     }
 }
