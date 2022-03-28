@@ -1,26 +1,20 @@
 package com.zahaand.webapp;
 
 import java.io.File;
+import java.util.Objects;
 
 public class MainFile {
     public static void main(String[] args) {
         File directory = new File("src/com/zahaand/webapp");
+
         if (directory.isDirectory()) {
             System.out.println("ROOT DIRECTORY: " + directory.getName());
             System.out.println("PATH: " + directory.getPath());
-            File[] files = directory.listFiles();
-            if (files != null) {
-                for (File file : files) {
-                    if (file.isDirectory()) {
-                        System.out.println("___" + file.getName());
-                        File[] files2 = file.listFiles();
-                        if (files2 != null) {
-                            for (File file2 : files2) {
-                                System.out.println("______" + file2.getName());
-                            }
-                        }
-                    } else if (file.isFile()) {
-                        System.out.println("___" + file.getName());
+            for (File file : Objects.requireNonNull(directory.listFiles())) {
+                System.out.println(file.getName());
+                if (file.isDirectory()) {
+                    for (File file2 : Objects.requireNonNull(file.listFiles())) {
+                        System.out.println("___" + file2.getName());
                     }
                 }
             }
