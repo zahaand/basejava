@@ -6,17 +6,17 @@ import java.util.Objects;
 public class MainFile {
     public static void main(String[] args) {
         File directory = new File("src/com/zahaand/webapp");
+        MainFile mainFile = new MainFile();
 
+        mainFile.printAllFilesNames(directory);
+
+    }
+
+    private void printAllFilesNames(File directory) {
+        System.out.println(directory.getName());
         if (directory.isDirectory()) {
-            System.out.println("ROOT DIRECTORY: " + directory.getName());
-            System.out.println("PATH: " + directory.getPath());
             for (File file : Objects.requireNonNull(directory.listFiles())) {
-                System.out.println(file.getName());
-                if (file.isDirectory()) {
-                    for (File file2 : Objects.requireNonNull(file.listFiles())) {
-                        System.out.println("___" + file2.getName());
-                    }
-                }
+                printAllFilesNames(file);
             }
         }
     }
