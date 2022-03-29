@@ -19,22 +19,6 @@ public class Experience {
         this.endDate = endDate;
     }
 
-    public String getOrganization() {
-        return organization;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public LocalDate getStartDate() {
-        return startDate;
-    }
-
-    public LocalDate getEndDate() {
-        return endDate;
-    }
-
     @Override
     public String toString() {
         return startDate + " - " + endDate + "\n" + description + "\n";
@@ -52,28 +36,4 @@ public class Experience {
     public int hashCode() {
         return Objects.hash(organization, description, startDate, endDate);
     }
-
-    //    @Override
-//    public boolean equals(Object o) {
-//        if (this == o) return true;
-//        if (o == null || getClass() != o.getClass()) return false;
-//
-//        Experience that = (Experience) o;
-//
-//        if (!homePage.equals(that.homePage)) return false;
-//        if (!organization.equals(that.organization)) return false;
-//        if (!Objects.equals(description, that.description)) return false;
-//        if (!startDate.equals(that.startDate)) return false;
-//        return endDate.equals(that.endDate);
-//    }
-//
-//    @Override
-//    public int hashCode() {
-//        int result = homePage.hashCode();
-//        result = 31 * result + organization.hashCode();
-//        result = 31 * result + (description != null ? description.hashCode() : 0);
-//        result = 31 * result + startDate.hashCode();
-//        result = 31 * result + endDate.hashCode();
-//        return result;
-//    }
 }
