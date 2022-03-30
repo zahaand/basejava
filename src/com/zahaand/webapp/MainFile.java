@@ -13,8 +13,9 @@ public class MainFile {
     }
 
     private void printAllFilesNames(File directory) {
-        System.out.println(directory.getName());
-        if (directory.isDirectory()) {
+        if (directory.isFile()) {
+            System.out.println(directory.getName());
+        } else if (directory.isDirectory()) {
             for (File file : Objects.requireNonNull(directory.listFiles())) {
                 printAllFilesNames(file);
             }
