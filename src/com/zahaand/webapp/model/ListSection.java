@@ -3,10 +3,10 @@ package com.zahaand.webapp.model;
 import java.util.List;
 import java.util.Objects;
 
-public class BulletedListSection extends AbstractSection {
+public class ListSection extends AbstractSection {
     private final List<String> bulletedList;
 
-    public BulletedListSection(List<String> bulletedList) {
+    public ListSection(List<String> bulletedList) {
         Objects.requireNonNull(bulletedList, "list must not be null");
         this.bulletedList = bulletedList;
     }
@@ -24,7 +24,7 @@ public class BulletedListSection extends AbstractSection {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        BulletedListSection that = (BulletedListSection) o;
+        ListSection that = (ListSection) o;
         return bulletedList.equals(that.bulletedList);
     }
 

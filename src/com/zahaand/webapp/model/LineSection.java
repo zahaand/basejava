@@ -2,10 +2,10 @@ package com.zahaand.webapp.model;
 
 import java.util.Objects;
 
-public class SimpleLineSection extends AbstractSection {
+public class LineSection extends AbstractSection {
     private final String text;
 
-    public SimpleLineSection(String text) {
+    public LineSection(String text) {
         Objects.requireNonNull(text, "line must not be null");
         this.text = text;
     }
@@ -19,7 +19,7 @@ public class SimpleLineSection extends AbstractSection {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        SimpleLineSection that = (SimpleLineSection) o;
+        LineSection that = (LineSection) o;
         return text.equals(that.text);
     }
 

@@ -21,10 +21,10 @@ public class MainTestResumeData {
         resume.setContact(ContactType.STACKOVERFLOW, "Профиль Stackoverflow");
         resume.setContact(ContactType.HOMEPAGE, "Домашняя страница");
 
-        AbstractSection objective = new SimpleLineSection("Ведущий стажировок и корпоративного обучения по Java Web и Enterprise технологиям");
+        AbstractSection objective = new LineSection("Ведущий стажировок и корпоративного обучения по Java Web и Enterprise технологиям");
         resume.setSectionData(SectionType.OBJECTIVE, objective);
 
-        AbstractSection personal = new SimpleLineSection("Аналитический склад ума, сильная логика, креативность, инициативность. Пурист кода и архитектуры.");
+        AbstractSection personal = new LineSection("Аналитический склад ума, сильная логика, креативность, инициативность. Пурист кода и архитектуры.");
         resume.setSectionData(SectionType.PERSONAL, personal);
 
         List<String> achievements = new ArrayList<>();
@@ -34,7 +34,7 @@ public class MainTestResumeData {
         achievements.add("Реализация c нуля Rich Internet Application приложения на стеке технологий JPA, Spring, Spring-MVC, GWT, ExtGWT (GXT), Commet, HTML5, Highstock для алгоритмического трейдинга.");
         achievements.add("Создание JavaEE фреймворка для отказоустойчивого взаимодействия слабо-связанных сервисов (SOA-base архитектура, JAX-WS, JMS, AS Glassfish). Сбор статистики сервисов и информации о состоянии через систему мониторинга Nagios. Реализация онлайн клиента для администрирования и мониторинга системы по JMX (Jython/ Django).");
         achievements.add("Реализация протоколов по приему платежей всех основных платежных системы России (Cyberplat, Eport, Chronopay, Сбербанк), Белоруcсии(Erip, Osmp) и Никарагуа.");
-        resume.setSectionData(SectionType.ACHIEVEMENT, new BulletedListSection(achievements));
+        resume.setSectionData(SectionType.ACHIEVEMENT, new ListSection(achievements));
 
         List<String> qualifications = new ArrayList<>();
         qualifications.add("JEE AS: GlassFish (v2.1, v3), OC4J, JBoss, Tomcat, Jetty, WebLogic, WSO2");
@@ -52,70 +52,70 @@ public class MainTestResumeData {
         qualifications.add("администрирование Hudson/Jenkins, Ant + custom task, SoapUI, JPublisher, Flyway, Nagios, iReport, OpenCmis, Bonita, pgBouncer.");
         qualifications.add("Отличное знание и опыт применения концепций ООП, SOA, шаблонов проектрирования, архитектурных шаблонов, UML, функционального программирования");
         qualifications.add("Родной русский, английский \"upper intermediate\"");
-        resume.setSectionData(SectionType.QUALIFICATIONS, new BulletedListSection(qualifications));
+        resume.setSectionData(SectionType.QUALIFICATIONS, new ListSection(qualifications));
 
         Link companyLink1 = new Link("Java Online Projects", null);
         String position1 = "Автор проекта.";
         String description1 = "Создание, организация и проведение Java онлайн проектов и стажировок.";
-        Experience workExperience1 = new Experience(position1, description1, DateUtil.of(2013, Month.OCTOBER), LocalDate.now());
-        List<Experience> workExperiences1 = new ArrayList<>();
-        workExperiences1.add(workExperience1);
+        Organization.Position workPosition1 = new Organization.Position(DateUtil.of(2013, Month.OCTOBER), LocalDate.now(), position1, description1);
+        List<Organization.Position> workExperiences1 = new ArrayList<>();
+        workExperiences1.add(workPosition1);
         Organization organization1 = new Organization(companyLink1, workExperiences1);
 
         Link companyLink2 = new Link("Wrike", null);
         String position2 = "Старший разработчик (backend)";
         String description2 = "Проектирование и разработка онлайн платформы управления проектами Wrike (Java 8 API, Maven, Spring, MyBatis, Guava, Vaadin, PostgreSQL, Redis). Двухфакторная аутентификация, авторизация по OAuth1, OAuth2, JWT SSO.";
-        Experience workExperience2 = new Experience(position2, description2, DateUtil.of(2014, Month.OCTOBER), DateUtil.of(2016, Month.JANUARY));
-        List<Experience> workExperiences2 = new ArrayList<>();
-        workExperiences2.add(workExperience2);
+        Organization.Position workPosition2 = new Organization.Position(DateUtil.of(2014, Month.OCTOBER), DateUtil.of(2016, Month.JANUARY), position2, description2);
+        List<Organization.Position> workExperiences2 = new ArrayList<>();
+        workExperiences2.add(workPosition2);
         Organization organization2 = new Organization(companyLink2, workExperiences2);
 
         Link companyLink3 = new Link("RIT Center", null);
         String position3 = "Java архитектор";
         String description3 = "Организация процесса разработки системы ERP для разных окружений: релизная политика, версионирование, ведение CI (Jenkins), миграция базы (кастомизация Flyway), конфигурирование системы (pgBoucer, Nginx), AAA via SSO. Архитектура БД и серверной части системы. Разработка интергационных сервисов: CMIS, BPMN2, 1C (WebServices), сервисов общего назначения (почта, экспорт в pdf, doc, html). Интеграция Alfresco JLAN для online редактирование из браузера документов MS Office. Maven + plugin development, Ant, Apache Commons, Spring security, Spring MVC, Tomcat,WSO2, xcmis, OpenCmis, Bonita, Python scripting, Unix shell remote scripting via ssh tunnels, PL/Python";
-        Experience workExperience3 = new Experience(position3, description3, DateUtil.of(2012, Month.APRIL), DateUtil.of(2014, Month.OCTOBER));
-        List<Experience> workExperiences3 = new ArrayList<>();
-        workExperiences3.add(workExperience3);
+        Organization.Position workPosition3 = new Organization.Position(DateUtil.of(2012, Month.APRIL), DateUtil.of(2014, Month.OCTOBER), position3, description3);
+        List<Organization.Position> workExperiences3 = new ArrayList<>();
+        workExperiences3.add(workPosition3);
         Organization organization3 = new Organization(companyLink3, workExperiences3);
 
         Link companyLink4 = new Link("Luxoft (Deutsche Bank)", null);
         String position4 = "Ведущий программист";
         String description4 = "Участие в проекте Deutsche Bank CRM (WebLogic, Hibernate, Spring, Spring MVC, SmartGWT, GWT, Jasper, Oracle). Реализация клиентской и серверной части CRM. Реализация RIA-приложения для администрирования, мониторинга и анализа результатов в области алгоритмического трейдинга. JPA, Spring, Spring-MVC, GWT, ExtGWT (GXT), Highstock, Commet, HTML5.";
-        Experience workExperience4 = new Experience(position4, description4, DateUtil.of(2010, Month.DECEMBER), DateUtil.of(2012, Month.APRIL));
-        List<Experience> workExperiences4 = new ArrayList<>();
-        workExperiences4.add(workExperience4);
+        Organization.Position workPosition4 = new Organization.Position(DateUtil.of(2010, Month.DECEMBER), DateUtil.of(2012, Month.APRIL), position4, description4);
+        List<Organization.Position> workExperiences4 = new ArrayList<>();
+        workExperiences4.add(workPosition4);
         Organization organization4 = new Organization(companyLink4, workExperiences4);
 
         Link companyLink5 = new Link("Yota", null);
         String position5 = "Ведущий специалист";
         String description5 = "Дизайн и имплементация Java EE фреймворка для отдела \"Платежные Системы\" (GlassFish v2.1, v3, OC4J, EJB3, JAX-WS RI 2.1, Servlet 2.4, JSP, JMX, JMS, Maven2). Реализация администрирования, статистики и мониторинга фреймворка. Разработка online JMX клиента (Python/ Jython, Django, ExtJS)";
-        Experience workExperience5 = new Experience(position5, description5, DateUtil.of(2008, Month.JUNE), DateUtil.of(2010, Month.DECEMBER));
-        List<Experience> workExperiences5 = new ArrayList<>();
-        workExperiences5.add(workExperience5);
+        Organization.Position workPosition5 = new Organization.Position(DateUtil.of(2008, Month.JUNE), DateUtil.of(2010, Month.DECEMBER), position5, description5);
+        List<Organization.Position> workExperiences5 = new ArrayList<>();
+        workExperiences5.add(workPosition5);
         Organization organization5 = new Organization(companyLink5, workExperiences5);
 
         Link companyLink6 = new Link("Enkata", null);
         String position6 = "Разработчик ПО";
         String description6 = "Реализация клиентской (Eclipse RCP) и серверной (JBoss 4.2, Hibernate 3.0, Tomcat, JMS) частей кластерного J2EE приложения (OLAP, Data mining).";
-        Experience workExperience6 = new Experience(position6, description6, DateUtil.of(2007, Month.MARCH), DateUtil.of(2008, Month.JUNE));
-        List<Experience> workExperiences6 = new ArrayList<>();
-        workExperiences6.add(workExperience6);
+        Organization.Position workPosition6 = new Organization.Position(DateUtil.of(2007, Month.MARCH), DateUtil.of(2008, Month.JUNE), position6, description6);
+        List<Organization.Position> workExperiences6 = new ArrayList<>();
+        workExperiences6.add(workPosition6);
         Organization organization6 = new Organization(companyLink6, workExperiences6);
 
         Link companyLink7 = new Link("Siemens AG", null);
         String position7 = "Java архитектор";
         String description7 = "Организация процесса разработки системы ERP для разных окружений: релизная политика, версионирование, ведение CI (Jenkins), миграция базы (кастомизация Flyway), конфигурирование системы (pgBoucer, Nginx), AAA via SSO. Архитектура БД и серверной части системы. Разработка интергационных сервисов: CMIS, BPMN2, 1C (WebServices), сервисов общего назначения (почта, экспорт в pdf, doc, html). Интеграция Alfresco JLAN для online редактирование из браузера документов MS Office. Maven + plugin development, Ant, Apache Commons, Spring security, Spring MVC, Tomcat,WSO2, xcmis, OpenCmis, Bonita, Python scripting, Unix shell remote scripting via ssh tunnels, PL/Python";
-        Experience workExperience7 = new Experience(position7, description7, DateUtil.of(2005, Month.JANUARY), DateUtil.of(2007, Month.FEBRUARY));
-        List<Experience> workExperiences7 = new ArrayList<>();
-        workExperiences7.add(workExperience7);
+        Organization.Position workPosition7 = new Organization.Position(DateUtil.of(2005, Month.JANUARY), DateUtil.of(2007, Month.FEBRUARY), position7, description7);
+        List<Organization.Position> workExperiences7 = new ArrayList<>();
+        workExperiences7.add(workPosition7);
         Organization organization7 = new Organization(companyLink7, workExperiences7);
 
         Link companyLink8 = new Link("Alcatel", null);
         String position8 = "Инженер по аппаратному и программному тестированию";
         String description8 = "Тестирование, отладка, внедрение ПО цифровой телефонной станции Alcatel 1000 S12 (CHILL, ASM).";
-        Experience workExperience8 = new Experience(position8, description8, DateUtil.of(2012, Month.APRIL), DateUtil.of(2014, Month.OCTOBER));
-        List<Experience> workExperiences8 = new ArrayList<>();
-        workExperiences8.add(workExperience8);
+        Organization.Position workPosition8 = new Organization.Position(DateUtil.of(2012, Month.APRIL), DateUtil.of(2014, Month.OCTOBER), position8, description8);
+        List<Organization.Position> workExperiences8 = new ArrayList<>();
+        workExperiences8.add(workPosition8);
         Organization organization8 = new Organization(companyLink8, workExperiences8);
 
         List<Organization> organizations = new ArrayList<>();
@@ -127,58 +127,58 @@ public class MainTestResumeData {
         organizations.add(organization6);
         organizations.add(organization7);
         organizations.add(organization8);
-        resume.setSectionData(SectionType.EXPERIENCE, new OrganizationsList(organizations));
+        resume.setSectionData(SectionType.EXPERIENCE, new OrganizationSection(organizations));
 
         Link courseLink1 = new Link("Coursera", null);
         String courseName1 = "\"Functional Programming Principles in Scala\" by Martin Odersky";
         String courseDescription1 = null;
-        Experience education1 = new Experience(courseName1, courseDescription1, DateUtil.of(2011, Month.MARCH), DateUtil.of(2013, Month.MAY));
-        List<Experience> finishedCourses1 = new ArrayList<>();
+        Organization.Position education1 = new Organization.Position(DateUtil.of(2011, Month.MARCH), DateUtil.of(2013, Month.MAY), courseName1, courseDescription1);
+        List<Organization.Position> finishedCourses1 = new ArrayList<>();
         finishedCourses1.add(education1);
         Organization educationalInstitution1 = new Organization(courseLink1, finishedCourses1);
 
         Link courseLink2 = new Link("Luxoft", null);
         String courseName2 = "Курс \"Объектно-ориентированный анализ ИС. Концептуальное моделирование на UML.\"";
         String courseDescription2 = null;
-        Experience education2 = new Experience(courseName2, courseDescription2, DateUtil.of(2011, Month.MARCH), DateUtil.of(2011, Month.APRIL));
-        List<Experience> finishedCourses2 = new ArrayList<>();
+        Organization.Position education2 = new Organization.Position(DateUtil.of(2011, Month.MARCH), DateUtil.of(2011, Month.APRIL), courseName2, courseDescription2);
+        List<Organization.Position> finishedCourses2 = new ArrayList<>();
         finishedCourses2.add(education2);
         Organization educationalInstitution2 = new Organization(courseLink2, finishedCourses2);
 
         Link courseLink3 = new Link("Siemens AG", null);
         String courseName3 = "3 месяца обучения мобильным IN сетям (Берлин)";
         String courseDescription3 = null;
-        Experience education3 = new Experience(courseName3, courseDescription3, DateUtil.of(2005, Month.JANUARY), DateUtil.of(2005, Month.APRIL));
-        List<Experience> finishedCourses3 = new ArrayList<>();
+        Organization.Position education3 = new Organization.Position(DateUtil.of(2005, Month.JANUARY), DateUtil.of(2005, Month.APRIL), courseName3, courseDescription3);
+        List<Organization.Position> finishedCourses3 = new ArrayList<>();
         finishedCourses3.add(education3);
         Organization educationalInstitution3 = new Organization(courseLink3, finishedCourses3);
 
         Link courseLink4 = new Link("Alcatel", null);
         String courseName4 = "6 месяцев обучения цифровым телефонным сетям (Москва)";
         String courseDescription4 = null;
-        Experience education4 = new Experience(courseName4, courseDescription4, DateUtil.of(1997, Month.SEPTEMBER), DateUtil.of(1998, Month.MARCH));
-        List<Experience> finishedCourses4 = new ArrayList<>();
+        Organization.Position education4 = new Organization.Position(DateUtil.of(1997, Month.SEPTEMBER), DateUtil.of(1998, Month.MARCH), courseName4, courseDescription4);
+        List<Organization.Position> finishedCourses4 = new ArrayList<>();
         finishedCourses4.add(education4);
         Organization educationalInstitution4 = new Organization(courseLink4, finishedCourses4);
 
         Link courseLink5 = new Link("Санкт-Петербургский национальный исследовательский университет информационных технологий, механики и оптики", null);
         String courseName5 = "Аспирантура (программист С, С++)";
         String courseDescription5 = null;
-        Experience education5 = new Experience(courseName5, courseDescription5, DateUtil.of(1997, Month.SEPTEMBER), DateUtil.of(1998, Month.MARCH));
-        List<Experience> finishedCourses5 = new ArrayList<>();
+        Organization.Position education5 = new Organization.Position(DateUtil.of(1997, Month.SEPTEMBER), DateUtil.of(1998, Month.MARCH), courseName5, courseDescription5);
+        List<Organization.Position> finishedCourses5 = new ArrayList<>();
         finishedCourses5.add(education5);
 
         String courseName6 = "Инженер (программист Fortran, C)";
         String courseDescription6 = null;
-        Experience education6 = new Experience(courseName6, courseDescription6, DateUtil.of(1987, Month.SEPTEMBER), DateUtil.of(1993, Month.JULY));
+        Organization.Position education6 = new Organization.Position(DateUtil.of(1987, Month.SEPTEMBER), DateUtil.of(1993, Month.JULY), courseName6, courseDescription6);
         finishedCourses5.add(education6);
         Organization educationalInstitution5 = new Organization(courseLink5, finishedCourses5);
 
         Link courseLink7 = new Link("Заочная физико-техническая школа при МФТИ", null);
         String courseName7 = "Закончил с отличием";
         String courseDescription7 = null;
-        Experience education7 = new Experience(courseName7, courseDescription7, DateUtil.of(1984, Month.SEPTEMBER), DateUtil.of(1987, Month.JUNE));
-        List<Experience> finishedCourses7 = new ArrayList<>();
+        Organization.Position education7 = new Organization.Position(DateUtil.of(1984, Month.SEPTEMBER), DateUtil.of(1987, Month.JUNE), courseName7, courseDescription7);
+        List<Organization.Position> finishedCourses7 = new ArrayList<>();
         finishedCourses7.add(education7);
         Organization educationalInstitution7 = new Organization(courseLink7, finishedCourses7);
 
@@ -189,7 +189,7 @@ public class MainTestResumeData {
         educations.add(educationalInstitution4);
         educations.add(educationalInstitution5);
         educations.add(educationalInstitution7);
-        resume.setSectionData(SectionType.EDUCATION, new OrganizationsList(educations));
+        resume.setSectionData(SectionType.EDUCATION, new OrganizationSection(educations));
 
         System.out.println(resume);
     }
@@ -205,10 +205,10 @@ public class MainTestResumeData {
         resume.setContact(ContactType.STACKOVERFLOW, "Профиль Stackoverflow");
         resume.setContact(ContactType.HOMEPAGE, "Домашняя страница");
 
-        AbstractSection objective = new SimpleLineSection("Ведущий стажировок и корпоративного обучения по Java Web и Enterprise технологиям");
+        AbstractSection objective = new LineSection("Ведущий стажировок и корпоративного обучения по Java Web и Enterprise технологиям");
         resume.setSectionData(SectionType.OBJECTIVE, objective);
 
-        AbstractSection personal = new SimpleLineSection("Аналитический склад ума, сильная логика, креативность, инициативность. Пурист кода и архитектуры.");
+        AbstractSection personal = new LineSection("Аналитический склад ума, сильная логика, креативность, инициативность. Пурист кода и архитектуры.");
         resume.setSectionData(SectionType.PERSONAL, personal);
 
         List<String> achievements = new ArrayList<>();
@@ -218,7 +218,7 @@ public class MainTestResumeData {
         achievements.add("Реализация c нуля Rich Internet Application приложения на стеке технологий JPA, Spring, Spring-MVC, GWT, ExtGWT (GXT), Commet, HTML5, Highstock для алгоритмического трейдинга.");
         achievements.add("Создание JavaEE фреймворка для отказоустойчивого взаимодействия слабо-связанных сервисов (SOA-base архитектура, JAX-WS, JMS, AS Glassfish). Сбор статистики сервисов и информации о состоянии через систему мониторинга Nagios. Реализация онлайн клиента для администрирования и мониторинга системы по JMX (Jython/ Django).");
         achievements.add("Реализация протоколов по приему платежей всех основных платежных системы России (Cyberplat, Eport, Chronopay, Сбербанк), Белоруcсии(Erip, Osmp) и Никарагуа.");
-        resume.setSectionData(SectionType.ACHIEVEMENT, new BulletedListSection(achievements));
+        resume.setSectionData(SectionType.ACHIEVEMENT, new ListSection(achievements));
 
         List<String> qualifications = new ArrayList<>();
         qualifications.add("JEE AS: GlassFish (v2.1, v3), OC4J, JBoss, Tomcat, Jetty, WebLogic, WSO2");
@@ -236,70 +236,70 @@ public class MainTestResumeData {
         qualifications.add("администрирование Hudson/Jenkins, Ant + custom task, SoapUI, JPublisher, Flyway, Nagios, iReport, OpenCmis, Bonita, pgBouncer.");
         qualifications.add("Отличное знание и опыт применения концепций ООП, SOA, шаблонов проектрирования, архитектурных шаблонов, UML, функционального программирования");
         qualifications.add("Родной русский, английский \"upper intermediate\"");
-        resume.setSectionData(SectionType.QUALIFICATIONS, new BulletedListSection(qualifications));
+        resume.setSectionData(SectionType.QUALIFICATIONS, new ListSection(qualifications));
 
         Link companyLink1 = new Link("Java Online Projects", null);
         String position1 = "Автор проекта.";
         String description1 = "Создание, организация и проведение Java онлайн проектов и стажировок.";
-        Experience workExperience1 = new Experience(position1, description1, DateUtil.of(2013, Month.OCTOBER), LocalDate.now());
-        List<Experience> workExperiences1 = new ArrayList<>();
-        workExperiences1.add(workExperience1);
+        Organization.Position workPosition1 = new Organization.Position(DateUtil.of(2013, Month.OCTOBER), LocalDate.now(), position1, description1);
+        List<Organization.Position> workExperiences1 = new ArrayList<>();
+        workExperiences1.add(workPosition1);
         Organization organization1 = new Organization(companyLink1, workExperiences1);
 
         Link companyLink2 = new Link("Wrike", null);
         String position2 = "Старший разработчик (backend)";
         String description2 = "Проектирование и разработка онлайн платформы управления проектами Wrike (Java 8 API, Maven, Spring, MyBatis, Guava, Vaadin, PostgreSQL, Redis). Двухфакторная аутентификация, авторизация по OAuth1, OAuth2, JWT SSO.";
-        Experience workExperience2 = new Experience(position2, description2, DateUtil.of(2014, Month.OCTOBER), DateUtil.of(2016, Month.JANUARY));
-        List<Experience> workExperiences2 = new ArrayList<>();
-        workExperiences2.add(workExperience2);
+        Organization.Position workPosition2 = new Organization.Position(DateUtil.of(2014, Month.OCTOBER), DateUtil.of(2016, Month.JANUARY), position2, description2);
+        List<Organization.Position> workExperiences2 = new ArrayList<>();
+        workExperiences2.add(workPosition2);
         Organization organization2 = new Organization(companyLink2, workExperiences2);
 
         Link companyLink3 = new Link("RIT Center", null);
         String position3 = "Java архитектор";
         String description3 = "Организация процесса разработки системы ERP для разных окружений: релизная политика, версионирование, ведение CI (Jenkins), миграция базы (кастомизация Flyway), конфигурирование системы (pgBoucer, Nginx), AAA via SSO. Архитектура БД и серверной части системы. Разработка интергационных сервисов: CMIS, BPMN2, 1C (WebServices), сервисов общего назначения (почта, экспорт в pdf, doc, html). Интеграция Alfresco JLAN для online редактирование из браузера документов MS Office. Maven + plugin development, Ant, Apache Commons, Spring security, Spring MVC, Tomcat,WSO2, xcmis, OpenCmis, Bonita, Python scripting, Unix shell remote scripting via ssh tunnels, PL/Python";
-        Experience workExperience3 = new Experience(position3, description3, DateUtil.of(2012, Month.APRIL), DateUtil.of(2014, Month.OCTOBER));
-        List<Experience> workExperiences3 = new ArrayList<>();
-        workExperiences3.add(workExperience3);
+        Organization.Position workPosition3 = new Organization.Position(DateUtil.of(2012, Month.APRIL), DateUtil.of(2014, Month.OCTOBER), position3, description3);
+        List<Organization.Position> workExperiences3 = new ArrayList<>();
+        workExperiences3.add(workPosition3);
         Organization organization3 = new Organization(companyLink3, workExperiences3);
 
         Link companyLink4 = new Link("Luxoft (Deutsche Bank)", null);
         String position4 = "Ведущий программист";
         String description4 = "Участие в проекте Deutsche Bank CRM (WebLogic, Hibernate, Spring, Spring MVC, SmartGWT, GWT, Jasper, Oracle). Реализация клиентской и серверной части CRM. Реализация RIA-приложения для администрирования, мониторинга и анализа результатов в области алгоритмического трейдинга. JPA, Spring, Spring-MVC, GWT, ExtGWT (GXT), Highstock, Commet, HTML5.";
-        Experience workExperience4 = new Experience(position4, description4, DateUtil.of(2010, Month.DECEMBER), DateUtil.of(2012, Month.APRIL));
-        List<Experience> workExperiences4 = new ArrayList<>();
-        workExperiences4.add(workExperience4);
+        Organization.Position workPosition4 = new Organization.Position(DateUtil.of(2010, Month.DECEMBER), DateUtil.of(2012, Month.APRIL), position4, description4);
+        List<Organization.Position> workExperiences4 = new ArrayList<>();
+        workExperiences4.add(workPosition4);
         Organization organization4 = new Organization(companyLink4, workExperiences4);
 
         Link companyLink5 = new Link("Yota", null);
         String position5 = "Ведущий специалист";
         String description5 = "Дизайн и имплементация Java EE фреймворка для отдела \"Платежные Системы\" (GlassFish v2.1, v3, OC4J, EJB3, JAX-WS RI 2.1, Servlet 2.4, JSP, JMX, JMS, Maven2). Реализация администрирования, статистики и мониторинга фреймворка. Разработка online JMX клиента (Python/ Jython, Django, ExtJS)";
-        Experience workExperience5 = new Experience(position5, description5, DateUtil.of(2008, Month.JUNE), DateUtil.of(2010, Month.DECEMBER));
-        List<Experience> workExperiences5 = new ArrayList<>();
-        workExperiences5.add(workExperience5);
+        Organization.Position workPosition5 = new Organization.Position(DateUtil.of(2008, Month.JUNE), DateUtil.of(2010, Month.DECEMBER), position5, description5);
+        List<Organization.Position> workExperiences5 = new ArrayList<>();
+        workExperiences5.add(workPosition5);
         Organization organization5 = new Organization(companyLink5, workExperiences5);
 
         Link companyLink6 = new Link("Enkata", null);
         String position6 = "Разработчик ПО";
         String description6 = "Реализация клиентской (Eclipse RCP) и серверной (JBoss 4.2, Hibernate 3.0, Tomcat, JMS) частей кластерного J2EE приложения (OLAP, Data mining).";
-        Experience workExperience6 = new Experience(position6, description6, DateUtil.of(2007, Month.MARCH), DateUtil.of(2008, Month.JUNE));
-        List<Experience> workExperiences6 = new ArrayList<>();
-        workExperiences6.add(workExperience6);
+        Organization.Position workPosition6 = new Organization.Position(DateUtil.of(2007, Month.MARCH), DateUtil.of(2008, Month.JUNE), position6, description6);
+        List<Organization.Position> workExperiences6 = new ArrayList<>();
+        workExperiences6.add(workPosition6);
         Organization organization6 = new Organization(companyLink6, workExperiences6);
 
         Link companyLink7 = new Link("Siemens AG", null);
         String position7 = "Java архитектор";
         String description7 = "Организация процесса разработки системы ERP для разных окружений: релизная политика, версионирование, ведение CI (Jenkins), миграция базы (кастомизация Flyway), конфигурирование системы (pgBoucer, Nginx), AAA via SSO. Архитектура БД и серверной части системы. Разработка интергационных сервисов: CMIS, BPMN2, 1C (WebServices), сервисов общего назначения (почта, экспорт в pdf, doc, html). Интеграция Alfresco JLAN для online редактирование из браузера документов MS Office. Maven + plugin development, Ant, Apache Commons, Spring security, Spring MVC, Tomcat,WSO2, xcmis, OpenCmis, Bonita, Python scripting, Unix shell remote scripting via ssh tunnels, PL/Python";
-        Experience workExperience7 = new Experience(position7, description7, DateUtil.of(2005, Month.JANUARY), DateUtil.of(2007, Month.FEBRUARY));
-        List<Experience> workExperiences7 = new ArrayList<>();
-        workExperiences7.add(workExperience7);
+        Organization.Position workPosition7 = new Organization.Position(DateUtil.of(2005, Month.JANUARY), DateUtil.of(2007, Month.FEBRUARY), position7, description7);
+        List<Organization.Position> workExperiences7 = new ArrayList<>();
+        workExperiences7.add(workPosition7);
         Organization organization7 = new Organization(companyLink7, workExperiences7);
 
         Link companyLink8 = new Link("Alcatel", null);
         String position8 = "Инженер по аппаратному и программному тестированию";
         String description8 = "Тестирование, отладка, внедрение ПО цифровой телефонной станции Alcatel 1000 S12 (CHILL, ASM).";
-        Experience workExperience8 = new Experience(position8, description8, DateUtil.of(2012, Month.APRIL), DateUtil.of(2014, Month.OCTOBER));
-        List<Experience> workExperiences8 = new ArrayList<>();
-        workExperiences8.add(workExperience8);
+        Organization.Position workPosition8 = new Organization.Position(DateUtil.of(2012, Month.APRIL), DateUtil.of(2014, Month.OCTOBER), position8, description8);
+        List<Organization.Position> workExperiences8 = new ArrayList<>();
+        workExperiences8.add(workPosition8);
         Organization organization8 = new Organization(companyLink8, workExperiences8);
 
         List<Organization> organizations = new ArrayList<>();
@@ -311,58 +311,58 @@ public class MainTestResumeData {
         organizations.add(organization6);
         organizations.add(organization7);
         organizations.add(organization8);
-        resume.setSectionData(SectionType.EXPERIENCE, new OrganizationsList(organizations));
+        resume.setSectionData(SectionType.EXPERIENCE, new OrganizationSection(organizations));
 
         Link courseLink1 = new Link("Coursera", null);
         String courseName1 = "\"Functional Programming Principles in Scala\" by Martin Odersky";
         String courseDescription1 = null;
-        Experience education1 = new Experience(courseName1, courseDescription1, DateUtil.of(2011, Month.MARCH), DateUtil.of(2013, Month.MAY));
-        List<Experience> finishedCourses1 = new ArrayList<>();
+        Organization.Position education1 = new Organization.Position(DateUtil.of(2011, Month.MARCH), DateUtil.of(2013, Month.MAY), courseName1, courseDescription1);
+        List<Organization.Position> finishedCourses1 = new ArrayList<>();
         finishedCourses1.add(education1);
         Organization educationalInstitution1 = new Organization(courseLink1, finishedCourses1);
 
         Link courseLink2 = new Link("Luxoft", null);
         String courseName2 = "Курс \"Объектно-ориентированный анализ ИС. Концептуальное моделирование на UML.\"";
         String courseDescription2 = null;
-        Experience education2 = new Experience(courseName2, courseDescription2, DateUtil.of(2011, Month.MARCH), DateUtil.of(2011, Month.APRIL));
-        List<Experience> finishedCourses2 = new ArrayList<>();
+        Organization.Position education2 = new Organization.Position(DateUtil.of(2011, Month.MARCH), DateUtil.of(2011, Month.APRIL), courseName2, courseDescription2);
+        List<Organization.Position> finishedCourses2 = new ArrayList<>();
         finishedCourses2.add(education2);
         Organization educationalInstitution2 = new Organization(courseLink2, finishedCourses2);
 
         Link courseLink3 = new Link("Siemens AG", null);
         String courseName3 = "3 месяца обучения мобильным IN сетям (Берлин)";
         String courseDescription3 = null;
-        Experience education3 = new Experience(courseName3, courseDescription3, DateUtil.of(2005, Month.JANUARY), DateUtil.of(2005, Month.APRIL));
-        List<Experience> finishedCourses3 = new ArrayList<>();
+        Organization.Position education3 = new Organization.Position(DateUtil.of(2005, Month.JANUARY), DateUtil.of(2005, Month.APRIL), courseName3, courseDescription3);
+        List<Organization.Position> finishedCourses3 = new ArrayList<>();
         finishedCourses3.add(education3);
         Organization educationalInstitution3 = new Organization(courseLink3, finishedCourses3);
 
         Link courseLink4 = new Link("Alcatel", null);
         String courseName4 = "6 месяцев обучения цифровым телефонным сетям (Москва)";
         String courseDescription4 = null;
-        Experience education4 = new Experience(courseName4, courseDescription4, DateUtil.of(1997, Month.SEPTEMBER), DateUtil.of(1998, Month.MARCH));
-        List<Experience> finishedCourses4 = new ArrayList<>();
+        Organization.Position education4 = new Organization.Position(DateUtil.of(1997, Month.SEPTEMBER), DateUtil.of(1998, Month.MARCH), courseName4, courseDescription4);
+        List<Organization.Position> finishedCourses4 = new ArrayList<>();
         finishedCourses4.add(education4);
         Organization educationalInstitution4 = new Organization(courseLink4, finishedCourses4);
 
         Link courseLink5 = new Link("Санкт-Петербургский национальный исследовательский университет информационных технологий, механики и оптики", null);
         String courseName5 = "Аспирантура (программист С, С++)";
         String courseDescription5 = null;
-        Experience education5 = new Experience(courseName5, courseDescription5, DateUtil.of(1997, Month.SEPTEMBER), DateUtil.of(1998, Month.MARCH));
-        List<Experience> finishedCourses5 = new ArrayList<>();
+        Organization.Position education5 = new Organization.Position(DateUtil.of(1997, Month.SEPTEMBER), DateUtil.of(1998, Month.MARCH), courseName5, courseDescription5);
+        List<Organization.Position> finishedCourses5 = new ArrayList<>();
         finishedCourses5.add(education5);
 
         String courseName6 = "Инженер (программист Fortran, C)";
         String courseDescription6 = null;
-        Experience education6 = new Experience(courseName6, courseDescription6, DateUtil.of(1987, Month.SEPTEMBER), DateUtil.of(1993, Month.JULY));
+        Organization.Position education6 = new Organization.Position(DateUtil.of(1987, Month.SEPTEMBER), DateUtil.of(1993, Month.JULY), courseName6, courseDescription6);
         finishedCourses5.add(education6);
         Organization educationalInstitution5 = new Organization(courseLink5, finishedCourses5);
 
         Link courseLink7 = new Link("Заочная физико-техническая школа при МФТИ", null);
         String courseName7 = "Закончил с отличием";
         String courseDescription7 = null;
-        Experience education7 = new Experience(courseName7, courseDescription7, DateUtil.of(1984, Month.SEPTEMBER), DateUtil.of(1987, Month.JUNE));
-        List<Experience> finishedCourses7 = new ArrayList<>();
+        Organization.Position education7 = new Organization.Position(DateUtil.of(1984, Month.SEPTEMBER), DateUtil.of(1987, Month.JUNE), courseName7, courseDescription7);
+        List<Organization.Position> finishedCourses7 = new ArrayList<>();
         finishedCourses7.add(education7);
         Organization educationalInstitution7 = new Organization(courseLink7, finishedCourses7);
 
@@ -373,7 +373,7 @@ public class MainTestResumeData {
         educations.add(educationalInstitution4);
         educations.add(educationalInstitution5);
         educations.add(educationalInstitution7);
-        resume.setSectionData(SectionType.EDUCATION, new OrganizationsList(educations));
+        resume.setSectionData(SectionType.EDUCATION, new OrganizationSection(educations));
 
         return resume;
     }
