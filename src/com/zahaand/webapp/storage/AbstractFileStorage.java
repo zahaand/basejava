@@ -3,8 +3,7 @@ package com.zahaand.webapp.storage;
 import com.zahaand.webapp.exception.StorageException;
 import com.zahaand.webapp.model.Resume;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -27,7 +26,7 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
     protected void saveResume(File file, Resume resume) {
         try {
             file.createNewFile();
-            writeResumeInFile(resume, file);
+            writeResume(resume, new BufferedOutputStream(new FileOutputStream(file)));
         } catch (IOException e) {
             throw new StorageException("IO error", file.getName(), e);
         }
@@ -38,7 +37,7 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
         file.delete();
         try {
             file.createNewFile();
-            writeResumeInFile(resume, file);
+            writeResume(resume, new BufferedOutputStream(new FileOutputStream(file)));
         } catch (IOException e) {
             throw new StorageException("IO error", file.getName(), e);
         }
@@ -46,12 +45,18 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
 
     @Override
     protected Resume getResume(File file) {
-        return readResumeFromFile(file);
+        try {
+            return readResume(new BufferedInputStream(new FileInputStream(file)));
+        } catch (IOException e) {
+            throw new StorageException("File read error", file.getName(), e);
+        }
     }
 
     @Override
     protected void deleteResume(File file) {
-        file.delete();
+        if (!file.delete()) {
+            throw new StorageException("File delete error", file.getName());
+        }
     }
 
     @Override
@@ -67,8 +72,8 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
     @Override
     protected List<Resume> getAllResumesAsList() {
         List<Resume> resumes = new ArrayList<>();
-        for (File file : directory.listFiles()) {
-            resumes.add(readResumeFromFile(file));
+        for (File file : Objects.requireNonNull(directory.listFiles())) {
+            resumes.add(getResume(file));
         }
         return resumes;
     }
@@ -80,10 +85,12 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
 
     @Override
     public void clear() {
-        directory.delete();
+        for (File file : Objects.requireNonNull(directory.listFiles())) {
+            deleteResume(file);
+        }
     }
 
-    protected abstract void writeResumeInFile(Resume resume, File file) throws IOException;
+    protected abstract void writeResume(Resume resume, OutputStream outputStream) throws IOException;
 
-    protected abstract Resume readResumeFromFile(File file);
+    protected abstract Resume readResume(InputStream inputStream) throws IOException;
 }
