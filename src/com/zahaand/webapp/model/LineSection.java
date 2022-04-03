@@ -4,6 +4,7 @@ import java.util.Objects;
 
 public class LineSection extends AbstractSection {
     private final String text;
+    private static final long SERIALIZABLE_VERSION = 1L;
 
     public LineSection(String text) {
         Objects.requireNonNull(text, "line must not be null");

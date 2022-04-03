@@ -51,7 +51,7 @@ public class MapResumeStorage extends AbstractStorage<Resume> {
     }
 
     @Override
-    public List<Resume> getAllResumesAsList() {
+    public List<Resume> getAllResumes() {
         return new ArrayList<>(storage.values());
     }
 }

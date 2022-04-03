@@ -52,7 +52,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage<Integer> {
     }
 
     @Override
-    public List<Resume> getAllResumesAsList() {
+    public List<Resume> getAllResumes() {
         return Arrays.asList(Arrays.copyOf(storage, size));
     }
 

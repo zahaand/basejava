@@ -54,7 +54,7 @@ public abstract class AbstractStorage<ResumeKeyType> implements Storage {
     @Override
     public List<Resume> getAllSorted() {
         LOGGER.info("Get all sorted");
-        List<Resume> resumesList = getAllResumesAsList();
+        List<Resume> resumesList = getAllResumes();
         resumesList.sort(Resume::compareTo);
         return resumesList;
     }
@@ -81,5 +81,5 @@ public abstract class AbstractStorage<ResumeKeyType> implements Storage {
 
     protected abstract boolean isExist(ResumeKeyType resumeKey);
 
-    protected abstract List<Resume> getAllResumesAsList();
+    protected abstract List<Resume> getAllResumes();
 }

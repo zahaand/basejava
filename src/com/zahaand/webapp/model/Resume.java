@@ -1,5 +1,6 @@
 package com.zahaand.webapp.model;
 
+import java.io.Serializable;
 import java.util.EnumMap;
 import java.util.Map;
 import java.util.Objects;
@@ -8,13 +9,12 @@ import java.util.UUID;
 /**
  * initial resume class
  */
-public class Resume implements Comparable<Resume> {
-
-    // unique identifier
+public class Resume implements Comparable<Resume>, Serializable {
     private final String uuid;
     private final String fullName;
     private final Map<ContactType, String> contacts = new EnumMap<>(ContactType.class);
     private final Map<SectionType, AbstractSection> sections = new EnumMap<>(SectionType.class);
+    private static final long SERIALIZABLE_VERSION = 1L;
 
     // random UUID generation
     public Resume(String fullName) {

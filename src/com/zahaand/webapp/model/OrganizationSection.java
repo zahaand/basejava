@@ -5,6 +5,7 @@ import java.util.Objects;
 
 public class OrganizationSection extends AbstractSection {
     private final List<Organization> organizations;
+    private static final long SERIALIZABLE_VERSION = 1L;
 
     public OrganizationSection(List<Organization> organizations) {
         Objects.requireNonNull(organizations, "organizations must not be null");

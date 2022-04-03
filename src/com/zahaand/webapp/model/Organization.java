@@ -1,5 +1,6 @@
 package com.zahaand.webapp.model;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.Arrays;
@@ -9,9 +10,10 @@ import java.util.Objects;
 import static com.zahaand.webapp.util.DateUtil.NOW;
 import static com.zahaand.webapp.util.DateUtil.of;
 
-public class Organization {
+public class Organization implements Serializable {
     private final Link homePage;
     private final List<Position> positions;
+    private static final long SERIALIZABLE_VERSION = 1L;
 
     public Organization(String name, String url, Position... positions) {
         this(new Link(name, url), Arrays.asList(positions));
@@ -46,11 +48,12 @@ public class Organization {
         return Objects.hash(homePage, positions);
     }
 
-    public static class Position {
+    public static class Position implements Serializable {
         private final String position;
         private final String description;
         private final LocalDate startDate;
         private final LocalDate endDate;
+        private static final long SERIALIZABLE_VERSION = 1L;
 
         public Position(int startYear, Month startMonth, String position, String description) {
             this(of(startYear, startMonth), NOW, position, description);
