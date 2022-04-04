@@ -63,7 +63,11 @@ public abstract class AbstractPathStorage extends AbstractStorage<Path> {
 
     @Override
     protected Path getResumeKey(String uuid) {
-        return null;
+        try {
+            return Files.createLink(directory, Paths.get(uuid));
+        } catch (IOException e) {
+            throw new StorageException("Get key error", uuid, e);
+        }
     }
 
     @Override
@@ -78,7 +82,11 @@ public abstract class AbstractPathStorage extends AbstractStorage<Path> {
 
     @Override
     public int size() {
-        return 0;
+        try {
+            return Files.list(directory).toArray().length;
+        } catch (IOException e) {
+            throw new StorageException("Get size error", null, e);
+        }
     }
 
     @Override
