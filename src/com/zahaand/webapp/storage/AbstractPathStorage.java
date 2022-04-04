@@ -7,6 +7,7 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -77,7 +78,13 @@ public abstract class AbstractPathStorage extends AbstractStorage<Path> {
 
     @Override
     protected List<Resume> getAllResumes() {
-        return null;
+        List<Resume> resumes = new ArrayList<>();
+        try {
+            Files.list(directory).forEach(x -> resumes.add(getResume(x)));
+        } catch (IOException e) {
+            throw new StorageException("Get all resumes error", null, e);
+        }
+        return resumes;
     }
 
     @Override
