@@ -12,12 +12,17 @@ public class MainFile {
     }
 
     private static void printDirectoryDeeply(File directory) {
-        if (directory.isFile()) {
-            System.out.println("___" + directory.getName());
-        } else if (directory.isDirectory()) {
+        if (directory.isDirectory()) {
             System.out.println(directory.getName());
             for (File file : Objects.requireNonNull(directory.listFiles())) {
-                printDirectoryDeeply(file);
+                if (file.isFile()) {
+                    System.out.println("___" + file.getName());
+                }
+            }
+            for (File file : Objects.requireNonNull(directory.listFiles())) {
+                if (file.isDirectory()) {
+                    printDirectoryDeeply(file);
+                }
             }
         }
     }
