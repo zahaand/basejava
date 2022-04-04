@@ -1,7 +1,6 @@
 package com.zahaand.webapp;
 
 import java.io.File;
-import java.util.Objects;
 
 public class MainFile {
     public static void main(String[] args) {
@@ -13,13 +12,15 @@ public class MainFile {
 
     private static void printDirectoryDeeply(File directory) {
         if (directory.isDirectory()) {
+            File[] files = directory.listFiles();
+            assert files != null;
             System.out.println(directory.getName());
-            for (File file : Objects.requireNonNull(directory.listFiles())) {
+            for (File file : files) {
                 if (file.isFile()) {
                     System.out.println("___" + file.getName());
                 }
             }
-            for (File file : Objects.requireNonNull(directory.listFiles())) {
+            for (File file : files) {
                 if (file.isDirectory()) {
                     printDirectoryDeeply(file);
                 }
