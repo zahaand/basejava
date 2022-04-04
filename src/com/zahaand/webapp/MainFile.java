@@ -13,8 +13,9 @@ public class MainFile {
 
     private static void printDirectoryDeeply(File directory) {
         if (directory.isFile()) {
-            System.out.println(directory.getName());
+            System.out.println("___" + directory.getName());
         } else if (directory.isDirectory()) {
+            System.out.println(directory.getName());
             for (File file : Objects.requireNonNull(directory.listFiles())) {
                 printDirectoryDeeply(file);
             }
