@@ -4,7 +4,7 @@ import java.io.File;
 
 public class MainFile {
     public static void main(String[] args) {
-        File directory = new File("src/com/zahaand/webapp");
+        File directory = new File("out");
 
         printDirectoryDeeply(directory);
 
@@ -12,17 +12,15 @@ public class MainFile {
 
     private static void printDirectoryDeeply(File directory) {
         if (directory.isDirectory()) {
+            StringBuilder stringBuilder = new StringBuilder();
+            System.out.println(stringBuilder + directory.getName());
             File[] files = directory.listFiles();
-            assert files != null;
-            System.out.println(directory.getName());
-            for (File file : files) {
-                if (file.isFile()) {
-                    System.out.println("___" + file.getName());
-                }
-            }
-            for (File file : files) {
-                if (file.isDirectory()) {
-                    printDirectoryDeeply(file);
+            if (files != null) {
+                for (File file : files) {
+                    if (file.isDirectory()) {
+                        stringBuilder.append("___");
+                        printDirectoryDeeply(file);
+                    }
                 }
             }
         }
