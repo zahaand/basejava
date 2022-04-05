@@ -64,11 +64,7 @@ public abstract class AbstractPathStorage extends AbstractStorage<Path> {
 
     @Override
     protected Path getResumeKey(String uuid) {
-        try {
-            return Files.createLink(directory, Paths.get(uuid));
-        } catch (IOException e) {
-            throw new StorageException("Get key error", uuid, e);
-        }
+        return Paths.get(String.valueOf(directory), uuid);
     }
 
     @Override
