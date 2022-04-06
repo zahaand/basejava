@@ -13,10 +13,13 @@ import java.util.Objects;
 
 public abstract class AbstractPathStorage extends AbstractStorage<Path> {
     private final Path directory;
+    SerializationStrategy strategy;
 
-    protected AbstractPathStorage(String directory) {
+    protected AbstractPathStorage(String directory, SerializationStrategy strategy) {
         Objects.requireNonNull(directory, "directory must not be null");
+        Objects.requireNonNull(strategy);
         this.directory = Paths.get(directory);
+        this.strategy = strategy;
         if (!Files.isDirectory(this.directory)) {
             throw new IllegalArgumentException(directory + " is not directory");
         }
@@ -101,7 +104,11 @@ public abstract class AbstractPathStorage extends AbstractStorage<Path> {
         }
     }
 
-    protected abstract void writeResume(Resume resume, OutputStream outputStream) throws IOException;
+    public void writeResume(Resume resume, OutputStream outputStream) throws IOException {
+        strategy.writeResume(resume, outputStream);
+    }
 
-    protected abstract Resume readResume(InputStream inputStream) throws IOException;
+    public Resume readResume(InputStream inputStream) throws IOException {
+        return strategy.readResume(inputStream);
+    }
 }
