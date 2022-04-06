@@ -13,7 +13,7 @@ import java.util.Objects;
 
 public abstract class AbstractPathStorage extends AbstractStorage<Path> {
     private final Path directory;
-    SerializationStrategy strategy;
+    private final SerializationStrategy strategy;
 
     protected AbstractPathStorage(String directory, SerializationStrategy strategy) {
         Objects.requireNonNull(directory, "directory must not be null");
