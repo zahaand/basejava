@@ -4,7 +4,7 @@ import java.io.File;
 import java.util.Objects;
 
 public class MainFile {
-    static String indent = "___";
+    private static String indent = "___";
 
     public static void main(String[] args) {
         File directory = new File("out");
