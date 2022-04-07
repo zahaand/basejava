@@ -12,6 +12,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class PathStorage extends AbstractStorage<Path> {
@@ -95,7 +96,7 @@ public class PathStorage extends AbstractStorage<Path> {
     @Override
     protected List<Resume> getAllResumes() {
         LOGGER.info("Get all resumes");
-        return (List<Resume>) getAllFiles().map(this::getResume);
+        return getAllFiles().map(this::getResume).collect(Collectors.toList());
     }
 
     @Override
