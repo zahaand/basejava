@@ -1,4 +1,4 @@
-package com.zahaand.webapp.storage;
+package com.zahaand.webapp.storage.strategy;
 
 import com.zahaand.webapp.exception.StorageException;
 import com.zahaand.webapp.model.Resume;

@@ -2,17 +2,18 @@ package com.zahaand.webapp.storage;
 
 import com.zahaand.webapp.exception.StorageException;
 import com.zahaand.webapp.model.Resume;
+import com.zahaand.webapp.storage.strategy.SerializationStrategy;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public abstract class AbstractFileStorage extends AbstractStorage<File> {
+public class FileStorage extends AbstractStorage<File> {
     private final File directory;
     private final SerializationStrategy strategy;
 
-    protected AbstractFileStorage(File directory, SerializationStrategy strategy) {
+    protected FileStorage(File directory, SerializationStrategy strategy) {
         Objects.requireNonNull(directory, "directory must not be null");
         Objects.requireNonNull(strategy, "strategy must not be null");
         if (!directory.isDirectory()) {
@@ -43,7 +44,7 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
     protected void updateResume(File file, Resume resume) {
         LOGGER.info("Update " + resume.getUuid());
         try {
-            writeResume(resume, new BufferedOutputStream(new FileOutputStream(file)));
+            strategy.writeResume(resume, new BufferedOutputStream(new FileOutputStream(file)));
         } catch (IOException e) {
             LOGGER.warning(resume + " do not update");
             throw new StorageException("IO error", file.getName(), e);
@@ -55,7 +56,7 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
     protected Resume getResume(File file) {
         LOGGER.info("Get " + file);
         try {
-            return readResume(new BufferedInputStream(new FileInputStream(file)));
+            return strategy.readResume(new BufferedInputStream(new FileInputStream(file)));
         } catch (IOException e) {
             LOGGER.warning(file + " do not get");
             throw new StorageException("File read error", file.getName(), e);
@@ -88,33 +89,34 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
     protected List<Resume> getAllResumes() {
         LOGGER.info("Get all resumes");
         List<Resume> resumes = new ArrayList<>();
-        for (File file : Objects.requireNonNull(directory.listFiles())) {
+        for (File file : getAllFiles()) {
             resumes.add(getResume(file));
         }
-        LOGGER.info("Successfully gotten all resumes");
+        LOGGER.info("Successfully got all resumes");
         return resumes;
     }
 
     @Override
     public int size() {
         LOGGER.info("Get size");
-        return Objects.requireNonNull(directory.listFiles()).length;
+        return getAllFiles().length;
     }
 
     @Override
     public void clear() {
         LOGGER.info("Clear directory");
-        for (File file : Objects.requireNonNull(directory.listFiles())) {
+        for (File file : getAllFiles()) {
             deleteResume(file);
         }
         LOGGER.info("Successfully cleared");
     }
 
-    protected void writeResume(Resume resume, OutputStream outputStream) throws IOException {
-        strategy.writeResume(resume, outputStream);
-    }
-
-    protected Resume readResume(InputStream inputStream) throws IOException {
-        return strategy.readResume(inputStream);
+    private File[] getAllFiles() {
+        File[] files = directory.listFiles();
+        if (files != null) {
+            return files;
+        } else {
+            throw new StorageException("Directory is empty ", directory.getName());
+        }
     }
 }

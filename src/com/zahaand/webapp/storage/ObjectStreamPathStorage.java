@@ -1,6 +1,8 @@
 package com.zahaand.webapp.storage;
 
-public class ObjectStreamPathStorage extends AbstractPathStorage {
+import com.zahaand.webapp.storage.strategy.ObjectStreamStrategy;
+
+public class ObjectStreamPathStorage extends PathStorage {
     protected ObjectStreamPathStorage(String directory) {
         super(directory, new ObjectStreamStrategy());
     }

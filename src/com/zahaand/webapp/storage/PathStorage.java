@@ -2,20 +2,23 @@ package com.zahaand.webapp.storage;
 
 import com.zahaand.webapp.exception.StorageException;
 import com.zahaand.webapp.model.Resume;
+import com.zahaand.webapp.storage.strategy.SerializationStrategy;
 
-import java.io.*;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
 
-public abstract class AbstractPathStorage extends AbstractStorage<Path> {
+public class PathStorage extends AbstractStorage<Path> {
     private final Path directory;
     private final SerializationStrategy strategy;
 
-    protected AbstractPathStorage(String directory, SerializationStrategy strategy) {
+    protected PathStorage(String directory, SerializationStrategy strategy) {
         Objects.requireNonNull(directory, "directory must not be null");
         Objects.requireNonNull(strategy, "strategy must not be null");
         this.directory = Paths.get(directory);
@@ -46,7 +49,7 @@ public abstract class AbstractPathStorage extends AbstractStorage<Path> {
     protected void updateResume(Path path, Resume resume) {
         LOGGER.info("Update " + resume.getUuid());
         try {
-            writeResume(resume, new BufferedOutputStream(new FileOutputStream(String.valueOf(path))));
+            strategy.writeResume(resume, new BufferedOutputStream(Files.newOutputStream(path)));
         } catch (IOException e) {
             LOGGER.warning(resume + " do not update");
             throw new StorageException("IO error", path.toString(), e);
@@ -58,7 +61,7 @@ public abstract class AbstractPathStorage extends AbstractStorage<Path> {
     protected Resume getResume(Path path) {
         LOGGER.info("Get " + path);
         try {
-            return readResume(new BufferedInputStream(new FileInputStream(String.valueOf(path))));
+            return strategy.readResume(new BufferedInputStream(Files.newInputStream(path)));
         } catch (IOException e) {
             LOGGER.warning(path + " do not get");
             throw new StorageException("Path read error", path.toString(), e);
@@ -80,7 +83,7 @@ public abstract class AbstractPathStorage extends AbstractStorage<Path> {
     @Override
     protected Path getResumeKey(String uuid) {
         LOGGER.info("Get key " + uuid);
-        return Paths.get(String.valueOf(directory), uuid);
+        return directory.resolve(uuid);
     }
 
     @Override
@@ -92,44 +95,27 @@ public abstract class AbstractPathStorage extends AbstractStorage<Path> {
     @Override
     protected List<Resume> getAllResumes() {
         LOGGER.info("Get all resumes");
-        List<Resume> resumes = new ArrayList<>();
-        try {
-            Files.list(directory).forEach(x -> resumes.add(getResume(x)));
-        } catch (IOException e) {
-            LOGGER.warning("All resumes do not get");
-            throw new StorageException("Get all resumes error", null, e);
-        }
-        LOGGER.info("Successfully gotten all resumes");
-        return resumes;
+        return (List<Resume>) getAllFiles().map(this::getResume);
     }
 
     @Override
     public int size() {
         LOGGER.info("Get size");
-        try {
-            return Files.list(directory).toArray().length;
-        } catch (IOException e) {
-            LOGGER.warning("Size do not get");
-            throw new StorageException("Get size error", null, e);
-        }
+        return getAllFiles().toArray().length;
     }
 
     @Override
     public void clear() {
         LOGGER.info("Clear directory");
+        getAllFiles().forEach(this::deleteResume);
+        LOGGER.info("Successfully cleared " + directory);
+    }
+
+    private Stream<Path> getAllFiles() {
         try {
-            Files.list(directory).forEach(this::deleteResume);
+            return Files.list(directory);
         } catch (IOException e) {
-            LOGGER.warning("Directory do not clear");
-            throw new StorageException("Path clear error", null, e);
+            throw new StorageException("Get all files Stream error ", directory.toString());
         }
-    }
-
-    public void writeResume(Resume resume, OutputStream outputStream) throws IOException {
-        strategy.writeResume(resume, outputStream);
-    }
-
-    public Resume readResume(InputStream inputStream) throws IOException {
-        return strategy.readResume(inputStream);
     }
 }
