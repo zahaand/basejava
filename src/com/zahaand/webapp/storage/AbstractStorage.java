@@ -36,7 +36,7 @@ public abstract class AbstractStorage<ResumeKeyType> implements Storage {
 
     @Override
     public Resume get(String uuid) {
-        LOGGER.info("GET " + uuid);
+        LOGGER.info("Get " + uuid);
         if (getResumeKeyIfExist(uuid) != null) {
             return getResume(getResumeKey(uuid));
         }
