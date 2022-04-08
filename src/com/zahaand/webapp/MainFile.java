@@ -23,6 +23,6 @@ public class MainFile {
                 }
             }
         }
-        indent = "___";
+        indent = indent.substring(0, (indent.length() - 3));
     }
 }
