@@ -13,6 +13,7 @@ public class MainFile {
 
     }
 
+    // recursive call
     private static void printDirectoryDeeply(File directory) {
         if (directory.isDirectory()) {
             for (File file : Objects.requireNonNull(directory.listFiles())) {
