@@ -1,9 +1,9 @@
 package com.zahaand.webapp.storage;
 
-import java.io.File;
+import com.zahaand.webapp.storage.strategy.ObjectStreamStrategy;
 
 public class FileStorageTest extends AbstractStorageTest {
     public FileStorageTest() {
-        super(new ObjectStreamStorage(new File(STORAGE_DIRECTORY)));
+        super(new FileStorage(STORAGE_DIRECTORY, new ObjectStreamStrategy()));
     }
 }

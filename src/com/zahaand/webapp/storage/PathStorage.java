@@ -40,7 +40,7 @@ public class PathStorage extends AbstractStorage<Path> {
             Files.createFile(path);
         } catch (IOException e) {
             LOGGER.warning(resume + " do not save");
-            throw new StorageException("Path create error", path.toString(), e);
+            throw new StorageException("Path create error", getFileName(path), e);
         }
         updateResume(path, resume);
         LOGGER.info("Successfully saved " + resume.getUuid());
@@ -53,7 +53,7 @@ public class PathStorage extends AbstractStorage<Path> {
             strategy.writeResume(resume, new BufferedOutputStream(Files.newOutputStream(path)));
         } catch (IOException e) {
             LOGGER.warning(resume + " do not update");
-            throw new StorageException("IO error", path.toString(), e);
+            throw new StorageException("Path write error", resume.getUuid(), e);
         }
         LOGGER.info("Successfully updated " + resume.getUuid());
     }
@@ -64,8 +64,8 @@ public class PathStorage extends AbstractStorage<Path> {
         try {
             return strategy.readResume(new BufferedInputStream(Files.newInputStream(path)));
         } catch (IOException e) {
-            LOGGER.warning(path + " do not get");
-            throw new StorageException("Path read error", path.toString(), e);
+            LOGGER.warning(getFileName(path) + " do not get");
+            throw new StorageException("Path read error", getFileName(path), e);
         }
     }
 
@@ -76,9 +76,9 @@ public class PathStorage extends AbstractStorage<Path> {
             Files.delete(path);
         } catch (IOException e) {
             LOGGER.warning(path + " do not delete");
-            throw new StorageException("Path delete error", path.toString(), e);
+            throw new StorageException("Path delete error", getFileName(path), e);
         }
-        LOGGER.info("Successfully deleted " + path);
+        LOGGER.info("Successfully deleted " + getFileName(path));
     }
 
     @Override
@@ -96,27 +96,31 @@ public class PathStorage extends AbstractStorage<Path> {
     @Override
     protected List<Resume> getAllResumes() {
         LOGGER.info("Get all resumes");
-        return getAllFiles().map(this::getResume).collect(Collectors.toList());
+        return getAllFilesList().map(this::getResume).collect(Collectors.toList());
     }
 
     @Override
     public int size() {
         LOGGER.info("Get size");
-        return getAllFiles().toArray().length;
+        return (int) getAllFilesList().count();
     }
 
     @Override
     public void clear() {
         LOGGER.info("Clear directory");
-        getAllFiles().forEach(this::deleteResume);
+        getAllFilesList().forEach(this::deleteResume);
         LOGGER.info("Successfully cleared " + directory);
     }
 
-    private Stream<Path> getAllFiles() {
+    private Stream<Path> getAllFilesList() {
         try {
             return Files.list(directory);
         } catch (IOException e) {
-            throw new StorageException("Get all files Stream error ", directory.toString());
+            throw new StorageException("Directory read error ", e);
         }
+    }
+
+    private String getFileName(Path path) {
+        return path.getFileName().toString();
     }
 }

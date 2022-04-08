@@ -89,7 +89,7 @@ public class FileStorage extends AbstractStorage<File> {
     protected List<Resume> getAllResumes() {
         LOGGER.info("Get all resumes");
         List<Resume> resumes = new ArrayList<>();
-        for (File file : getAllFiles()) {
+        for (File file : getAllFilesArray()) {
             resumes.add(getResume(file));
         }
         LOGGER.info("Successfully got all resumes");
@@ -99,19 +99,19 @@ public class FileStorage extends AbstractStorage<File> {
     @Override
     public int size() {
         LOGGER.info("Get size");
-        return getAllFiles().length;
+        return getAllFilesArray().length;
     }
 
     @Override
     public void clear() {
         LOGGER.info("Clear directory");
-        for (File file : getAllFiles()) {
+        for (File file : getAllFilesArray()) {
             deleteResume(file);
         }
         LOGGER.info("Successfully cleared");
     }
 
-    private File[] getAllFiles() {
+    private File[] getAllFilesArray() {
         File[] files = directory.listFiles();
         if (files != null) {
             return files;

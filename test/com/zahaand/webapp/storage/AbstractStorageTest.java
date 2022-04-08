@@ -7,6 +7,7 @@ import com.zahaand.webapp.model.Resume;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +15,7 @@ import static org.junit.Assert.assertEquals;
 
 public abstract class AbstractStorageTest {
     protected final Storage storage;
-    protected static final String STORAGE_DIRECTORY = "test/com/zahaand/webapp/storage/StorageTest";
+    protected static final File STORAGE_DIRECTORY = new File("test/com/zahaand/webapp/storage/StorageTest");
 
     private static final String UUID_1 = "uuid1";
     private static final String UUID_2 = "uuid2";
