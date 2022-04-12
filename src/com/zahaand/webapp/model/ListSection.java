@@ -4,8 +4,11 @@ import java.util.List;
 import java.util.Objects;
 
 public class ListSection extends AbstractSection {
-    private final List<String> bulletedList;
+    private List<String> bulletedList;
     private static final long SERIALIZABLE_VERSION = 1L;
+
+    public ListSection() {
+    }
 
     public ListSection(List<String> bulletedList) {
         Objects.requireNonNull(bulletedList, "list must not be null");

@@ -1,5 +1,10 @@
 package com.zahaand.webapp.model;
 
+import com.zahaand.webapp.util.LocalDateAdapter;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Month;
@@ -10,10 +15,14 @@ import java.util.Objects;
 import static com.zahaand.webapp.util.DateUtil.NOW;
 import static com.zahaand.webapp.util.DateUtil.of;
 
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Organization implements Serializable {
-    private final Link homePage;
-    private final List<Position> positions;
+    private Link homePage;
+    private List<Position> positions;
     private static final long SERIALIZABLE_VERSION = 1L;
+
+    public Organization() {
+    }
 
     public Organization(String name, String url, Position... positions) {
         this(new Link(name, url), Arrays.asList(positions));
@@ -48,12 +57,18 @@ public class Organization implements Serializable {
         return Objects.hash(homePage, positions);
     }
 
+    @XmlAccessorType(XmlAccessType.FIELD)
     public static class Position implements Serializable {
-        private final String position;
-        private final String description;
-        private final LocalDate startDate;
-        private final LocalDate endDate;
+        private String position;
+        private String description;
+        @XmlJavaTypeAdapter(LocalDateAdapter.class)
+        private LocalDate startDate;
+        @XmlJavaTypeAdapter(LocalDateAdapter.class)
+        private LocalDate endDate;
         private static final long SERIALIZABLE_VERSION = 1L;
+
+        public Position() {
+        }
 
         public Position(int startYear, Month startMonth, String position, String description) {
             this(of(startYear, startMonth), NOW, position, description);

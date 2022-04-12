@@ -1,4 +1,4 @@
-package com.zahaand.webapp.storage.strategy;
+package com.zahaand.webapp.storage.serializer;
 
 import com.zahaand.webapp.model.Resume;
 

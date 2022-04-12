@@ -1,12 +1,18 @@
 package com.zahaand.webapp.model;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import java.io.Serializable;
 import java.util.Objects;
 
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Link implements Serializable {
-    private final String organizationName;
-    private final String url;
+    private String organizationName;
+    private String url;
     private static final long SERIALIZABLE_VERSION = 1L;
+
+    public Link() {
+    }
 
     public Link(String organizationName, String url) {
         Objects.requireNonNull(organizationName, "organization name must not be null");

@@ -2,7 +2,7 @@ package com.zahaand.webapp.storage;
 
 import com.zahaand.webapp.exception.StorageException;
 import com.zahaand.webapp.model.Resume;
-import com.zahaand.webapp.storage.strategy.SerializationStrategy;
+import com.zahaand.webapp.storage.serializer.SerializationStrategy;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
