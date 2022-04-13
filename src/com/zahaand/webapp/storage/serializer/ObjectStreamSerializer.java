@@ -5,7 +5,7 @@ import com.zahaand.webapp.model.Resume;
 
 import java.io.*;
 
-public class ObjectStreamStrategy implements SerializationStrategy {
+public class ObjectStreamSerializer implements StreamSerializer {
     @Override
     public void writeResume(Resume resume, OutputStream outputStream) throws IOException {
         try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream)) {

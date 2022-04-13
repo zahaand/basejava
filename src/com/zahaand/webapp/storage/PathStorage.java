@@ -2,7 +2,7 @@ package com.zahaand.webapp.storage;
 
 import com.zahaand.webapp.exception.StorageException;
 import com.zahaand.webapp.model.Resume;
-import com.zahaand.webapp.storage.serializer.SerializationStrategy;
+import com.zahaand.webapp.storage.serializer.StreamSerializer;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -17,9 +17,9 @@ import java.util.stream.Stream;
 
 public class PathStorage extends AbstractStorage<Path> {
     private final Path directory;
-    private final SerializationStrategy strategy;
+    private final StreamSerializer strategy;
 
-    protected PathStorage(String directory, SerializationStrategy strategy) {
+    protected PathStorage(String directory, StreamSerializer strategy) {
         Objects.requireNonNull(directory, "directory must not be null");
         Objects.requireNonNull(strategy, "strategy must not be null");
         this.directory = Paths.get(directory);
