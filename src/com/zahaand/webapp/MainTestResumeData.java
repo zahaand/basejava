@@ -13,19 +13,19 @@ public class MainTestResumeData {
     public static void main(String[] args) {
         Resume resume = new Resume("Григорий Кислин");
 
-        resume.setContact(ContactType.PHONE_NUMBER, "+7(921) 855-0482");
-        resume.setContact(ContactType.SKYPE, "grigory.kislin");
-        resume.setContact(ContactType.EMAIL, "gkislin@yandex.ru");
-        resume.setContact(ContactType.LINKEDIN, "Профиль LinkedIn");
-        resume.setContact(ContactType.GITHUB, "Профиль GitHub");
-        resume.setContact(ContactType.STACKOVERFLOW, "Профиль Stackoverflow");
-        resume.setContact(ContactType.HOMEPAGE, "Домашняя страница");
+        resume.addContact(ContactType.PHONE_NUMBER, "+7(921) 855-0482");
+        resume.addContact(ContactType.SKYPE, "grigory.kislin");
+        resume.addContact(ContactType.EMAIL, "gkislin@yandex.ru");
+        resume.addContact(ContactType.LINKEDIN, "Профиль LinkedIn");
+        resume.addContact(ContactType.GITHUB, "Профиль GitHub");
+        resume.addContact(ContactType.STACKOVERFLOW, "Профиль Stackoverflow");
+        resume.addContact(ContactType.HOMEPAGE, "Домашняя страница");
 
         AbstractSection objective = new LineSection("Ведущий стажировок и корпоративного обучения по Java Web и Enterprise технологиям");
-        resume.setSectionData(SectionType.OBJECTIVE, objective);
+        resume.addSectionData(SectionType.OBJECTIVE, objective);
 
         AbstractSection personal = new LineSection("Аналитический склад ума, сильная логика, креативность, инициативность. Пурист кода и архитектуры.");
-        resume.setSectionData(SectionType.PERSONAL, personal);
+        resume.addSectionData(SectionType.PERSONAL, personal);
 
         List<String> achievements = new ArrayList<>();
         achievements.add("С 2013 года: разработка проектов \"Разработка Web приложения\",\"Java Enterprise\", \"Многомодульный maven. Многопоточность. XML (JAXB/StAX). Веб сервисы (JAX-RS/SOAP). Удаленное взаимодействие (JMS/AKKA)\". Организация онлайн стажировок и ведение проектов. Более 1000 выпускников.");
@@ -34,7 +34,7 @@ public class MainTestResumeData {
         achievements.add("Реализация c нуля Rich Internet Application приложения на стеке технологий JPA, Spring, Spring-MVC, GWT, ExtGWT (GXT), Commet, HTML5, Highstock для алгоритмического трейдинга.");
         achievements.add("Создание JavaEE фреймворка для отказоустойчивого взаимодействия слабо-связанных сервисов (SOA-base архитектура, JAX-WS, JMS, AS Glassfish). Сбор статистики сервисов и информации о состоянии через систему мониторинга Nagios. Реализация онлайн клиента для администрирования и мониторинга системы по JMX (Jython/ Django).");
         achievements.add("Реализация протоколов по приему платежей всех основных платежных системы России (Cyberplat, Eport, Chronopay, Сбербанк), Белоруcсии(Erip, Osmp) и Никарагуа.");
-        resume.setSectionData(SectionType.ACHIEVEMENT, new ListSection(achievements));
+        resume.addSectionData(SectionType.ACHIEVEMENT, new ListSection(achievements));
 
         List<String> qualifications = new ArrayList<>();
         qualifications.add("JEE AS: GlassFish (v2.1, v3), OC4J, JBoss, Tomcat, Jetty, WebLogic, WSO2");
@@ -52,7 +52,7 @@ public class MainTestResumeData {
         qualifications.add("администрирование Hudson/Jenkins, Ant + custom task, SoapUI, JPublisher, Flyway, Nagios, iReport, OpenCmis, Bonita, pgBouncer.");
         qualifications.add("Отличное знание и опыт применения концепций ООП, SOA, шаблонов проектрирования, архитектурных шаблонов, UML, функционального программирования");
         qualifications.add("Родной русский, английский \"upper intermediate\"");
-        resume.setSectionData(SectionType.QUALIFICATIONS, new ListSection(qualifications));
+        resume.addSectionData(SectionType.QUALIFICATIONS, new ListSection(qualifications));
 
         Link companyLink1 = new Link("Java Online Projects", null);
         String position1 = "Автор проекта.";
@@ -127,7 +127,7 @@ public class MainTestResumeData {
         organizations.add(organization6);
         organizations.add(organization7);
         organizations.add(organization8);
-        resume.setSectionData(SectionType.EXPERIENCE, new OrganizationSection(organizations));
+        resume.addSectionData(SectionType.EXPERIENCE, new OrganizationSection(organizations));
 
         Link courseLink1 = new Link("Coursera", null);
         String courseName1 = "\"Functional Programming Principles in Scala\" by Martin Odersky";
@@ -189,7 +189,7 @@ public class MainTestResumeData {
         educations.add(educationalInstitution4);
         educations.add(educationalInstitution5);
         educations.add(educationalInstitution7);
-        resume.setSectionData(SectionType.EDUCATION, new OrganizationSection(educations));
+        resume.addSectionData(SectionType.EDUCATION, new OrganizationSection(educations));
 
         System.out.println(resume);
     }
@@ -197,19 +197,19 @@ public class MainTestResumeData {
     public Resume createResume(String uuid, String fullName) {
         Resume resume = new Resume(uuid, fullName);
 
-        resume.setContact(ContactType.PHONE_NUMBER, "+7(921) 855-0482");
-        resume.setContact(ContactType.SKYPE, "grigory.kislin");
-        resume.setContact(ContactType.EMAIL, "gkislin@yandex.ru");
-        resume.setContact(ContactType.LINKEDIN, "Профиль LinkedIn");
-        resume.setContact(ContactType.GITHUB, "Профиль GitHub");
-        resume.setContact(ContactType.STACKOVERFLOW, "Профиль Stackoverflow");
-        resume.setContact(ContactType.HOMEPAGE, "Домашняя страница");
+        resume.addContact(ContactType.PHONE_NUMBER, "+7(921) 855-0482");
+        resume.addContact(ContactType.SKYPE, "grigory.kislin");
+        resume.addContact(ContactType.EMAIL, "gkislin@yandex.ru");
+        resume.addContact(ContactType.LINKEDIN, "Профиль LinkedIn");
+        resume.addContact(ContactType.GITHUB, "Профиль GitHub");
+        resume.addContact(ContactType.STACKOVERFLOW, "Профиль Stackoverflow");
+        resume.addContact(ContactType.HOMEPAGE, "Домашняя страница");
 
         AbstractSection objective = new LineSection("Ведущий стажировок и корпоративного обучения по Java Web и Enterprise технологиям");
-        resume.setSectionData(SectionType.OBJECTIVE, objective);
+        resume.addSectionData(SectionType.OBJECTIVE, objective);
 
         AbstractSection personal = new LineSection("Аналитический склад ума, сильная логика, креативность, инициативность. Пурист кода и архитектуры.");
-        resume.setSectionData(SectionType.PERSONAL, personal);
+        resume.addSectionData(SectionType.PERSONAL, personal);
 
         List<String> achievements = new ArrayList<>();
         achievements.add("С 2013 года: разработка проектов \"Разработка Web приложения\",\"Java Enterprise\", \"Многомодульный maven. Многопоточность. XML (JAXB/StAX). Веб сервисы (JAX-RS/SOAP). Удаленное взаимодействие (JMS/AKKA)\". Организация онлайн стажировок и ведение проектов. Более 1000 выпускников.");
@@ -218,7 +218,7 @@ public class MainTestResumeData {
         achievements.add("Реализация c нуля Rich Internet Application приложения на стеке технологий JPA, Spring, Spring-MVC, GWT, ExtGWT (GXT), Commet, HTML5, Highstock для алгоритмического трейдинга.");
         achievements.add("Создание JavaEE фреймворка для отказоустойчивого взаимодействия слабо-связанных сервисов (SOA-base архитектура, JAX-WS, JMS, AS Glassfish). Сбор статистики сервисов и информации о состоянии через систему мониторинга Nagios. Реализация онлайн клиента для администрирования и мониторинга системы по JMX (Jython/ Django).");
         achievements.add("Реализация протоколов по приему платежей всех основных платежных системы России (Cyberplat, Eport, Chronopay, Сбербанк), Белоруcсии(Erip, Osmp) и Никарагуа.");
-        resume.setSectionData(SectionType.ACHIEVEMENT, new ListSection(achievements));
+        resume.addSectionData(SectionType.ACHIEVEMENT, new ListSection(achievements));
 
         List<String> qualifications = new ArrayList<>();
         qualifications.add("JEE AS: GlassFish (v2.1, v3), OC4J, JBoss, Tomcat, Jetty, WebLogic, WSO2");
@@ -236,7 +236,7 @@ public class MainTestResumeData {
         qualifications.add("администрирование Hudson/Jenkins, Ant + custom task, SoapUI, JPublisher, Flyway, Nagios, iReport, OpenCmis, Bonita, pgBouncer.");
         qualifications.add("Отличное знание и опыт применения концепций ООП, SOA, шаблонов проектрирования, архитектурных шаблонов, UML, функционального программирования");
         qualifications.add("Родной русский, английский \"upper intermediate\"");
-        resume.setSectionData(SectionType.QUALIFICATIONS, new ListSection(qualifications));
+        resume.addSectionData(SectionType.QUALIFICATIONS, new ListSection(qualifications));
 
         Link companyLink1 = new Link("Java Online Projects", null);
         String position1 = "Автор проекта.";
@@ -311,7 +311,7 @@ public class MainTestResumeData {
         organizations.add(organization6);
         organizations.add(organization7);
         organizations.add(organization8);
-        resume.setSectionData(SectionType.EXPERIENCE, new OrganizationSection(organizations));
+        resume.addSectionData(SectionType.EXPERIENCE, new OrganizationSection(organizations));
 
         Link courseLink1 = new Link("Coursera", null);
         String courseName1 = "\"Functional Programming Principles in Scala\" by Martin Odersky";
@@ -373,7 +373,7 @@ public class MainTestResumeData {
         educations.add(educationalInstitution4);
         educations.add(educationalInstitution5);
         educations.add(educationalInstitution7);
-        resume.setSectionData(SectionType.EDUCATION, new OrganizationSection(educations));
+        resume.addSectionData(SectionType.EDUCATION, new OrganizationSection(educations));
 
         return resume;
     }

@@ -41,15 +41,23 @@ public class Resume implements Comparable<Resume>, Serializable {
         return uuid;
     }
 
-    public String getFullName(String uuid) {
+    public String getFullName() {
         return fullName;
     }
 
-    public void setContact(ContactType contactType, String contact) {
+    public Map<ContactType, String> getContacts() {
+        return contacts;
+    }
+
+    public Map<SectionType, AbstractSection> getSections() {
+        return sections;
+    }
+
+    public void addContact(ContactType contactType, String contact) {
         contacts.put(contactType, contact);
     }
 
-    public void setSectionData(SectionType sectionType, AbstractSection section) {
+    public void addSectionData(SectionType sectionType, AbstractSection section) {
         sections.put(sectionType, section);
     }
 
