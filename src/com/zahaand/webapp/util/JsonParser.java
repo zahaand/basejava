@@ -2,14 +2,14 @@ package com.zahaand.webapp.util;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.zahaand.webapp.model.SectionType;
+import com.zahaand.webapp.model.AbstractSection;
 
 import java.io.Reader;
 import java.io.Writer;
 
 public class JsonParser {
     private static final Gson GSON = new GsonBuilder()
-            .registerTypeAdapter(SectionType.class, new JsonSectionAdapter<>())
+            .registerTypeAdapter(AbstractSection.class, new JsonSectionAdapter<>())
             .create();
 
     public static <T> T read(Reader reader, Class<T> clazz) {
