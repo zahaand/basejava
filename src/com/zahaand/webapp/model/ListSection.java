@@ -15,6 +15,10 @@ public class ListSection extends AbstractSection {
         this.bulletedList = bulletedList;
     }
 
+    public List<String> getBulletedList() {
+        return bulletedList;
+    }
+
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();

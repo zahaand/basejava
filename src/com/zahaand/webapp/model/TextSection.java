@@ -2,16 +2,20 @@ package com.zahaand.webapp.model;
 
 import java.util.Objects;
 
-public class LineSection extends AbstractSection {
+public class TextSection extends AbstractSection {
     private String text;
     private static final long SERIALIZABLE_VERSION = 1L;
 
-    public LineSection() {
+    public TextSection() {
     }
 
-    public LineSection(String text) {
+    public TextSection(String text) {
         Objects.requireNonNull(text, "line must not be null");
         this.text = text;
+    }
+
+    public String getText() {
+        return text;
     }
 
     @Override
@@ -23,7 +27,7 @@ public class LineSection extends AbstractSection {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        LineSection that = (LineSection) o;
+        TextSection that = (TextSection) o;
         return text.equals(that.text);
     }
 

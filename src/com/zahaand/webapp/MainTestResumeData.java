@@ -21,10 +21,10 @@ public class MainTestResumeData {
         resume.addContact(ContactType.STACKOVERFLOW, "Профиль Stackoverflow");
         resume.addContact(ContactType.HOMEPAGE, "Домашняя страница");
 
-        AbstractSection objective = new LineSection("Ведущий стажировок и корпоративного обучения по Java Web и Enterprise технологиям");
+        AbstractSection objective = new TextSection("Ведущий стажировок и корпоративного обучения по Java Web и Enterprise технологиям");
         resume.addSectionData(SectionType.OBJECTIVE, objective);
 
-        AbstractSection personal = new LineSection("Аналитический склад ума, сильная логика, креативность, инициативность. Пурист кода и архитектуры.");
+        AbstractSection personal = new TextSection("Аналитический склад ума, сильная логика, креативность, инициативность. Пурист кода и архитектуры.");
         resume.addSectionData(SectionType.PERSONAL, personal);
 
         List<String> achievements = new ArrayList<>();
@@ -205,10 +205,10 @@ public class MainTestResumeData {
         resume.addContact(ContactType.STACKOVERFLOW, "Профиль Stackoverflow");
         resume.addContact(ContactType.HOMEPAGE, "Домашняя страница");
 
-        AbstractSection objective = new LineSection("Ведущий стажировок и корпоративного обучения по Java Web и Enterprise технологиям");
+        AbstractSection objective = new TextSection("Ведущий стажировок и корпоративного обучения по Java Web и Enterprise технологиям");
         resume.addSectionData(SectionType.OBJECTIVE, objective);
 
-        AbstractSection personal = new LineSection("Аналитический склад ума, сильная логика, креативность, инициативность. Пурист кода и архитектуры.");
+        AbstractSection personal = new TextSection("Аналитический склад ума, сильная логика, креативность, инициативность. Пурист кода и архитектуры.");
         resume.addSectionData(SectionType.PERSONAL, personal);
 
         List<String> achievements = new ArrayList<>();

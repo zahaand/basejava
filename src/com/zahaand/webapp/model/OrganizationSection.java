@@ -18,6 +18,10 @@ public class OrganizationSection extends AbstractSection {
         this.organizations = organizations;
     }
 
+    public List<Organization> getOrganizations() {
+        return organizations;
+    }
+
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();

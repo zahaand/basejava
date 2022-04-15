@@ -20,6 +20,14 @@ public class Link implements Serializable {
         this.url = url;
     }
 
+    public String getOrganizationName() {
+        return organizationName;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
     @Override
     public String toString() {
         return organizationName + "\n" + url + "\n";
