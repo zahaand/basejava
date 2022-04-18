@@ -43,29 +43,29 @@ public class DataStreamSerializer implements StreamSerializer {
                         for (Organization organization : organizations) {
                             dataOutputStream.writeUTF(organization.getHomePage().getOrganizationName());
                             String url = organization.getHomePage().getUrl();
-                            if (url == null) {
-                                dataOutputStream.writeUTF("");
-                            } else {
-                                dataOutputStream.writeUTF(url);
-                            }
+                            dataOutputStream.writeUTF(writeStringIfNull(url));
                             List<Organization.Position> positions = organization.getPositions();
                             dataOutputStream.writeInt(positions.size());
                             for (Organization.Position position : positions) {
                                 dataOutputStream.writeUTF(position.getPosition());
                                 String description = position.getDescription();
-                                if (description == null) {
-                                    dataOutputStream.writeUTF("");
-                                } else {
-                                    dataOutputStream.writeUTF(description);
-                                }
-                                dataOutputStream.writeUTF(String.valueOf(position.getStartDate()));
-                                dataOutputStream.writeUTF(String.valueOf(position.getEndDate()));
+                                dataOutputStream.writeUTF(writeStringIfNull(description));
+                                dataOutputStream.writeUTF(writeLocalDate(position.getStartDate()));
+                                dataOutputStream.writeUTF(writeLocalDate(position.getEndDate()));
                             }
                         }
                     }
                 }
             }
         }
+    }
+
+    private String writeStringIfNull(String url) {
+        return url == null ? "" : url;
+    }
+
+    private String writeLocalDate(LocalDate date) {
+        return String.valueOf(date);
     }
 
     @Override
@@ -111,8 +111,8 @@ public class DataStreamSerializer implements StreamSerializer {
                             for (int k = 0; k < positionsCount; k++) {
                                 String position = dataInputStream.readUTF();
                                 String description = dataInputStream.readUTF();
-                                LocalDate startDate = LocalDate.parse(dataInputStream.readUTF());
-                                LocalDate endDate = LocalDate.parse(dataInputStream.readUTF());
+                                LocalDate startDate = readLocalDate(dataInputStream.readUTF());
+                                LocalDate endDate = readLocalDate(dataInputStream.readUTF());
                                 positions.add(new Organization.Position(startDate, endDate, position, description));
                             }
                             Organization organization = new Organization(homePage, positions);
@@ -126,4 +126,10 @@ public class DataStreamSerializer implements StreamSerializer {
             return resume;
         }
     }
+
+    private LocalDate readLocalDate(String date) {
+        return LocalDate.parse(date);
+    }
 }
+
+
