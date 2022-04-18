@@ -7,10 +7,10 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 
 public class XmlStreamSerializer implements StreamSerializer {
-    private XmlParser xmlParser;
+    private final XmlParser xmlParser;
 
     public XmlStreamSerializer() {
-        xmlParser = new XmlParser(Resume.class, Organization.class, Link.class, Organization.Position.class, LineSection.class, ListSection.class, OrganizationSection.class);
+        xmlParser = new XmlParser(Resume.class, Organization.class, Link.class, Organization.Position.class, TextSection.class, ListSection.class, OrganizationSection.class);
     }
 
     @Override
