@@ -30,9 +30,10 @@ public class DataStreamSerializer implements StreamSerializer {
                     case OBJECTIVE, PERSONAL -> dataOutputStream.writeUTF(String.valueOf(entry.getValue()));
                     case ACHIEVEMENT, QUALIFICATIONS -> {
                         ListSection listSection = (ListSection) entry.getValue();
-                        dataOutputStream.writeInt(listSection.getBulletedList().size());
-                        for (String s : listSection.getBulletedList()) {
-                            dataOutputStream.writeUTF(s);
+                        List<String> bulletedList = listSection.getBulletedList();
+                        dataOutputStream.writeInt(bulletedList.size());
+                        for (String string : bulletedList) {
+                            dataOutputStream.writeUTF(string);
                         }
                     }
                     case EDUCATION, EXPERIENCE -> {
@@ -40,13 +41,23 @@ public class DataStreamSerializer implements StreamSerializer {
                         List<Organization> organizations = organizationSection.getOrganizations();
                         dataOutputStream.writeInt(organizations.size());
                         for (Organization organization : organizations) {
-                            dataOutputStream.writeUTF((organization.getHomePage().getOrganizationName()));
-                            dataOutputStream.writeUTF((organization.getHomePage().getUrl()));
+                            dataOutputStream.writeUTF(organization.getHomePage().getOrganizationName());
+                            String url = organization.getHomePage().getUrl();
+                            if (url == null) {
+                                dataOutputStream.writeUTF("");
+                            } else {
+                                dataOutputStream.writeUTF(url);
+                            }
                             List<Organization.Position> positions = organization.getPositions();
                             dataOutputStream.writeInt(positions.size());
                             for (Organization.Position position : positions) {
                                 dataOutputStream.writeUTF(position.getPosition());
-                                dataOutputStream.writeUTF(position.getDescription());
+                                String description = position.getDescription();
+                                if (description == null) {
+                                    dataOutputStream.writeUTF("");
+                                } else {
+                                    dataOutputStream.writeUTF(description);
+                                }
                                 dataOutputStream.writeUTF(String.valueOf(position.getStartDate()));
                                 dataOutputStream.writeUTF(String.valueOf(position.getEndDate()));
                             }
@@ -81,7 +92,8 @@ public class DataStreamSerializer implements StreamSerializer {
                     }
                     case ACHIEVEMENT, QUALIFICATIONS -> {
                         List<String> bulletedList = new ArrayList<>();
-                        for (int j = 0; j < dataInputStream.readInt(); j++) {
+                        int bulletedListCount = dataInputStream.readInt();
+                        for (int j = 0; j < bulletedListCount; j++) {
                             bulletedList.add(dataInputStream.readUTF());
                         }
                         ListSection listSection = new ListSection(bulletedList);
@@ -89,12 +101,14 @@ public class DataStreamSerializer implements StreamSerializer {
                     }
                     case EDUCATION, EXPERIENCE -> {
                         List<Organization> organizations = new ArrayList<>();
-                        for (int j = 0; j < dataInputStream.readInt(); j++) {
+                        int organizationsCount = dataInputStream.readInt();
+                        for (int j = 0; j < organizationsCount; j++) {
                             String organizationName = dataInputStream.readUTF();
                             String url = dataInputStream.readUTF();
                             Link homePage = new Link(organizationName, url);
                             List<Organization.Position> positions = new ArrayList<>();
-                            for (int k = 0; k < dataInputStream.readInt(); k++) {
+                            int positionsCount = dataInputStream.readInt();
+                            for (int k = 0; k < positionsCount; k++) {
                                 String position = dataInputStream.readUTF();
                                 String description = dataInputStream.readUTF();
                                 LocalDate startDate = LocalDate.parse(dataInputStream.readUTF());
