@@ -5,6 +5,7 @@ import com.zahaand.webapp.model.*;
 import java.io.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -16,48 +17,53 @@ public class DataStreamSerializer implements StreamSerializer {
             dataOutputStream.writeUTF(resume.getFullName());
 
             Map<ContactType, String> contacts = resume.getContacts();
-            dataOutputStream.writeInt(contacts.size());
-            for (Map.Entry<ContactType, String> entry : contacts.entrySet()) {
-                dataOutputStream.writeUTF(entry.getKey().name());
-                dataOutputStream.writeUTF(entry.getValue());
-            }
+            writeCollection(contacts.entrySet(), dataOutputStream, contact -> {
+                dataOutputStream.writeUTF(contact.getKey().name());
+                dataOutputStream.writeUTF(contact.getValue());
+            });
 
             Map<SectionType, AbstractSection> sections = resume.getSections();
-            dataOutputStream.writeInt(sections.size());
-            for (Map.Entry<SectionType, AbstractSection> entry : sections.entrySet()) {
-                dataOutputStream.writeUTF(entry.getKey().name());
-                switch (entry.getKey()) {
-                    case OBJECTIVE, PERSONAL -> dataOutputStream.writeUTF(String.valueOf(entry.getValue()));
+            writeCollection(sections.entrySet(), dataOutputStream, section -> {
+                dataOutputStream.writeUTF(section.getKey().name());
+                switch (section.getKey()) {
+                    case OBJECTIVE, PERSONAL -> dataOutputStream.writeUTF(String.valueOf(section.getValue()));
                     case ACHIEVEMENT, QUALIFICATIONS -> {
-                        ListSection listSection = (ListSection) entry.getValue();
+                        ListSection listSection = (ListSection) section.getValue();
                         List<String> bulletedList = listSection.getBulletedList();
-                        dataOutputStream.writeInt(bulletedList.size());
-                        for (String string : bulletedList) {
-                            dataOutputStream.writeUTF(string);
-                        }
+                        writeCollection(bulletedList, dataOutputStream, dataOutputStream::writeUTF);
                     }
                     case EDUCATION, EXPERIENCE -> {
-                        OrganizationSection organizationSection = (OrganizationSection) entry.getValue();
+                        OrganizationSection organizationSection = (OrganizationSection) section.getValue();
                         List<Organization> organizations = organizationSection.getOrganizations();
-                        dataOutputStream.writeInt(organizations.size());
-                        for (Organization organization : organizations) {
+                        writeCollection(organizations, dataOutputStream, organization -> {
                             dataOutputStream.writeUTF(organization.getHomePage().getOrganizationName());
                             String url = organization.getHomePage().getUrl();
                             writeStringIfNull(url, dataOutputStream);
                             List<Organization.Position> positions = organization.getPositions();
-                            dataOutputStream.writeInt(positions.size());
-                            for (Organization.Position position : positions) {
+                            writeCollection(positions, dataOutputStream, position -> {
                                 dataOutputStream.writeUTF(position.getPosition());
                                 String description = position.getDescription();
                                 writeStringIfNull(description, dataOutputStream);
                                 writeLocalDate(position.getStartDate(), dataOutputStream);
                                 writeLocalDate(position.getEndDate(), dataOutputStream);
-                            }
-                        }
+                            });
+                        });
                     }
                 }
-            }
+            });
         }
+    }
+
+    private <T> void writeCollection(Collection<T> collection, DataOutputStream dataOutputStream, ElementWriter<T> writer) throws IOException {
+        dataOutputStream.writeInt(collection.size());
+        for (T t : collection) {
+            writer.write(t);
+        }
+    }
+
+    @FunctionalInterface
+    private interface ElementWriter<T> {
+        void write(T t) throws IOException;
     }
 
     private void writeStringIfNull(String url, DataOutputStream dataOutputStream) throws IOException {
