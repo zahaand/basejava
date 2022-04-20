@@ -126,7 +126,7 @@ public class DataStreamSerializer implements StreamSerializer {
         }
     }
 
-    private <T> void readElement(DataInputStream dataInputStream, ElementReader reader) throws IOException {
+    private void readElement(DataInputStream dataInputStream, ElementReader reader) throws IOException {
         int size = dataInputStream.readInt();
         for (int i = 0; i < size; i++) {
             reader.read();
