@@ -81,15 +81,13 @@ public class DataStreamSerializer implements StreamSerializer {
             String fullName = dataInputStream.readUTF();
             Resume resume = new Resume(uuid, fullName);
 
-            int contactsCount = dataInputStream.readInt();
-            for (int i = 0; i < contactsCount; i++) {
+            readElement(dataInputStream, () -> {
                 ContactType contactType = ContactType.valueOf(dataInputStream.readUTF());
                 String value = dataInputStream.readUTF();
                 resume.addContact(contactType, value);
-            }
+            });
 
-            int sectionsCount = dataInputStream.readInt();
-            for (int i = 0; i < sectionsCount; i++) {
+            readElement(dataInputStream, () -> {
                 SectionType sectionType = SectionType.valueOf(dataInputStream.readUTF());
                 switch (sectionType) {
                     case OBJECTIVE, PERSONAL -> {
@@ -98,39 +96,46 @@ public class DataStreamSerializer implements StreamSerializer {
                     }
                     case ACHIEVEMENT, QUALIFICATIONS -> {
                         List<String> bulletedList = new ArrayList<>();
-                        int bulletedListCount = dataInputStream.readInt();
-                        for (int j = 0; j < bulletedListCount; j++) {
-                            bulletedList.add(dataInputStream.readUTF());
-                        }
+                        readElement(dataInputStream, () -> bulletedList.add(dataInputStream.readUTF()));
                         ListSection listSection = new ListSection(bulletedList);
                         resume.addSectionData(sectionType, listSection);
                     }
                     case EDUCATION, EXPERIENCE -> {
                         List<Organization> organizations = new ArrayList<>();
-                        int organizationsCount = dataInputStream.readInt();
-                        for (int j = 0; j < organizationsCount; j++) {
+                        readElement(dataInputStream, () -> {
                             String organizationName = dataInputStream.readUTF();
                             String url = dataInputStream.readUTF();
                             Link homePage = new Link(organizationName, url);
                             List<Organization.Position> positions = new ArrayList<>();
-                            int positionsCount = dataInputStream.readInt();
-                            for (int k = 0; k < positionsCount; k++) {
+                            readElement(dataInputStream, () -> {
                                 String position = dataInputStream.readUTF();
                                 String description = dataInputStream.readUTF();
                                 LocalDate startDate = readLocalDate(dataInputStream);
                                 LocalDate endDate = readLocalDate(dataInputStream);
                                 positions.add(new Organization.Position(startDate, endDate, position, description));
-                            }
+                            });
                             Organization organization = new Organization(homePage, positions);
                             organizations.add(organization);
                             OrganizationSection organizationSection = new OrganizationSection(organizations);
                             resume.addSectionData(sectionType, organizationSection);
-                        }
+                        });
                     }
                 }
-            }
+            });
             return resume;
         }
+    }
+
+    private <T> void readElement(DataInputStream dataInputStream, ElementReader reader) throws IOException {
+        int size = dataInputStream.readInt();
+        for (int i = 0; i < size; i++) {
+            reader.read();
+        }
+    }
+
+    @FunctionalInterface
+    private interface ElementReader {
+        void read() throws IOException;
     }
 
     private LocalDate readLocalDate(DataInputStream dataInputStream) throws IOException {
