@@ -80,53 +80,53 @@ public class DataStreamSerializer implements StreamSerializer {
             String uuid = dataInputStream.readUTF();
             String fullName = dataInputStream.readUTF();
             Resume resume = new Resume(uuid, fullName);
-
-            readElement(dataInputStream, () -> {
+            readElements(dataInputStream, () -> {
                 ContactType contactType = ContactType.valueOf(dataInputStream.readUTF());
                 String value = dataInputStream.readUTF();
                 resume.addContact(contactType, value);
             });
-
-            readElement(dataInputStream, () -> {
+            readElements(dataInputStream, () -> {
                 SectionType sectionType = SectionType.valueOf(dataInputStream.readUTF());
-                switch (sectionType) {
-                    case OBJECTIVE, PERSONAL -> {
-                        TextSection textSection = new TextSection(dataInputStream.readUTF());
-                        resume.addSectionData(sectionType, textSection);
-                    }
-                    case ACHIEVEMENT, QUALIFICATIONS -> {
-                        List<String> bulletedList = new ArrayList<>();
-                        readElement(dataInputStream, () -> bulletedList.add(dataInputStream.readUTF()));
-                        ListSection listSection = new ListSection(bulletedList);
-                        resume.addSectionData(sectionType, listSection);
-                    }
-                    case EDUCATION, EXPERIENCE -> {
-                        List<Organization> organizations = new ArrayList<>();
-                        readElement(dataInputStream, () -> {
-                            String organizationName = dataInputStream.readUTF();
-                            String url = dataInputStream.readUTF();
-                            Link homePage = new Link(organizationName, url);
-                            List<Organization.Position> positions = new ArrayList<>();
-                            readElement(dataInputStream, () -> {
-                                String position = dataInputStream.readUTF();
-                                String description = dataInputStream.readUTF();
-                                LocalDate startDate = readLocalDate(dataInputStream);
-                                LocalDate endDate = readLocalDate(dataInputStream);
-                                positions.add(new Organization.Position(startDate, endDate, position, description));
-                            });
-                            Organization organization = new Organization(homePage, positions);
-                            organizations.add(organization);
-                            OrganizationSection organizationSection = new OrganizationSection(organizations);
-                            resume.addSectionData(sectionType, organizationSection);
-                        });
-                    }
-                }
+                resume.addSectionData(sectionType, readSection(sectionType, dataInputStream));
             });
             return resume;
         }
     }
 
-    private void readElement(DataInputStream dataInputStream, ElementReader reader) throws IOException {
+    private AbstractSection readSection(SectionType sectionType, DataInputStream dataInputStream) throws IOException {
+        switch (sectionType) {
+            case OBJECTIVE, PERSONAL -> {
+                return new TextSection(dataInputStream.readUTF());
+            }
+            case ACHIEVEMENT, QUALIFICATIONS -> {
+                List<String> bulletedList = new ArrayList<>();
+                readElements(dataInputStream, () -> bulletedList.add(dataInputStream.readUTF()));
+                return new ListSection(bulletedList);
+            }
+            case EDUCATION, EXPERIENCE -> {
+                List<Organization> organizations = new ArrayList<>();
+                readElements(dataInputStream, () -> {
+                    String organizationName = dataInputStream.readUTF();
+                    String url = dataInputStream.readUTF();
+                    Link homePage = new Link(organizationName, url);
+                    List<Organization.Position> positions = new ArrayList<>();
+                    readElements(dataInputStream, () -> {
+                        String position = dataInputStream.readUTF();
+                        String description = dataInputStream.readUTF();
+                        LocalDate startDate = readLocalDate(dataInputStream);
+                        LocalDate endDate = readLocalDate(dataInputStream);
+                        positions.add(new Organization.Position(startDate, endDate, position, description));
+                    });
+                    Organization organization = new Organization(homePage, positions);
+                    organizations.add(organization);
+                });
+                return new OrganizationSection(organizations);
+            }
+            default -> throw new IllegalStateException("Unexpected value: " + sectionType);
+        }
+    }
+
+    private void readElements(DataInputStream dataInputStream, ElementReader reader) throws IOException {
         int size = dataInputStream.readInt();
         for (int i = 0; i < size; i++) {
             reader.read();
