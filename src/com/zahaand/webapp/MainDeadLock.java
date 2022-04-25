@@ -12,37 +12,19 @@ public class MainDeadLock {
         Thread thread3 = new Thread(runnable);
         thread3.start();
 
-        MyThreadThread thread4 = new MyThreadThread();
+        MyThread thread4 = new MyThread();
         thread4.start();
     }
 
     // deadLock #1
     static Thread thread1 = new Thread(() -> {
         System.out.println("thread1 run");
-        synchronized (LOCK_1) {
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            synchronized (LOCK_2) {
-                System.out.println("thread1 done");
-            }
-        }
+        doLock1();
     });
 
     static Thread thread2 = new Thread(() -> {
         System.out.println("thread2 run");
-        synchronized (LOCK_2) {
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            synchronized (LOCK_1) {
-                System.out.println("thread2 done");
-            }
-        }
+        doLock2();
     });
 
     // deadLock #2
@@ -50,30 +32,40 @@ public class MainDeadLock {
         @Override
         public void run() {
             System.out.println("MyThreadRunnable run");
+            doLock1();
+        }
+    }
+
+    static class MyThread extends Thread {
+        @Override
+        public void run() {
+            System.out.println("MyThread run");
+            doLock2();
+        }
+    }
+
+    static private void doLock1() {
+        synchronized (LOCK_1) {
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
             synchronized (LOCK_2) {
-                System.out.println("thread1 done");
+                System.out.println("doLock1 done");
             }
         }
     }
 
-    static class MyThreadThread extends Thread {
-        @Override
-        public void run() {
-            System.out.println("MyThreadThread run");
-            synchronized (LOCK_2) {
-                try {
-                    Thread.sleep(100);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                synchronized (LOCK_1) {
-                    System.out.println("MyThread2 done");
-                }
+    private static void doLock2() {
+        synchronized (LOCK_2) {
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            synchronized (LOCK_1) {
+                System.out.println("doLock2 done");
             }
         }
     }
