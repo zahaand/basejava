@@ -3,15 +3,15 @@ package com.zahaand.webapp;
 import java.io.File;
 import java.util.Objects;
 
-public class MainFile {
+public class MainRecursiveCall {
     private static String indent = "___";
 
     public static void main(String[] args) {
         File directory = new File("out");
 
         printDirectoryDeeply(directory);
-        printDirectoryDeeply(directory, "");
         printDirectoryDeeply2(directory, "");
+        printDirectoryDeeply3(directory, "");
 
     }
 
@@ -30,7 +30,7 @@ public class MainFile {
     }
 
     // recursive call #2
-    public static void printDirectoryDeeply(File directory, String offset) {
+    public static void printDirectoryDeeply2(File directory, String offset) {
         File[] files = directory.listFiles();
         if (files != null) {
             for (File file : files) {
@@ -38,18 +38,18 @@ public class MainFile {
                     System.out.println(offset + "F: " + file.getName());
                 } else if (file.isDirectory()) {
                     System.out.println(offset + "D: " + file.getName());
-                    printDirectoryDeeply(file, offset + "  ");
+                    printDirectoryDeeply2(file, offset + "  ");
                 }
             }
         }
     }
 
     // recursive call #3
-    public static void printDirectoryDeeply2(File directory, String offset) {
+    public static void printDirectoryDeeply3(File directory, String offset) {
         if (directory.isDirectory()) {
             for (File file : directory.listFiles()) {
                 System.out.println(offset + file.getName());
-                printDirectoryDeeply2(file, offset + "   ");
+                printDirectoryDeeply3(file, offset + "   ");
             }
         }
     }
