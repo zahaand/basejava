@@ -20,12 +20,12 @@ public class MainDeadLock {
     // deadLock #1
     static Thread thread1 = new Thread(() -> {
         System.out.println("thread1 run");
-        doLock();
+        doLock(LOCK_1, LOCK_2);
     });
 
     static Thread thread2 = new Thread(() -> {
         System.out.println("thread2 run");
-        doLock();
+        doLock(LOCK_2, LOCK_1);
     });
 
     // deadLock #2
@@ -33,7 +33,7 @@ public class MainDeadLock {
         @Override
         public void run() {
             System.out.println("MyThreadRunnable run");
-            doLock();
+            doLock(LOCK_1, LOCK_2);
         }
     }
 
@@ -41,33 +41,19 @@ public class MainDeadLock {
         @Override
         public void run() {
             System.out.println("MyThread run");
-            doLock();
+            doLock(LOCK_2, LOCK_1);
         }
     }
 
-    static private void doLock() {
-        if (!isLocked) {
-            synchronized (LOCK_1) {
-                isLocked = true;
-                try {
-                    Thread.sleep(100);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                synchronized (LOCK_2) {
-                    System.out.println("LOCK_1 done");
-                }
+    static private void doLock(Object o1, Object o2) {
+        synchronized (o1) {
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
-        } else {
-            synchronized (LOCK_2) {
-                try {
-                    Thread.sleep(100);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                synchronized (LOCK_1) {
-                    System.out.println("LOCK_2 done");
-                }
+            synchronized (o2) {
+                System.out.println("doLock done");
             }
         }
     }
