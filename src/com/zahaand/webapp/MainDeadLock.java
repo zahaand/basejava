@@ -3,6 +3,7 @@ package com.zahaand.webapp;
 public class MainDeadLock {
     static final Object LOCK_1 = new Object();
     static final Object LOCK_2 = new Object();
+    static boolean isLocked = false;
 
     public static void main(String[] args) {
         thread1.start();
@@ -19,12 +20,12 @@ public class MainDeadLock {
     // deadLock #1
     static Thread thread1 = new Thread(() -> {
         System.out.println("thread1 run");
-        doLock1();
+        doLock();
     });
 
     static Thread thread2 = new Thread(() -> {
         System.out.println("thread2 run");
-        doLock2();
+        doLock();
     });
 
     // deadLock #2
@@ -32,7 +33,7 @@ public class MainDeadLock {
         @Override
         public void run() {
             System.out.println("MyThreadRunnable run");
-            doLock1();
+            doLock();
         }
     }
 
@@ -40,32 +41,33 @@ public class MainDeadLock {
         @Override
         public void run() {
             System.out.println("MyThread run");
-            doLock2();
+            doLock();
         }
     }
 
-    static private void doLock1() {
-        synchronized (LOCK_1) {
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            synchronized (LOCK_2) {
-                System.out.println("doLock1 done");
-            }
-        }
-    }
-
-    private static void doLock2() {
-        synchronized (LOCK_2) {
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+    static private void doLock() {
+        if (!isLocked) {
             synchronized (LOCK_1) {
-                System.out.println("doLock2 done");
+                isLocked = true;
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                synchronized (LOCK_2) {
+                    System.out.println("LOCK_1 done");
+                }
+            }
+        } else {
+            synchronized (LOCK_2) {
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                synchronized (LOCK_1) {
+                    System.out.println("LOCK_2 done");
+                }
             }
         }
     }
