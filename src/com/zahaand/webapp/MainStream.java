@@ -25,7 +25,7 @@ public class MainStream {
     }
 
     static int minValue(int[] values) {
-        return Arrays.stream(values).distinct().sorted().reduce(0, (left, right) -> Integer.parseInt(left + "" + right));
+        return Arrays.stream(values).distinct().sorted().reduce(0, (left, right) -> (left * 10 + right));
     }
 
     static List<Integer> oddOrEven(List<Integer> integers) {
