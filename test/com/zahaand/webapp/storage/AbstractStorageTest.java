@@ -1,5 +1,6 @@
 package com.zahaand.webapp.storage;
 
+import com.zahaand.webapp.Config;
 import com.zahaand.webapp.MainTestResumeData;
 import com.zahaand.webapp.exception.ExistStorageException;
 import com.zahaand.webapp.exception.NotExistStorageException;
@@ -15,7 +16,7 @@ import static org.junit.Assert.assertEquals;
 
 public abstract class AbstractStorageTest {
     protected final Storage storage;
-    protected static final File STORAGE_DIRECTORY = new File("test/com/zahaand/webapp/storage/StorageTest");
+    protected static final File STORAGE_DIRECTORY = Config.getInstance().getStorageDir();
 
     private static final String UUID_1 = "uuid1";
     private static final String UUID_2 = "uuid2";
