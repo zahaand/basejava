@@ -79,13 +79,9 @@ public class SqlStorage implements Storage {
     @Override
     public int size() {
         try (Connection connection = connectionFactory.getConnection();
-             Statement statement = connection.createStatement()) {
-            ResultSet resultSet = statement.executeQuery("SELECT count(*) FROM resumes");
-            int count = 0;
-            while (resultSet.next()) {
-                count++;
-            }
-            return count;
+             PreparedStatement preparedStatement = connection.prepareStatement("SELECT count(*) FROM resumes")) {
+            ResultSet resultSet = preparedStatement.executeQuery();
+            return resultSet.getInt(1);
         } catch (SQLException e) {
             throw new StorageException("Connection error", e);
         }
