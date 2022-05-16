@@ -1,18 +1,30 @@
 package com.zahaand.webapp.sql;
 
-import com.zahaand.webapp.storage.SqlStorage;
+import com.zahaand.webapp.exception.StorageException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class SqlHelper {
-    public PreparedStatement doConnection(String sqlCommand) {
-        try (Connection connection = (Connection) SqlStorage.connectionFactory;
-             PreparedStatement preparedStatement = connection.prepareStatement(String.valueOf(sqlCommand))) {
-            return preparedStatement;
+    ConnectionFactory connectionFactory;
+
+    public <T> T execute(String sqlCommand, PreparedStatementExecutor<T> executor) {
+        try (Connection connection = connectionFactory.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sqlCommand)) {
+            return executor.execute(preparedStatement);
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new StorageException("Connection error", e);
         }
+    }
+
+    @FunctionalInterface
+    public interface ConnectionFactory {
+        Connection getConnection() throws SQLException;
+    }
+
+    @FunctionalInterface
+    public interface PreparedStatementExecutor<T> {
+        T execute(PreparedStatement preparedStatement) throws SQLException;
     }
 }
