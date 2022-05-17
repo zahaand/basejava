@@ -31,7 +31,7 @@ public class SqlStorage implements Storage {
             try {
                 preparedStatement.execute();
             } catch (PSQLException e) {
-                if (e.getServerErrorMessage().equals("23505")) {
+                if (e.getErrorCode() == 23505) {
                     throw new ExistStorageException("Already exist " + r.getUuid());
                 }
             }
