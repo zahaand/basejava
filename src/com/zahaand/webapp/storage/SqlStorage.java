@@ -1,8 +1,10 @@
 package com.zahaand.webapp.storage;
 
+import com.zahaand.webapp.exception.ExistStorageException;
 import com.zahaand.webapp.exception.NotExistStorageException;
 import com.zahaand.webapp.model.Resume;
 import com.zahaand.webapp.sql.SqlHelper;
+import org.postgresql.util.PSQLException;
 
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -13,6 +15,11 @@ public class SqlStorage implements Storage {
     SqlHelper sqlHelper;
 
     public SqlStorage(String dbUrl, String dbUser, String dbPassword) {
+        try {
+            Class.forName("org.postgresql.Driver");
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
         sqlHelper = new SqlHelper(() -> DriverManager.getConnection(dbUrl, dbUser, dbPassword));
     }
 
@@ -21,7 +28,13 @@ public class SqlStorage implements Storage {
         sqlHelper.execute("INSERT INTO resumes (uuid, full_name) VALUES (?, ?)", preparedStatement -> {
             preparedStatement.setString(1, r.getUuid());
             preparedStatement.setString(2, r.getFullName());
-            preparedStatement.execute();
+            try {
+                preparedStatement.execute();
+            } catch (PSQLException e) {
+                if (e.getServerErrorMessage().equals("23505")) {
+                    throw new ExistStorageException("Already exist " + r.getUuid());
+                }
+            }
             return null;
         });
     }
