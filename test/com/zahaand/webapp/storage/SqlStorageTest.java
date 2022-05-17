@@ -1,7 +1,9 @@
 package com.zahaand.webapp.storage;
 
+import com.zahaand.webapp.Config;
+
 public class SqlStorageTest extends AbstractStorageTest {
     public SqlStorageTest() {
-        super(new SqlStorage("jdbc:postgresql://localhost:5432/resumes", "postgres", "postgres"));
+        super(Config.getInstance().getSqlStorage());
     }
 }

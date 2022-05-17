@@ -9,6 +9,10 @@ import java.sql.SQLException;
 public class SqlHelper {
     ConnectionFactory connectionFactory;
 
+    public SqlHelper(ConnectionFactory connectionFactory) {
+        this.connectionFactory = connectionFactory;
+    }
+
     public <T> T execute(String sqlCommand, PreparedStatementExecutor<T> executor) {
         try (Connection connection = connectionFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sqlCommand)) {

@@ -1,7 +1,6 @@
 package com.zahaand.webapp.storage;
 
 import com.zahaand.webapp.exception.NotExistStorageException;
-import com.zahaand.webapp.exception.StorageException;
 import com.zahaand.webapp.model.Resume;
 import com.zahaand.webapp.sql.SqlHelper;
 
@@ -11,11 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SqlStorage implements Storage {
-    SqlHelper.ConnectionFactory connectionFactory;
-    SqlHelper sqlHelper = new SqlHelper();
+    SqlHelper sqlHelper;
 
     public SqlStorage(String dbUrl, String dbUser, String dbPassword) {
-        connectionFactory = () -> DriverManager.getConnection(dbUrl, dbUser, dbPassword);
+        sqlHelper = new SqlHelper(() -> DriverManager.getConnection(dbUrl, dbUser, dbPassword));
     }
 
     @Override
@@ -23,17 +21,20 @@ public class SqlStorage implements Storage {
         sqlHelper.execute("INSERT INTO resumes (uuid, full_name) VALUES (?, ?)", preparedStatement -> {
             preparedStatement.setString(1, r.getUuid());
             preparedStatement.setString(2, r.getFullName());
-            return preparedStatement.execute();
+            preparedStatement.execute();
+            return null;
         });
     }
 
     @Override
     public void update(Resume r) {
-        sqlHelper.execute("UPDATE resumes SET uuid = ?, full_name = ? WHERE uuid = ?", preparedStatement -> {
-            preparedStatement.setString(1, r.getUuid());
-            preparedStatement.setString(2, r.getFullName());
-            preparedStatement.setString(3, r.getUuid());
-            return preparedStatement.executeUpdate();
+        sqlHelper.execute("UPDATE resumes SET full_name = ? WHERE uuid = ?", preparedStatement -> {
+            preparedStatement.setString(1, r.getFullName());
+            preparedStatement.setString(2, r.getUuid());
+            if (preparedStatement.executeUpdate() == 0) {
+                throw new NotExistStorageException("Not exist " + r.getUuid());
+            }
+            return null;
         });
     }
 
@@ -43,7 +44,7 @@ public class SqlStorage implements Storage {
             preparedStatement.setString(1, uuid);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (!resultSet.next()) {
-                throw new NotExistStorageException(uuid);
+                throw new NotExistStorageException("Not exist " + uuid);
             }
             return new Resume(uuid, resultSet.getString("full_name"));
         });
@@ -51,12 +52,8 @@ public class SqlStorage implements Storage {
 
     @Override
     public List<Resume> getAllSorted() {
-        return sqlHelper.execute("SELECT * FROM resumes ORDER BY ?", preparedStatement -> {
-            preparedStatement.setString(1, "full_name, uuid");
+        return sqlHelper.execute("SELECT * FROM resumes ORDER BY full_name, uuid", preparedStatement -> {
             ResultSet resultSet = preparedStatement.executeQuery();
-            if (!resultSet.next()) {
-                throw new StorageException("Storage is empty");
-            }
             List<Resume> resumes = new ArrayList<>();
             while (resultSet.next()) {
                 Resume resume = new Resume(resultSet.getString("uuid"), resultSet.getString("full_name"));
@@ -78,7 +75,10 @@ public class SqlStorage implements Storage {
     public void delete(String uuid) {
         sqlHelper.execute("DELETE FROM resumes WHERE uuid = ?", preparedStatement -> {
             preparedStatement.setString(1, uuid);
-            return preparedStatement.executeUpdate();
+            if (preparedStatement.executeUpdate() == 0) {
+                throw new NotExistStorageException("Not exist " + uuid);
+            }
+            return null;
         });
     }
 
