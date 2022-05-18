@@ -3,7 +3,7 @@ package com.zahaand.webapp.storage;
 import com.zahaand.webapp.exception.ExistStorageException;
 import com.zahaand.webapp.exception.NotExistStorageException;
 import com.zahaand.webapp.model.Resume;
-import com.zahaand.webapp.sql.SqlHelper;
+import com.zahaand.webapp.util.SqlHelper;
 import org.postgresql.util.PSQLException;
 
 import java.sql.DriverManager;

@@ -1,4 +1,4 @@
-package com.zahaand.webapp.sql;
+package com.zahaand.webapp.util;
 
 import com.zahaand.webapp.exception.StorageException;
 
