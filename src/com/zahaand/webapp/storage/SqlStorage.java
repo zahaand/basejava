@@ -134,7 +134,7 @@ public class SqlStorage implements Storage {
                         "FROM resumes",
                 preparedStatement -> {
                     ResultSet resultSet = preparedStatement.executeQuery();
-                    return resultSet.getInt(1);
+                    return resultSet.next() ? resultSet.getInt(1) : 0;
                 });
     }
 
@@ -156,6 +156,6 @@ public class SqlStorage implements Storage {
     public void clear() {
         sqlHelper.execute("" +
                         "DELETE FROM resumes",
-                preparedStatement -> null);
+                PreparedStatement::executeUpdate);
     }
 }
