@@ -11,6 +11,7 @@ import org.junit.Test;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import static org.junit.Assert.assertEquals;
 
@@ -18,10 +19,10 @@ public abstract class AbstractStorageTest {
     protected final Storage storage;
     protected static final File STORAGE_DIRECTORY = Config.getInstance().getStorageDir();
 
-    private final static Resume RESUME_1 = MainTestResumeData.createResume("uuid1", "FullName1");
-    private final static Resume RESUME_2 = MainTestResumeData.createResume("uuid2", "FullName2");
-    private final static Resume RESUME_3 = MainTestResumeData.createResume("uuid3", "FullName3");
-    private final static Resume RESUME_4 = MainTestResumeData.createResume("uuid4", "FullName4");
+    private final static Resume RESUME_1 = MainTestResumeData.createResume(String.valueOf(UUID.randomUUID()), "FullName1");
+    private final static Resume RESUME_2 = MainTestResumeData.createResume(String.valueOf(UUID.randomUUID()), "FullName2");
+    private final static Resume RESUME_3 = MainTestResumeData.createResume(String.valueOf(UUID.randomUUID()), "FullName3");
+    private final static Resume RESUME_4 = MainTestResumeData.createResume(String.valueOf(UUID.randomUUID()), "FullName4");
 
     protected AbstractStorageTest(Storage storage) {
         this.storage = storage;

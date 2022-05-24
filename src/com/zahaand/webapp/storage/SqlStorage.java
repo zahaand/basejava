@@ -9,6 +9,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -76,7 +77,6 @@ public class SqlStorage implements Storage {
             }
             return null;
         });
-
     }
 
     @Override
@@ -112,18 +112,17 @@ public class SqlStorage implements Storage {
                         "ORDER BY full_name, uuid",
                 preparedStatement -> {
                     ResultSet resultSet = preparedStatement.executeQuery();
-                    List<Resume> resumes = new ArrayList<>();
+                    Map<String, Resume> resumes = new LinkedHashMap<>();
                     while (resultSet.next()) {
-                        Resume resume = new Resume(resultSet.getString("uuid"), resultSet.getString("full_name"));
-                        do {
-                            String contact = resultSet.getString("value");
-                            if (contact != null) {
-                                resume.addContact(ContactType.valueOf(resultSet.getString("type")), contact);
-                            }
-                        } while (resultSet.next() && resultSet.getString("uuid").equals(resume.getUuid()));
-                        resumes.add(resume);
+                        String uuid = resultSet.getString("uuid");
+                        Resume resume = resumes.get(uuid);
+                        if (resume == null) {
+                            resume = new Resume(uuid, resultSet.getString("full_name"));
+                            resumes.put(uuid, resume);
+                        }
+                        resume.addContact(ContactType.valueOf(resultSet.getString("type")), resultSet.getString("value"));
                     }
-                    return resumes;
+                    return new ArrayList<>(resumes.values());
                 });
     }
 
