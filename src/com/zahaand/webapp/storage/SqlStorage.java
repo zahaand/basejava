@@ -65,8 +65,9 @@ public class SqlStorage implements Storage {
             }
             try (PreparedStatement preparedStatement = connection.prepareStatement("" +
                     "UPDATE contacts " +
-                    "SET type = ?, value = ? " +
-                    "WHERE resume_uuid = ?")) {
+                    "SET value = ? " +
+                    "WHERE type = ?" +
+                    "AND resume_uuid = ?")) {
                 for (Map.Entry<ContactType, String> contact : r.getContacts().entrySet()) {
                     preparedStatement.setString(1, contact.getKey().name());
                     preparedStatement.setString(2, contact.getValue());
