@@ -71,12 +71,9 @@ public class SqlStorage implements Storage {
                         throw new NotExistStorageException("Not exist " + uuid);
                     }
                     Resume resume = new Resume(uuid, resultSet.getString("full_name"));
-                    String contact = resultSet.getString("value");
-                    if (contact != null) {
-                        do {
-                            resume.addContact(ContactType.valueOf(resultSet.getString("type")), contact);
-                        } while (resultSet.next());
-                    }
+                    do {
+                        resume.addContact(ContactType.valueOf(resultSet.getString("type")), resultSet.getString("value"));
+                    } while (resultSet.next());
                     return resume;
                 });
     }
