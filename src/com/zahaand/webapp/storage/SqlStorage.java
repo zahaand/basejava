@@ -69,8 +69,8 @@ public class SqlStorage implements Storage {
                     "WHERE type = ?" +
                     "AND resume_uuid = ?")) {
                 for (Map.Entry<ContactType, String> contact : r.getContacts().entrySet()) {
-                    preparedStatement.setString(1, contact.getKey().name());
-                    preparedStatement.setString(2, contact.getValue());
+                    preparedStatement.setString(1, contact.getValue());
+                    preparedStatement.setString(2, contact.getKey().name());
                     preparedStatement.setString(3, r.getUuid());
                     preparedStatement.addBatch();
                 }
