@@ -32,9 +32,10 @@ public class SqlHelper {
                 connection.commit();
                 return result;
             } catch (PSQLException e) {
-                if (e.getErrorCode() == 23505) {
+                if (e.getSQLState().equals("23505")) {
                     throw new ExistStorageException("Already exist ", e);
                 }
+                e.getErrorCode();
             }
         } catch (SQLException e) {
             throw new StorageException("Connection error", e);
