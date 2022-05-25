@@ -109,12 +109,12 @@ public class DataStreamSerializer implements StreamSerializer {
                 List<Organization> organizations = new ArrayList<>();
                 readElements(dataInputStream, () -> {
                     String organizationName = dataInputStream.readUTF();
-                    String url = dataInputStream.readUTF();
+                    String url = readStringIfNull(dataInputStream);
                     Link homePage = new Link(organizationName, url);
                     List<Organization.Position> positions = new ArrayList<>();
                     readElements(dataInputStream, () -> {
                         String position = dataInputStream.readUTF();
-                        String description = dataInputStream.readUTF();
+                        String description = readStringIfNull(dataInputStream);
                         LocalDate startDate = readLocalDate(dataInputStream);
                         LocalDate endDate = readLocalDate(dataInputStream);
                         positions.add(new Organization.Position(startDate, endDate, position, description));
@@ -138,6 +138,11 @@ public class DataStreamSerializer implements StreamSerializer {
     @FunctionalInterface
     private interface ElementReader {
         void read() throws IOException;
+    }
+
+    private String readStringIfNull(DataInputStream dataInputStream) throws IOException {
+        String result = dataInputStream.readUTF();
+        return result.equals("") ? null : result;
     }
 
     private LocalDate readLocalDate(DataInputStream dataInputStream) throws IOException {
