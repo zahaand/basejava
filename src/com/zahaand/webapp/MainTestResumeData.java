@@ -13,12 +13,12 @@ public class MainTestResumeData {
         Resume resume = new Resume(uuid, fullName);
 
         resume.addContact(ContactType.PHONE_NUMBER, "+7(921) 855-0482");
-//        resume.addContact(ContactType.SKYPE, "grigory.kislin");
-//        resume.addContact(ContactType.EMAIL, "gkislin@yandex.ru");
-//        resume.addContact(ContactType.LINKEDIN, "Профиль LinkedIn");
-//        resume.addContact(ContactType.GITHUB, "Профиль GitHub");
-//        resume.addContact(ContactType.STACKOVERFLOW, "Профиль Stackoverflow");
-//        resume.addContact(ContactType.HOMEPAGE, "Домашняя страница");
+        resume.addContact(ContactType.SKYPE, "grigory.kislin");
+        resume.addContact(ContactType.EMAIL, "gkislin@yandex.ru");
+        resume.addContact(ContactType.LINKEDIN, "Профиль LinkedIn");
+        resume.addContact(ContactType.GITHUB, "Профиль GitHub");
+        resume.addContact(ContactType.STACKOVERFLOW, "Профиль Stackoverflow");
+        resume.addContact(ContactType.HOMEPAGE, "Домашняя страница");
 
         AbstractSection objective = new TextSection("Ведущий стажировок и корпоративного обучения по Java Web и Enterprise технологиям");
         resume.addSectionData(SectionType.OBJECTIVE, objective);
