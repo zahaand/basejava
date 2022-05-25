@@ -31,9 +31,11 @@ public class SqlHelper {
                 T result = executor.execute(connection);
                 connection.commit();
                 return result;
-            } catch (PSQLException e) {
-                if (e.getSQLState().equals("23505")) {
-                    throw new ExistStorageException("Already exist ", e);
+            } catch (SQLException e) {
+                if (e instanceof PSQLException) {
+                    if (e.getSQLState().equals("23505")) {
+                        throw new ExistStorageException("Already exist ", e);
+                    }
                 }
             }
         } catch (SQLException e) {
