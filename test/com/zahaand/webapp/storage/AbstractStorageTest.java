@@ -4,6 +4,7 @@ import com.zahaand.webapp.Config;
 import com.zahaand.webapp.MainTestResumeData;
 import com.zahaand.webapp.exception.ExistStorageException;
 import com.zahaand.webapp.exception.NotExistStorageException;
+import com.zahaand.webapp.model.ContactType;
 import com.zahaand.webapp.model.Resume;
 import org.junit.Before;
 import org.junit.Test;
@@ -44,6 +45,7 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void update() {
+        RESUME_1.addContact(ContactType.EMAIL, "update@mail.ru");
         storage.update(RESUME_1);
         assertEquals(RESUME_1, storage.get(RESUME_1.getUuid()));
     }

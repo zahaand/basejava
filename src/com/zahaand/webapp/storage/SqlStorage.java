@@ -5,9 +5,7 @@ import com.zahaand.webapp.model.ContactType;
 import com.zahaand.webapp.model.Resume;
 import com.zahaand.webapp.util.SqlHelper;
 
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -35,17 +33,7 @@ public class SqlStorage implements Storage {
                 preparedStatement.setString(2, r.getFullName());
                 preparedStatement.execute();
             }
-            try (PreparedStatement preparedStatement = connection.prepareStatement("" +
-                    "INSERT INTO contacts (resume_uuid, type, value) " +
-                    "VALUES (?,?,?)")) {
-                for (Map.Entry<ContactType, String> contact : r.getContacts().entrySet()) {
-                    preparedStatement.setString(1, r.getUuid());
-                    preparedStatement.setString(2, contact.getKey().name());
-                    preparedStatement.setString(3, contact.getValue());
-                    preparedStatement.addBatch();
-                }
-                preparedStatement.executeBatch();
-            }
+            addContacts(r, connection);
             return null;
         });
     }
@@ -63,19 +51,8 @@ public class SqlStorage implements Storage {
                     throw new NotExistStorageException("Not exist " + r.getUuid());
                 }
             }
-            try (PreparedStatement preparedStatement = connection.prepareStatement("" +
-                    "UPDATE contacts " +
-                    "SET value = ? " +
-                    "WHERE type = ?" +
-                    "AND resume_uuid = ?")) {
-                for (Map.Entry<ContactType, String> contact : r.getContacts().entrySet()) {
-                    preparedStatement.setString(1, contact.getValue());
-                    preparedStatement.setString(2, contact.getKey().name());
-                    preparedStatement.setString(3, r.getUuid());
-                    preparedStatement.addBatch();
-                }
-                preparedStatement.executeBatch();
-            }
+            deleteContacts(r, connection);
+            addContacts(r, connection);
             return null;
         });
     }
@@ -121,7 +98,10 @@ public class SqlStorage implements Storage {
                             resume = new Resume(uuid, resultSet.getString("full_name"));
                             resumes.put(uuid, resume);
                         }
-                        resume.addContact(ContactType.valueOf(resultSet.getString("type")), resultSet.getString("value"));
+                        String value = resultSet.getString("value");
+                        if (value != null) {
+                            resume.addContact(ContactType.valueOf(resultSet.getString("type")), value);
+                        }
                     }
                     return new ArrayList<>(resumes.values());
                 });
@@ -157,5 +137,28 @@ public class SqlStorage implements Storage {
         sqlHelper.execute("" +
                         "DELETE FROM resumes",
                 PreparedStatement::executeUpdate);
+    }
+
+    private static void addContacts(Resume r, Connection connection) throws SQLException {
+        try (PreparedStatement preparedStatement = connection.prepareStatement("" +
+                "INSERT INTO contacts (resume_uuid, type, value) " +
+                "VALUES (?,?,?)")) {
+            for (Map.Entry<ContactType, String> contact : r.getContacts().entrySet()) {
+                preparedStatement.setString(1, r.getUuid());
+                preparedStatement.setString(2, contact.getKey().name());
+                preparedStatement.setString(3, contact.getValue());
+                preparedStatement.addBatch();
+            }
+            preparedStatement.executeBatch();
+        }
+    }
+
+    private static void deleteContacts(Resume r, Connection connection) throws SQLException {
+        try (PreparedStatement preparedStatement = connection.prepareStatement("" +
+                "DELETE FROM contacts " +
+                "WHERE resume_uuid = ?")) {
+            preparedStatement.setString(1, r.getUuid());
+            preparedStatement.execute();
+        }
     }
 }
