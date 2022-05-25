@@ -35,7 +35,6 @@ public class SqlHelper {
                 if (e.getSQLState().equals("23505")) {
                     throw new ExistStorageException("Already exist ", e);
                 }
-                e.getErrorCode();
             }
         } catch (SQLException e) {
             throw new StorageException("Connection error", e);
