@@ -80,11 +80,13 @@ public class DataStreamSerializer implements StreamSerializer {
             String uuid = dataInputStream.readUTF();
             String fullName = dataInputStream.readUTF();
             Resume resume = new Resume(uuid, fullName);
+
             readElements(dataInputStream, () -> {
                 ContactType contactType = ContactType.valueOf(dataInputStream.readUTF());
                 String value = dataInputStream.readUTF();
                 resume.addContact(contactType, value);
             });
+
             readElements(dataInputStream, () -> {
                 SectionType sectionType = SectionType.valueOf(dataInputStream.readUTF());
                 resume.addSectionData(sectionType, readSection(sectionType, dataInputStream));

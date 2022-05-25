@@ -17,7 +17,8 @@ public class Link implements Serializable {
     public Link(String organizationName, String url) {
         Objects.requireNonNull(organizationName, "organization name must not be null");
         this.organizationName = organizationName;
-        this.url = url;
+        this.url = (url == null ? "" : url);
+//        this.url = url;
     }
 
     public String getOrganizationName() {
@@ -25,7 +26,8 @@ public class Link implements Serializable {
     }
 
     public String getUrl() {
-        return url;
+        return url == null ? "" : url;
+//        return url;
     }
 
     @Override
