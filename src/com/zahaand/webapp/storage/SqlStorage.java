@@ -72,10 +72,7 @@ public class SqlStorage implements Storage {
                     }
                     Resume resume = new Resume(uuid, resultSet.getString("full_name"));
                     do {
-                        String value = resultSet.getString("value");
-                        if (value != null) {
-                            resume.addContact(ContactType.valueOf(resultSet.getString("type")), value);
-                        }
+                        addContact(resultSet, resume);
                     } while (resultSet.next());
                     return resume;
                 });
@@ -98,14 +95,12 @@ public class SqlStorage implements Storage {
                             resume = new Resume(uuid, resultSet.getString("full_name"));
                             resumes.put(uuid, resume);
                         }
-                        String value = resultSet.getString("value");
-                        if (value != null) {
-                            resume.addContact(ContactType.valueOf(resultSet.getString("type")), value);
-                        }
+                        addContact(resultSet, resume);
                     }
                     return new ArrayList<>(resumes.values());
                 });
     }
+
 
     @Override
     public int size() {
@@ -137,6 +132,13 @@ public class SqlStorage implements Storage {
         sqlHelper.execute("" +
                         "DELETE FROM resumes",
                 PreparedStatement::executeUpdate);
+    }
+
+    private static void addContact(ResultSet resultSet, Resume resume) throws SQLException {
+        String value = resultSet.getString("value");
+        if (value != null) {
+            resume.addContact(ContactType.valueOf(resultSet.getString("type")), value);
+        }
     }
 
     private static void addContacts(Resume r, Connection connection) throws SQLException {
