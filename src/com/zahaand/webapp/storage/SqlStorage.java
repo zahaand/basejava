@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 public class SqlStorage implements Storage {
-    SqlHelper sqlHelper;
+    private final SqlHelper sqlHelper;
 
     public SqlStorage(String dbUrl, String dbUser, String dbPassword) {
         try {
@@ -101,7 +101,6 @@ public class SqlStorage implements Storage {
                 });
     }
 
-
     @Override
     public int size() {
         return sqlHelper.execute("" +
@@ -137,7 +136,7 @@ public class SqlStorage implements Storage {
     private static void addContact(ResultSet resultSet, Resume resume) throws SQLException {
         String value = resultSet.getString("value");
         if (value != null) {
-            resume.addContact(ContactType.valueOf(resultSet.getString("type")), value);
+            resume.setContact(ContactType.valueOf(resultSet.getString("type")), value);
         }
     }
 

@@ -84,12 +84,12 @@ public class DataStreamSerializer implements StreamSerializer {
             readElements(dataInputStream, () -> {
                 ContactType contactType = ContactType.valueOf(dataInputStream.readUTF());
                 String value = dataInputStream.readUTF();
-                resume.addContact(contactType, value);
+                resume.setContact(contactType, value);
             });
 
             readElements(dataInputStream, () -> {
                 SectionType sectionType = SectionType.valueOf(dataInputStream.readUTF());
-                resume.addSectionData(sectionType, readSection(sectionType, dataInputStream));
+                resume.setSection(sectionType, readSection(sectionType, dataInputStream));
             });
             return resume;
         }
