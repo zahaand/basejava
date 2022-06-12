@@ -49,15 +49,19 @@ public class Resume implements Comparable<Resume>, Serializable {
         return contacts;
     }
 
+    public String getContact(ContactType contactType) {
+        return contacts.get(contactType);
+    }
+
     public Map<SectionType, AbstractSection> getSections() {
         return sections;
     }
 
-    public void addContact(ContactType contactType, String contact) {
+    public void setContact(ContactType contactType, String contact) {
         contacts.put(contactType, contact);
     }
 
-    public void addSectionData(SectionType sectionType, AbstractSection section) {
+    public void setSection(SectionType sectionType, AbstractSection section) {
         sections.put(sectionType, section);
     }
 
