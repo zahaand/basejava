@@ -8,12 +8,12 @@
 <body>
 <section>
     <table border="1" cellpadding="8" cellspacing="0">
-        <jsp:useBean id="resumes" scope="request" type="com.zahaand.webapp.model.Resume"/>
-        <jsp:useBean id="ContactType" scope="request" type="com.zahaand.webapp.model.ContactType"/>
         <tr>
             <th>Name</th>
             <th>Email</th>
         </tr>
+        <jsp:useBean id="resumes" scope="request" type="java.util.List"/>
+        <%--        <jsp:useBean id="ContactType" scope="request" type="com.zahaand.webapp.model.ContactType"/>--%>
         <c:forEach items="${resumes}" var="resume">
             <tr>
                 <td><a href="resume?uuid=${resume.uuid}">${resume.fullName}</a></td>

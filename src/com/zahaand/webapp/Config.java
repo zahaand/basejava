@@ -12,7 +12,7 @@ import java.util.Properties;
 public class Config {
 
     private static Config configInstance;
-    private static final File PROPERTIES = new File("config/resumes.properties");
+    private static final File PROPERTIES = new File("/Users/zahaand/Java Projects/basejava/config/resumes.properties");
     private final File storageDir;
     private final Storage sqlStorage;
 
