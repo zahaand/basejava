@@ -17,7 +17,7 @@
         <c:forEach items="${resumes}" var="resume">
             <tr>
                 <td><a href="resume?uuid=${resume.uuid}">${resume.fullName}</a></td>
-                <td>${resume.getContact(ContactType)}</td>
+                <td>${resume.getContact(ContactType.EMAIL)}</td>
             </tr>
         </c:forEach>
     </table>
