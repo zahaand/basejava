@@ -4,9 +4,11 @@
 
 <html>
 <head>
+    <link rel="stylesheet" href="css/style.css">
     <title>Resumes</title>
 </head>
 <body>
+<jsp:include page="fragments/header.jsp"></jsp:include>
 <section>
     <table border="1" cellpadding="8" cellspacing="0">
         <tr>
@@ -21,8 +23,8 @@
             <tr>
                 <td><a href="resume?uuid = ${resume.uuid}">${resume.fullName}</a></td>
                 <td>${resume.getContact(ContactType.EMAIL) == null ? "" : resume.getContact(ContactType.EMAIL)}</td>
-                <td><a href="resume?uuid = ${resume.uuid}">Delete</a></td>
                 <td><a href="resume?uuid = ${resume.uuid}">Edit</a></td>
+                <td><a href="resume?uuid = ${resume.uuid}">Delete</a></td>
             </tr>
         </c:forEach>
         <tr>
@@ -30,5 +32,6 @@
         </tr>
     </table>
 </section>
+<jsp:include page="fragments/footer.jsp"></jsp:include>
 </body>
 </html>
