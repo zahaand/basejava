@@ -1,13 +1,13 @@
 header {
-    background: none repeat scroll 0 0 #A6C9E2;
-    color: #2E6E9E;
+    background: none repeat scroll 0 0 #c0c0c0;
+    color: #000000;
     font-size: 20px;
     padding: 5px 20px;
 }
 
 footer {
-    background: none repeat scroll 0 0 #A6C9E2;
-    color: #2E6E9E;
+    background: none repeat scroll 0 0 #c0c0c0;
+    color: #000000;
     font-size: 20px;
     padding: 5px 20px;
     margin: 20px 0;
