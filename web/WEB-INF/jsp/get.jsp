@@ -16,6 +16,7 @@
                          type="java.util.Map.Entry<com.zahaand.webapp.model.ContactType, java.lang.String>"></jsp:useBean>
             ${contactsEntry.key}
             ${contactsEntry.value}
+            <br/>
         </c:forEach>
     </p>
 </section>

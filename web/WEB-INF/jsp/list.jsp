@@ -29,7 +29,7 @@
             </tr>
         </c:forEach>
         <tr>
-            <td><a href="resume?add&action=add"><img src="img/add.png" alt="Add"></a></td>
+            <td><a href="resume?action=add"><img src="img/add.png" alt="Add"></a></td>
         </tr>
     </table>
 </section>

@@ -40,7 +40,7 @@ public class ResumeServlet extends HttpServlet {
                 return;
             }
             case "add" -> {
-                storage.save(new Resume());
+                storage.save(new Resume(""));
                 response.sendRedirect("resume");
                 return;
             }
