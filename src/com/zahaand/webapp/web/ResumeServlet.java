@@ -16,8 +16,8 @@ public class ResumeServlet extends HttpServlet {
 
     @Override
     public void init(ServletConfig config) throws ServletException {
-        super.init();
         storage = Config.getInstance().getSqlStorage();
+        super.init();
     }
 
     @Override

@@ -21,10 +21,10 @@
         <c:forEach items="${resumes}" var="resume">
             <jsp:useBean id="resume" type="com.zahaand.webapp.model.Resume"/>
             <tr>
-                <td><a href="resume?uuid = ${resume.uuid}&action=get">${resume.fullName}</a></td>
+                <td><a href="resume?uuid=${resume.uuid}&action=get">${resume.fullName}</a></td>
                 <td>${resume.getContact(ContactType.EMAIL) == null ? "" : resume.getContact(ContactType.EMAIL)}</td>
-                <td><a href="resume?uuid = ${resume.uuid}&action=edit"><img src="img/edit.png" alt="Edit"></a></td>
-                <td><a href="resume?uuid = ${resume.uuid}&action=delete"><img src="img/delete.png" alt="Delete"></a>
+                <td><a href="resume?uuid=${resume.uuid}&action=edit"><img src="img/edit.png" alt="Edit"></a></td>
+                <td><a href="resume?uuid=${resume.uuid}&action=delete"><img src="img/delete.png" alt="Delete"></a>
                 </td>
             </tr>
         </c:forEach>
