@@ -5,6 +5,7 @@ import com.zahaand.webapp.model.AbstractSection;
 import com.zahaand.webapp.model.ContactType;
 import com.zahaand.webapp.model.Resume;
 import com.zahaand.webapp.model.SectionType;
+import com.zahaand.webapp.util.JsonParser;
 import com.zahaand.webapp.util.SqlHelper;
 
 import java.sql.*;
@@ -102,6 +103,7 @@ public class SqlStorage implements Storage {
                             resumes.put(uuid, resume);
                         }
                         addContact(resultSet, resume);
+                        addSection(resultSet, resume);
                     }
                     return new ArrayList<>(resumes.values());
                 });
@@ -171,9 +173,9 @@ public class SqlStorage implements Storage {
 
     private void addSection(ResultSet resultSet, Resume resume) throws SQLException {
         String content = resultSet.getString("content");
-//        if (content != null) {
-//            resume.setSection(SectionType.valueOf(resultSet.getString("type")), content);
-//        }
+        if (content != null) {
+            resume.setSection(SectionType.valueOf(resultSet.getString("type")), JsonParser.read(content, SectionType.class));
+        }
     }
 
     private void addSections(Resume r, Connection connection) throws SQLException {
@@ -182,7 +184,7 @@ public class SqlStorage implements Storage {
                 "VALUES (?,?,?)")) {
             for (Map.Entry<SectionType, AbstractSection> section : r.getSections().entrySet()) {
                 preparedStatement.setString(1, r.getUuid());
-                preparedStatement.setString(2, section.getKey().toString());
+                preparedStatement.setString(2, section.getKey().getTitle());
                 preparedStatement.setString(3, section.getValue().toString());
                 preparedStatement.addBatch();
             }
