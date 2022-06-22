@@ -174,7 +174,7 @@ public class SqlStorage implements Storage {
     private void addSection(ResultSet resultSet, Resume resume) throws SQLException {
         String content = resultSet.getString("content");
         if (content != null) {
-            resume.setSection(SectionType.valueOf(resultSet.getString("type")), JsonParser.read(content, SectionType.class));
+            resume.setSection(SectionType.valueOf(resultSet.getString("type")), JsonParser.read(content, AbstractSection.class));
         }
     }
 
