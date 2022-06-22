@@ -1,8 +1,10 @@
 package com.zahaand.webapp.storage;
 
 import com.zahaand.webapp.exception.NotExistStorageException;
+import com.zahaand.webapp.model.AbstractSection;
 import com.zahaand.webapp.model.ContactType;
 import com.zahaand.webapp.model.Resume;
+import com.zahaand.webapp.model.SectionType;
 import com.zahaand.webapp.util.SqlHelper;
 
 import java.sql.*;
@@ -34,6 +36,7 @@ public class SqlStorage implements Storage {
                 preparedStatement.execute();
             }
             addContacts(r, connection);
+            addSections(r, connection);
             return null;
         });
     }
@@ -52,7 +55,9 @@ public class SqlStorage implements Storage {
                 }
             }
             deleteContacts(r, connection);
+            deleteSections(r, connection);
             addContacts(r, connection);
+            addSections(r, connection);
             return null;
         });
     }
@@ -73,6 +78,7 @@ public class SqlStorage implements Storage {
                     Resume resume = new Resume(uuid, resultSet.getString("full_name"));
                     do {
                         addContact(resultSet, resume);
+                        addSection(resultSet, resume);
                     } while (resultSet.next());
                     return resume;
                 });
@@ -157,6 +163,36 @@ public class SqlStorage implements Storage {
     private static void deleteContacts(Resume r, Connection connection) throws SQLException {
         try (PreparedStatement preparedStatement = connection.prepareStatement("" +
                 "DELETE FROM contacts " +
+                "WHERE resume_uuid = ?")) {
+            preparedStatement.setString(1, r.getUuid());
+            preparedStatement.execute();
+        }
+    }
+
+    private void addSection(ResultSet resultSet, Resume resume) throws SQLException {
+        String content = resultSet.getString("content");
+//        if (content != null) {
+//            resume.setSection(SectionType.valueOf(resultSet.getString("type")), content);
+//        }
+    }
+
+    private void addSections(Resume r, Connection connection) throws SQLException {
+        try (PreparedStatement preparedStatement = connection.prepareStatement("" +
+                "INSERT INTO sections (resume_uuid, type, content) " +
+                "VALUES (?,?,?)")) {
+            for (Map.Entry<SectionType, AbstractSection> section : r.getSections().entrySet()) {
+                preparedStatement.setString(1, r.getUuid());
+                preparedStatement.setString(2, section.getKey().toString());
+                preparedStatement.setString(3, section.getValue().toString());
+                preparedStatement.addBatch();
+            }
+            preparedStatement.executeBatch();
+        }
+    }
+
+    private void deleteSections(Resume r, Connection connection) throws SQLException {
+        try (PreparedStatement preparedStatement = connection.prepareStatement("" +
+                "DELETE FROM sections " +
                 "WHERE resume_uuid = ?")) {
             preparedStatement.setString(1, r.getUuid());
             preparedStatement.execute();
