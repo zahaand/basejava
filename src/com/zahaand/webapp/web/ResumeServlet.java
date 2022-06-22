@@ -40,8 +40,9 @@ public class ResumeServlet extends HttpServlet {
                 return;
             }
             case "add" -> {
-                storage.save(new Resume(""));
-                response.sendRedirect("resume");
+                resume = new Resume("");
+                storage.save(resume);
+                response.sendRedirect("resume?uuid=" + resume.getUuid() + "&action=edit");
                 return;
             }
             default -> throw new IllegalArgumentException("Action " + action + " is illegal");
@@ -49,9 +50,5 @@ public class ResumeServlet extends HttpServlet {
 
         request.setAttribute("resume", resume);
         request.getRequestDispatcher((action.equals("get")) ? "/WEB-INF/jsp/get.jsp" : "/WEB-INF/jsp/edit.jsp").forward(request, response);
-
-        if (action.equals("add")) {
-            request.getRequestDispatcher("/WEB-INF/jsp/edit.jsp").forward(request, response);
-        }
     }
 }

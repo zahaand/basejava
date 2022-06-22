@@ -3,7 +3,7 @@
 <html>
 <head>
     <link rel="stylesheet" href="css/style.css">
-    <title>Get reume</title>
+    <title>Get resume</title>
 </head>
 <body>
 <jsp:include page="fragments/header.jsp"></jsp:include>
