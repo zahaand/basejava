@@ -89,8 +89,8 @@ public class SqlStorage implements Storage {
     public List<Resume> getAllSorted() {
         return sqlHelper.execute("" +
                         "SELECT * FROM resumes " +
-                        "LEFT JOIN contacts " +
-                        "ON resumes.uuid = contacts.resume_uuid " +
+                        "LEFT JOIN contacts ON resumes.uuid = contacts.resume_uuid " +
+                        "LEFT JOIN sections ON resumes.uuid = sections.resume_uuid " +
                         "ORDER BY full_name, uuid",
                 preparedStatement -> {
                     ResultSet resultSet = preparedStatement.executeQuery();
