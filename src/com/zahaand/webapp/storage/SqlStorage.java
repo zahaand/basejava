@@ -87,26 +87,35 @@ public class SqlStorage implements Storage {
 
     @Override
     public List<Resume> getAllSorted() {
-        return sqlHelper.execute("" +
-                        "SELECT * FROM resumes " +
-                        "LEFT JOIN contacts ON resumes.uuid = contacts.resume_uuid " +
-                        "LEFT JOIN sections ON resumes.uuid = sections.resume_uuid " +
-                        "ORDER BY full_name, uuid",
-                preparedStatement -> {
-                    ResultSet resultSet = preparedStatement.executeQuery();
-                    Map<String, Resume> resumes = new LinkedHashMap<>();
-                    while (resultSet.next()) {
-                        String uuid = resultSet.getString("uuid");
-                        Resume resume = resumes.get(uuid);
-                        if (resume == null) {
-                            resume = new Resume(uuid, resultSet.getString("full_name"));
-                            resumes.put(uuid, resume);
-                        }
-                        addContact(resultSet, resume);
-                        addSection(resultSet, resume);
-                    }
-                    return new ArrayList<>(resumes.values());
-                });
+        return sqlHelper.executeTransaction(connection -> {
+            Map<String, Resume> resumes = new LinkedHashMap<>();
+            try (PreparedStatement preparedStatement = connection.prepareStatement("" +
+                    "SELECT * FROM resumes " +
+                    "ORDER BY full_name, uuid")) {
+                ResultSet resultSet = preparedStatement.executeQuery();
+                while (resultSet.next()) {
+                    String uuid = resultSet.getString("uuid");
+                    resumes.put(uuid, new Resume(resultSet.getString("full_name")));
+                }
+            }
+            try (PreparedStatement preparedStatement = connection.prepareStatement("" +
+                    "SELECT * FROM contacts")) {
+                ResultSet resultSet = preparedStatement.executeQuery();
+                while (resultSet.next()) {
+                    Resume resume = resumes.get(resultSet.getString("resume_uuid"));
+                    addContact(resultSet, resume);
+                }
+            }
+            try (PreparedStatement preparedStatement = connection.prepareStatement("" +
+                    "SELECT * FROM sections")) {
+                ResultSet resultSet = preparedStatement.executeQuery();
+                while (resultSet.next()) {
+                    Resume resume = resumes.get(resultSet.getString("resume_uuid"));
+                    addSection(resultSet, resume);
+                }
+            }
+            return new ArrayList<>(resumes.values());
+        });
     }
 
     @Override
@@ -184,8 +193,8 @@ public class SqlStorage implements Storage {
                 "VALUES (?,?,?)")) {
             for (Map.Entry<SectionType, AbstractSection> section : r.getSections().entrySet()) {
                 preparedStatement.setString(1, r.getUuid());
-                preparedStatement.setString(2, section.getKey().getTitle());
-                preparedStatement.setString(3, section.getValue().toString());
+                preparedStatement.setString(2, section.getKey().name());
+                preparedStatement.setString(3, JsonParser.write(section.getValue(), AbstractSection.class));
                 preparedStatement.addBatch();
             }
             preparedStatement.executeBatch();
