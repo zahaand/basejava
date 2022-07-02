@@ -109,7 +109,7 @@ public class SqlStorage implements Storage {
                 ResultSet resultSet = preparedStatement.executeQuery();
                 while (resultSet.next()) {
                     String uuid = resultSet.getString("uuid");
-                    resumes.put(uuid, new Resume(resultSet.getString("full_name")));
+                    resumes.put(uuid, new Resume(uuid, resultSet.getString("full_name")));
                 }
             }
             try (PreparedStatement preparedStatement = connection.prepareStatement("" +
