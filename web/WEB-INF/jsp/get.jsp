@@ -1,5 +1,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="com.zahaand.webapp.model.ListSection" %>
+<%@ page import="com.zahaand.webapp.model.OrganizationSection" %>
+<%@ page import="com.zahaand.webapp.model.TextSection" %>
 <html>
 <head>
     <link rel="stylesheet" href="css/style.css">
@@ -24,17 +27,18 @@
             <jsp:useBean id="sectionsEntry"
                          type="java.util.Map.Entry<com.zahaand.webapp.model.SectionType, com.zahaand.webapp.model.AbstractSection>"/>
             <c:set var="type" value="${sectionsEntry.key}"></c:set>
-            <c:set var="type" value="${sectionsEntry.value}"></c:set>
+            <c:set var="section" value="${sectionsEntry.value}"></c:set>
+            <jsp:useBean id="section" type="com.zahaand.webapp.model.AbstractSection"></jsp:useBean>
             <tr>
                 <td colspan="2">
-                    <h2><a name="type_name" ${type.title}</h2>
+                    <h2><a name="type_name" ${type.title}></a></h2>
                 </td>
             </tr>
             <c:choose>
                 <c:when test="${type=='OBJECTIVE' || type=='PERSONAL'}">
                     <tr>
                         <td colspan="2">
-                                ${type.toString()}
+                                ${section.toString()}
                         </td>
                     </tr>
                 </c:when>
@@ -42,8 +46,7 @@
                     <tr>
                         <td colspan="2">
                             <ul>
-                                <jsp:useBean id="section" type="com.zahaand.webapp.model.AbstractSection"/>
-                                <c:forEach var="item" items="${section.getBulletedList()}">
+                                <c:forEach var="item" items="<%=((ListSection) section).getBulletedList()%>">
                                     <li>${item}</li>
                                 </c:forEach>
                             </ul>
@@ -51,7 +54,7 @@
                     </tr>
                 </c:when>
                 <c:when test="${type=='EXPERIENCE' || type=='EDUCATION'}">
-                    <c:forEach var="organization" items="${section.getOrganizations()}">
+                    <c:forEach var="organization" items="<%=((OrganizationSection) section).getOrganizations()%>">
                         <tr>
                             <td colspan="2">
                                 <c:choose>
@@ -66,9 +69,11 @@
                             </td>
                         </tr>
                         <c:forEach var="position" items="${organization.positions}">
+                            <jsp:useBean id="position"
+                                         type="com.zahaand.webapp.model.Organization.Position"></jsp:useBean>
                             <tr>
                                 <td><${position}></td>
-                                <td>${position.description}</td>
+                                    <%--                                <td>${position.description}</td>--%>
                             </tr>
                         </c:forEach>
                     </c:forEach>
