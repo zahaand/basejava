@@ -22,32 +22,30 @@
         <c:forEach var="type" items="${ContactType.values()}">
             <dl>
                 <dt>${type.title}</dt>
-                <dd><input type="text" name="${type.name()}" size="30" value="${resume.getContact(type)}"></dd>
+                <dd><input type="text" name="${type}" size="30" value="${resume.getContact(type)}"></dd>
             </dl>
         </c:forEach>
         <h3>Sections:</h3>
-        <c:forEach var="sections" items="${SectionType.values()}">
-            <c:set var="type" value="${resume.getSectionType(sections)}"></c:set>
-            <jsp:useBean id="section" type="com.zahaand.webapp.model.SectionType"></jsp:useBean>
+        <c:forEach var="type" items="${SectionType.values()}">
+            <c:set var="section" value="${resume.getSectionType(type)}"></c:set>
+            <jsp:useBean id="type" type="com.zahaand.webapp.model.SectionType"></jsp:useBean>
             <c:choose>
-                <c:when test="${type=='OBJECTIVE' || type=='PERSONAL'}">
-                    <input type="text" name="${sections}" size="30" value="${type}">
-                </c:when>
-                <c:when test="${type=='ACHIEVEMENT' || type=='QUALIFICATIONS'}">
-                    <textarea name="${sections}" cols="30" rows="10">
-                            ${type.getBulletedList()}
+                <c:when test="${type != SectionType.EXPERIENCE && type != SectionType.EDUCATION}">
+                    <h4>${type.title}</h4>
+                    <textarea name="${type.title}">
+                            ${resume.getSectionType(type)}
                     </textarea>
                 </c:when>
-                <c:when test="${type=='EXPERIENCE' || type=='EDUCATION'}">
-                    <c:forEach var="organization" items="${type.getOrganizations()}">
+                <c:when test="${section=='EXPERIENCE' || section=='EDUCATION'}">
+                    <c:forEach var="organization" items="${section.getOrganizations()}">
                         <dl>
                             <dt>Organization:</dt>
-                            <dd><input type="text" name="${sections}" size="30"
+                            <dd><input type="text" name="${type}" size="30"
                                        value="${organization.getHomePage().getOrganizationName()}"></dd>
                         </dl>
                         <dl>
                             <dt>web-site:</dt>
-                            <dd><input type="text" name="${sections}_url" size="30"
+                            <dd><input type="text" name="${type}_url" size="30"
                                        value="${organization.getHomePage().getUrl()}"></dd>
                         </dl>
                         <div>
@@ -55,19 +53,19 @@
                                 <jsp:useBean id="positions"
                                              type="com.zahaand.webapp.model.Organization.Position"></jsp:useBean>
                                 <dl>start date:</dl>
-                                <dd><input type="text" name="${sections}_${sections.index}_startDate" size="10"
+                                <dd><input type="text" name="${type}_${type.index}_startDate" size="10"
                                            value="${position.startDate}">
                                 </dd>
                                 <dl>end date:</dl>
-                                <dd><input type="text" name="${sections}_${sections.index}_endDate" size="10"
+                                <dd><input type="text" name="${type}_${type.index}_endDate" size="10"
                                            value="${position.endDate}">
                                 </dd>
                                 <dl>position:</dl>
-                                <dd><input type="text" name="${sections}_${sections.index}_position" size="30"
+                                <dd><input type="text" name="${type}_${type.index}_position" size="30"
                                            value="${position.position}">
                                 </dd>
                                 <dl>description:</dl>
-                                <dd><textarea name="${sections}_${sections.index}_description" rows="5"
+                                <dd><textarea name="${type}_${type.index}_description" rows="5"
                                               cols="30">${position.description}</textarea>
                                 </dd>
                             </c:forEach>

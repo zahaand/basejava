@@ -73,7 +73,6 @@
                                          type="com.zahaand.webapp.model.Organization.Position"></jsp:useBean>
                             <tr>
                                 <td><${position}></td>
-                                    <%--                                <td>${position.description}</td>--%>
                             </tr>
                         </c:forEach>
                     </c:forEach>
