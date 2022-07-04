@@ -1,6 +1,5 @@
 <%@ page import="com.zahaand.webapp.model.ContactType" %>
 <%@ page import="com.zahaand.webapp.model.SectionType" %>
-<%@ page import="com.zahaand.webapp.util.DateUtil" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
@@ -30,48 +29,48 @@
             <c:set var="section" value="${resume.getSectionType(type)}"></c:set>
             <jsp:useBean id="type" type="com.zahaand.webapp.model.SectionType"></jsp:useBean>
             <c:choose>
-                <c:when test="${type != SectionType.EXPERIENCE && type != SectionType.EDUCATION}">
+                <c:when test="${type != 'EXPERIENCE' && type != 'EDUCATION'}">
                     <h4>${type.title}</h4>
                     <textarea name="${type.title}">
                             ${resume.getSectionType(type)}
                     </textarea>
                 </c:when>
-                <c:when test="${section=='EXPERIENCE' || section=='EDUCATION'}">
-                    <c:forEach var="organization" items="${section.getOrganizations()}">
+                <c:otherwise>
+                    <c:forEach var="organization" items="${resume.getSectionType(type).getOrganizations()}">
                         <dl>
                             <dt>Organization:</dt>
-                            <dd><input type="text" name="${type}" size="30"
+                            <dd><input type="text" name="${type.title}" size="30"
                                        value="${organization.getHomePage().getOrganizationName()}"></dd>
                         </dl>
                         <dl>
                             <dt>web-site:</dt>
-                            <dd><input type="text" name="${type}_url" size="30"
+                            <dd><input type="text" name="${type.title}_url" size="30"
                                        value="${organization.getHomePage().getUrl()}"></dd>
                         </dl>
                         <div>
                             <c:forEach var="position" items="${organization.getPositions()}">
-                                <jsp:useBean id="positions"
+                                <jsp:useBean id="position"
                                              type="com.zahaand.webapp.model.Organization.Position"></jsp:useBean>
                                 <dl>start date:</dl>
-                                <dd><input type="text" name="${type}_${type.index}_startDate" size="10"
+                                <dd><input type="text" name="${type.title}_startDate" size="10"
                                            value="${position.startDate}">
                                 </dd>
                                 <dl>end date:</dl>
-                                <dd><input type="text" name="${type}_${type.index}_endDate" size="10"
+                                <dd><input type="text" name="${type.title}_endDate" size="10"
                                            value="${position.endDate}">
                                 </dd>
                                 <dl>position:</dl>
-                                <dd><input type="text" name="${type}_${type.index}_position" size="30"
+                                <dd><input type="text" name="${type.title}_position" size="30"
                                            value="${position.position}">
                                 </dd>
                                 <dl>description:</dl>
-                                <dd><textarea name="${type}_${type.index}_description" rows="5"
+                                <dd><textarea name="${type.title}_description" rows="5"
                                               cols="30">${position.description}</textarea>
                                 </dd>
                             </c:forEach>
                         </div>
                     </c:forEach>
-                </c:when>
+                </c:otherwise>
             </c:choose>
         </c:forEach>
         <hr/>
