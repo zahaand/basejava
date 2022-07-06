@@ -61,6 +61,10 @@ public class Resume implements Comparable<Resume>, Serializable {
         return sections.get(sectionType);
     }
 
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
     public void setContact(ContactType contactType, String contact) {
         contacts.put(contactType, contact);
     }
