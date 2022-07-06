@@ -1,12 +1,8 @@
 package com.zahaand.webapp.web;
 
 import com.zahaand.webapp.Config;
-import com.zahaand.webapp.model.AbstractSection;
-import com.zahaand.webapp.model.ContactType;
-import com.zahaand.webapp.model.Resume;
-import com.zahaand.webapp.model.SectionType;
+import com.zahaand.webapp.model.*;
 import com.zahaand.webapp.storage.Storage;
-import com.zahaand.webapp.util.JsonParser;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -14,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Arrays;
 
 public class ResumeServlet extends HttpServlet {
     private Storage storage;
@@ -69,10 +66,15 @@ public class ResumeServlet extends HttpServlet {
         }
         for (SectionType sectionType : SectionType.values()) {
             String section = request.getParameter(sectionType.name());
-            if (section != null && section.trim().length() != 0) {
-                resume.setSection(sectionType, JsonParser.read(section, AbstractSection.class));
-            } else {
-                resume.getSections().remove(sectionType);
+            switch (sectionType) {
+                case OBJECTIVE, PERSONAL -> resume.setSection(sectionType, new TextSection(section));
+                case ACHIEVEMENT, QUALIFICATIONS ->
+                        resume.setSection(sectionType, new ListSection(Arrays.stream(section.split("\\n")).toList()));
+                case EXPERIENCE, EDUCATION -> {
+//                    List<Organization> organizations = new ArrayList<>();
+//                    List<Organization.Position> positions = new ArrayList<>();
+//                    resume.setSection(sectionType, new OrganizationSection(organizations));
+                }
             }
         }
         storage.update(resume);
