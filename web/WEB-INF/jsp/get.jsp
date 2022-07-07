@@ -12,7 +12,8 @@
 <jsp:include page="fragments/header.jsp"></jsp:include>
 <section>
     <jsp:useBean id="resume" scope="request" type="com.zahaand.webapp.model.Resume"/>
-    <h1>${resume.fullName}&nbsp;<a href="resume.uuid=${resume.uuid}&action=edit"><img src="img/edit.png"></a></h1>
+    <h1>${resume.fullName}&nbsp;<a href="resume?uuid=${resume.uuid}&action=edit"><img src="img/edit.png" alt="Edit"></a>
+    </h1>
     <p>
         <c:forEach var="contactsEntry" items="${resume.contacts}">
             <jsp:useBean id="contactsEntry"
