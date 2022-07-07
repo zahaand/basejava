@@ -10,7 +10,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class ResumeServlet extends HttpServlet {
     private Storage storage;
@@ -58,22 +61,43 @@ public class ResumeServlet extends HttpServlet {
         resume.setFullName(fullName);
         for (ContactType contactType : ContactType.values()) {
             String contact = request.getParameter(contactType.name());
-            if (contact != null && contact.trim().length() != 0) {
-                resume.setContact(contactType, contact);
-            } else {
+            if (contact == null) {
                 resume.getContacts().remove(contactType);
+            } else {
+                resume.setContact(contactType, contact);
             }
         }
         for (SectionType sectionType : SectionType.values()) {
             String section = request.getParameter(sectionType.name());
-            switch (sectionType) {
-                case OBJECTIVE, PERSONAL -> resume.setSection(sectionType, new TextSection(section));
-                case ACHIEVEMENT, QUALIFICATIONS ->
-                        resume.setSection(sectionType, new ListSection(Arrays.stream(section.split("\\n")).toList()));
-                case EXPERIENCE, EDUCATION -> {
-//                    List<Organization> organizations = new ArrayList<>();
-//                    List<Organization.Position> positions = new ArrayList<>();
-//                    resume.setSection(sectionType, new OrganizationSection(organizations));
+            if (section == null) {
+                resume.getSections().remove(sectionType);
+            } else {
+                switch (sectionType) {
+                    case OBJECTIVE, PERSONAL -> resume.setSection(sectionType, new TextSection(section));
+                    case ACHIEVEMENT, QUALIFICATIONS ->
+                            resume.setSection(sectionType, new ListSection(Arrays.stream(section.split("\\n")).toList()));
+                    case EXPERIENCE, EDUCATION -> {
+                        List<Organization> organizations = new ArrayList<>();
+                        List<Organization.Position> positions = new ArrayList<>();
+                        String[] parameterValues = request.getParameterValues(sectionType.name());
+                        String[] urls = request.getParameterValues("url");
+                        for (int i = 0; i < parameterValues.length; i++) {
+                            String name = parameterValues[i];
+                            if (name != null) {
+                                String[] startDates = request.getParameterValues("startDate");
+                                String[] endDates = request.getParameterValues("endDate");
+                                String[] titles = request.getParameterValues("titles");
+                                String[] descriptions = request.getParameterValues("description");
+                                for (int j = 0; j < titles.length; j++) {
+                                    if (titles[j] != null) {
+                                        positions.add(new Organization.Position(LocalDate.parse(startDates[j]), LocalDate.parse(endDates[j]), titles[j], descriptions[j]));
+                                    }
+                                }
+                                organizations.add(new Organization(new Link(name, urls[i]), positions));
+                            }
+                        }
+                        resume.setSection(sectionType, new OrganizationSection(organizations));
+                    }
                 }
             }
         }
