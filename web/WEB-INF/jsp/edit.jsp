@@ -16,7 +16,14 @@
         <input type="hidden" name="uuid" value="${resume.uuid}">
         <dl>
             <dt>Name:</dt>
-            <dd><input type="text" name="fullName" size="50" value="${resume.fullName}"></dd>
+            <c:choose>
+                <c:when test="${resume.fullName == null}">
+
+                </c:when>
+                <c:otherwise>
+                    <dd><input type="text" name="fullName" size="50" value="${resume.fullName}"></dd>
+                </c:otherwise>
+            </c:choose>
         </dl>
         <h3>Contacts:</h3>
         <c:forEach var="type" items="${ContactType.values()}">
