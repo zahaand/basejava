@@ -19,8 +19,15 @@
         <c:forEach var="contactsEntry" items="${resume.contacts}">
             <jsp:useBean id="contactsEntry"
                          type="java.util.Map.Entry<com.zahaand.webapp.model.ContactType, java.lang.String>"></jsp:useBean>
-            ${contactsEntry.key}
-            ${contactsEntry.value}
+            <c:choose>
+                <c:when test="${contactsEntry.value.length() == 0}">
+                    ${resume.contacts.remove(contactsEntry.key)}
+                </c:when>
+                <c:otherwise>
+                    ${contactsEntry.key}
+                    ${contactsEntry.value}
+                </c:otherwise>
+            </c:choose>
             <br/>
         </c:forEach>
     </p>
