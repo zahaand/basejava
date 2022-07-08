@@ -18,6 +18,9 @@
             <th></th>
             <th></th>
         </tr>
+        <tr>
+            <td><a href="resume?action=add"><img src="img/add.png" alt="Add"></a></td>
+        </tr>
         <jsp:useBean id="resumes" scope="request" type="java.util.List"/>
         <c:forEach items="${resumes}" var="resume">
             <jsp:useBean id="resume" type="com.zahaand.webapp.model.Resume"/>
