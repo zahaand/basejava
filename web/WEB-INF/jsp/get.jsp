@@ -5,6 +5,7 @@
 <%@ page import="com.zahaand.webapp.model.TextSection" %>
 <html>
 <head>
+    <meta charset="UTF-8">
     <link rel="stylesheet" href="css/style.css">
     <title>Get resume</title>
 </head>
