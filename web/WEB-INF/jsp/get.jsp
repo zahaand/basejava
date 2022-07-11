@@ -71,7 +71,8 @@
                                         <h3>${organization.homePage.url}</h3>
                                     </c:when>
                                     <c:otherwise>
-                                        <h3><a href="${organization.homePage.url}">${organization.homePage.name}</a>
+                                        <h3>
+                                            <a href="${organization.homePage.url}">${organization.homePage.organizationName}</a>
                                         </h3>
                                     </c:otherwise>
                                 </c:choose>

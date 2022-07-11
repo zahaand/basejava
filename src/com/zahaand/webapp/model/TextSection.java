@@ -20,6 +20,9 @@ public class TextSection extends AbstractSection {
 
     @Override
     public String toString() {
+        if (text == null) {
+            return "";
+        }
         return text;
     }
 

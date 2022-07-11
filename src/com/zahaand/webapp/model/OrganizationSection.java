@@ -24,11 +24,10 @@ public class OrganizationSection extends AbstractSection {
 
     @Override
     public String toString() {
-        StringBuilder stringBuilder = new StringBuilder();
-        for (Organization organization : organizations) {
-            stringBuilder.append(organization).append("\n");
+        if (organizations == null) {
+            return "";
         }
-        return stringBuilder.toString();
+        return organizations.toString();
     }
 
     @Override

@@ -44,12 +44,13 @@ public class Organization implements Serializable {
 
     @Override
     public String toString() {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(homePage);
-        for (Position position : positions) {
-            stringBuilder.append(position);
-        }
-        return stringBuilder.toString();
+//        StringBuilder stringBuilder = new StringBuilder();
+//        stringBuilder.append(homePage);
+//        for (Position position : positions) {
+//            stringBuilder.append(position);
+//        }
+//        return stringBuilder.toString();
+        return homePage + "\n" + positions;
     }
 
     @Override

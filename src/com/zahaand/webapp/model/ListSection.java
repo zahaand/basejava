@@ -21,11 +21,10 @@ public class ListSection extends AbstractSection {
 
     @Override
     public String toString() {
-        StringBuilder stringBuilder = new StringBuilder();
-        for (String s : bulletedList) {
-            stringBuilder.append(s).append("\n");
+        if (bulletedList == null) {
+            return "";
         }
-        return stringBuilder.toString();
+        return bulletedList.toString();
     }
 
     @Override

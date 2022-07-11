@@ -1,5 +1,6 @@
 <%@ page import="com.zahaand.webapp.model.ContactType" %>
 <%@ page import="com.zahaand.webapp.model.SectionType" %>
+<%@ page import="com.zahaand.webapp.model.OrganizationSection" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
@@ -16,14 +17,8 @@
         <input type="hidden" name="uuid" value="${resume.uuid}">
         <dl>
             <dt>Name:</dt>
-            <c:choose>
-                <c:when test="${resume.fullName == null}">
-
-                </c:when>
-                <c:otherwise>
-                    <dd><input type="text" name="fullName" size="50" value="${resume.fullName}"></dd>
-                </c:otherwise>
-            </c:choose>
+            <dd><input class="field" type="text" name="fullName" size=55 placeholder="ФИО"
+                       value="${resume.fullName}" required></dd>
         </dl>
         <h3>Contacts:</h3>
         <c:forEach var="type" items="${ContactType.values()}">
@@ -35,28 +30,28 @@
         <h3>Sections:</h3>
         <c:forEach var="type" items="${SectionType.values()}">
             <c:set var="section" value="${resume.getSectionType(type)}"></c:set>
-            <jsp:useBean id="type" type="com.zahaand.webapp.model.SectionType"></jsp:useBean>
+            <jsp:useBean id="section" type="com.zahaand.webapp.model.AbstractSection"></jsp:useBean>
+            <h4><a>${type.title}</a></h4>
             <c:choose>
                 <c:when test="${type != 'EXPERIENCE' && type != 'EDUCATION'}">
-                    <h4>${type.title}</h4>
                     <textarea name="${type.title}">
-                            ${resume.getSectionType(type)}
+                        <%=section.toString()%>
                     </textarea>
                 </c:when>
                 <c:otherwise>
-                    <c:forEach var="organization" items="${resume.getSectionType(type).getOrganizations()}">
+                    <c:forEach var="organization" items="<%=((OrganizationSection) section).getOrganizations()%>">
                         <dl>
                             <dt>Organization:</dt>
                             <dd><input type="text" name="${type.title}" size="30"
-                                       value="${organization.getHomePage().getOrganizationName()}"></dd>
+                                       value="${organization.homePage.organizationName}"></dd>
                         </dl>
                         <dl>
                             <dt>web-site:</dt>
                             <dd><input type="text" name="${type.title}_url" size="30"
-                                       value="${organization.getHomePage().getUrl()}"></dd>
+                                       value="${organization.homePage.url}"></dd>
                         </dl>
                         <div>
-                            <c:forEach var="position" items="${organization.getPositions()}">
+                            <c:forEach var="position" items="${organization.positions}">
                                 <jsp:useBean id="position"
                                              type="com.zahaand.webapp.model.Organization.Position"></jsp:useBean>
                                 <dl>start date:</dl>

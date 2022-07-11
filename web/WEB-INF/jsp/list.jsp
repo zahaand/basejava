@@ -4,7 +4,7 @@
 
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <meta charset="UTF-8">
     <link rel="stylesheet" href="css/style.css">
     <title>Resumes</title>
 </head>
@@ -17,9 +17,6 @@
             <th>Email</th>
             <th></th>
             <th></th>
-        </tr>
-        <tr>
-            <td><a href="resume?action=add"><img src="img/add.png" alt="Add"></a></td>
         </tr>
         <jsp:useBean id="resumes" scope="request" type="java.util.List"/>
         <c:forEach items="${resumes}" var="resume">

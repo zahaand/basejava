@@ -21,7 +21,7 @@ public class ResumeServlet extends HttpServlet {
     @Override
     public void init(ServletConfig config) throws ServletException {
         storage = Config.getInstance().getSqlStorage();
-        super.init();
+        super.init(config);
     }
 
     @Override
@@ -35,7 +35,40 @@ public class ResumeServlet extends HttpServlet {
             return;
         }
         switch (action) {
-            case "get", "edit" -> resume = storage.get(uuid);
+            case "get" -> resume = storage.get(uuid);
+            case "edit" -> {
+                resume = storage.get(uuid);
+                for (SectionType sectionType : SectionType.values()) {
+                    AbstractSection section = resume.getSectionType(sectionType);
+                    switch (sectionType) {
+                        case OBJECTIVE, PERSONAL -> {
+                            if (section == null) {
+                                section = new TextSection();
+                            }
+                        }
+                        case ACHIEVEMENT, QUALIFICATIONS -> {
+                            if (section == null) {
+                                section = new ListSection();
+                            }
+                        }
+                        case EXPERIENCE, EDUCATION -> {
+                            OrganizationSection organizationSection = (OrganizationSection) section;
+                            List<Organization> organizations = new ArrayList<>();
+                            organizations.add(new Organization());
+                            if (organizationSection != null) {
+                                for (Organization organization : organizationSection.getOrganizations()) {
+                                    List<Organization.Position> positions = new ArrayList<>();
+                                    positions.add(new Organization.Position());
+                                    positions.addAll(organization.getPositions());
+                                    organizations.add(new Organization(organization.getHomePage(), positions));
+                                }
+                            }
+                            section = new OrganizationSection(organizations);
+                        }
+                    }
+                    resume.setSection(sectionType, section);
+                }
+            }
             case "delete" -> {
                 storage.delete(uuid);
                 response.sendRedirect("resume");
@@ -58,8 +91,14 @@ public class ResumeServlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         String uuid = request.getParameter("uuid");
         String fullName = request.getParameter("fullName");
-        Resume resume = storage.get(uuid);
-        resume.setFullName(fullName);
+        final boolean isCreate = (uuid.length() != 0);
+        Resume resume;
+        if (!isCreate) {
+            resume = new Resume(fullName);
+        } else {
+            resume = storage.get(uuid);
+            resume.setFullName(fullName);
+        }
         for (ContactType contactType : ContactType.values()) {
             String contact = request.getParameter(contactType.name());
             if (contact == null) {
@@ -102,7 +141,11 @@ public class ResumeServlet extends HttpServlet {
                 }
             }
         }
-        storage.update(resume);
+        if (isCreate) {
+            storage.save(resume);
+        } else {
+            storage.update(resume);
+        }
         response.sendRedirect("resume");
     }
 }
