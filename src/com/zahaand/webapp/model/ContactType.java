@@ -1,13 +1,13 @@
 package com.zahaand.webapp.model;
 
 public enum ContactType {
-    PHONE_NUMBER("Номер телефона"),
+    PHONE_NUMBER("Phone number"),
     SKYPE("Skype"),
-    EMAIL("e-mail"),
+    EMAIL("E-mail"),
     LINKEDIN("Linkedin"),
     GITHUB("GitHub"),
     STACKOVERFLOW("Stackoverflow"),
-    HOMEPAGE("Home page");
+    HOMEPAGE("Homepage");
 
     private final String title;
 

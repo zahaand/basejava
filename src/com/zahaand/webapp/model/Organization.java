@@ -21,6 +21,8 @@ public class Organization implements Serializable {
     private List<Position> positions;
     private static final long SERIALIZABLE_VERSION = 1L;
 
+    public static final Organization EMPTY = new Organization("", "", Position.EMPTY);
+
     public Organization() {
     }
 
@@ -75,6 +77,8 @@ public class Organization implements Serializable {
         @XmlJavaTypeAdapter(LocalDateAdapter.class)
         private LocalDate endDate;
         private static final long SERIALIZABLE_VERSION = 1L;
+
+        public static final Position EMPTY = new Position();
 
         public Position() {
         }

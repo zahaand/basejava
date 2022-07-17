@@ -129,7 +129,7 @@ public class MainTestResumeData {
         resume.setSection(SectionType.EXPERIENCE, new OrganizationSection(organizations));
 
         Link courseLink1 = new Link("Coursera", null);
-        String courseName1 = "\"Functional Programming Principles in Scala\" by Martin Odersky";
+        String courseName1 = "Functional Programming Principles in Scala by Martin Odersky";
         String courseDescription1 = null;
         Organization.Position education1 = new Organization.Position(DateUtil.of(2011, Month.MARCH), DateUtil.of(2013, Month.MAY), courseName1, courseDescription1);
         List<Organization.Position> finishedCourses1 = new ArrayList<>();
@@ -137,7 +137,7 @@ public class MainTestResumeData {
         Organization educationalInstitution1 = new Organization(courseLink1, finishedCourses1);
 
         Link courseLink2 = new Link("Luxoft", null);
-        String courseName2 = "Курс \"Объектно-ориентированный анализ ИС. Концептуальное моделирование на UML.\"";
+        String courseName2 = "Курс Объектно-ориентированный анализ ИС. Концептуальное моделирование на UML.";
         String courseDescription2 = null;
         Organization.Position education2 = new Organization.Position(DateUtil.of(2011, Month.MARCH), DateUtil.of(2011, Month.APRIL), courseName2, courseDescription2);
         List<Organization.Position> finishedCourses2 = new ArrayList<>();
