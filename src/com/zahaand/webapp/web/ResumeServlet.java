@@ -38,20 +38,20 @@ public class ResumeServlet extends HttpServlet {
             case "add" -> resume = new Resume();
             case "edit" -> {
                 resume = storage.get(uuid);
-//                for (SectionType sectionType : new SectionType[]{SectionType.EXPERIENCE, SectionType.EDUCATION}) {
-//                    OrganizationSection section = (OrganizationSection) resume.getSection(sectionType);
-//                    List<Organization> emptyFirstOrganizations = new ArrayList<>();
-//                    emptyFirstOrganizations.add(Organization.EMPTY);
-//                    if (section != null) {
-//                        for (Organization organization : section.getOrganizations()) {
-//                            List<Organization.Position> emptyFirstPositions = new ArrayList<>();
-//                            emptyFirstPositions.add(Organization.Position.EMPTY);
-//                            emptyFirstPositions.addAll(organization.getPositions());
-//                            emptyFirstOrganizations.add(new Organization(organization.getHomePage(), emptyFirstPositions));
-//                        }
-//                    }
-//                    resume.setSection(sectionType, new OrganizationSection(emptyFirstOrganizations));
-//                }
+                for (SectionType sectionType : new SectionType[]{SectionType.EXPERIENCE, SectionType.EDUCATION}) {
+                    OrganizationSection section = (OrganizationSection) resume.getSection(sectionType);
+                    List<Organization> emptyFirstOrganizations = new ArrayList<>();
+                    emptyFirstOrganizations.add(Organization.EMPTY);
+                    if (section != null) {
+                        for (Organization organization : section.getOrganizations()) {
+                            List<Organization.Position> emptyFirstPositions = new ArrayList<>();
+                            emptyFirstPositions.add(Organization.Position.EMPTY);
+                            emptyFirstPositions.addAll(organization.getPositions());
+                            emptyFirstOrganizations.add(new Organization(organization.getHomePage(), emptyFirstPositions));
+                        }
+                    }
+                    resume.setSection(sectionType, new OrganizationSection(emptyFirstOrganizations));
+                }
             }
             case "delete" -> {
                 storage.delete(uuid);
