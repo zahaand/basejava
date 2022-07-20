@@ -39,7 +39,7 @@ public class ResumeServlet extends HttpServlet {
             case "edit" -> {
                 resume = storage.get(uuid);
 //                for (SectionType sectionType : new SectionType[]{SectionType.EXPERIENCE, SectionType.EDUCATION}) {
-//                    OrganizationSection section = (OrganizationSection) resume.getSectionType(sectionType);
+//                    OrganizationSection section = (OrganizationSection) resume.getSection(sectionType);
 //                    List<Organization> emptyFirstOrganizations = new ArrayList<>();
 //                    emptyFirstOrganizations.add(Organization.EMPTY);
 //                    if (section != null) {
@@ -70,7 +70,7 @@ public class ResumeServlet extends HttpServlet {
         String uuid = request.getParameter("uuid");
         String fullName = request.getParameter("fullName");
         boolean isCreate = !uuid.equals("");
-        Resume resume = isCreate ? storage.get(uuid) : new Resume(fullName);
+        Resume resume = isCreate ? storage.get(uuid) : new Resume("");
         resume.setFullName(fullName);
         for (ContactType contactType : ContactType.values()) {
             String contactValue = request.getParameter(contactType.name());
@@ -101,8 +101,8 @@ public class ResumeServlet extends HttpServlet {
                                 String[] endDates = request.getParameterValues("endDate" + organization + i);
                                 String[] titles = request.getParameterValues("position" + organization + i);
                                 String[] descriptions = request.getParameterValues("description" + organization + i);
-                                for (int j = 0; j < titles.length; j++) {
-                                    if (titles[j] != null) {
+                                if (titles != null) {
+                                    for (int j = 0; j < titles.length; j++) {
                                         positions.add(new Organization.Position(DateUtil.parse(startDates[j]), DateUtil.parse(endDates[j]), titles[j], descriptions[j]));
                                     }
                                 }

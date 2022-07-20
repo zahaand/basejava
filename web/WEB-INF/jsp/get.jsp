@@ -35,7 +35,7 @@
     <table cellspacing="2">
         <c:forEach var="sectionsEntry" items="${resume.sections}">
             <jsp:useBean id="sectionsEntry"
-                         type="java.util.Map.Entry<com.zahaand.webapp.model.SectionType, com.zahaand.webapp.model.AbstractSection>"/>
+                         type="java.util.Map.Entry<com.zahaand.webapp.model.SectionType, com.zahaand.webapp.model.AbstractSection>"></jsp:useBean>
             <c:set var="sectionType" value="${sectionsEntry.key}"></c:set>
             <c:set var="section" value="${sectionsEntry.value}"></c:set>
             <jsp:useBean id="section" type="com.zahaand.webapp.model.AbstractSection"></jsp:useBean>

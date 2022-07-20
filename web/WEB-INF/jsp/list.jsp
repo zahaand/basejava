@@ -6,6 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="css/style.css">
+    <jsp:useBean id="resumes" scope="request" type="java.util.List"/>
     <title>Resumes</title>
 </head>
 <body>
@@ -18,7 +19,6 @@
             <th></th>
             <th></th>
         </tr>
-        <jsp:useBean id="resumes" scope="request" type="java.util.List"/>
         <c:forEach items="${resumes}" var="resume">
             <jsp:useBean id="resume" type="com.zahaand.webapp.model.Resume"/>
             <tr>
